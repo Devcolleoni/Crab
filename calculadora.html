@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Financeira SIMA</title>
+</head>
+<body>
+    
+    <h1>Simulador Financeiro</h1>
+    Valor do Estoque (R$): <br>
+    <input type="Number" id="ipt_valorEstoque"> <br><br>
+    Capacidade de Pallets (Estoque): <br>
+    <input type="Number" id="ipt_qtdPallets"> <br><br>
+    Perda Mensal (R$): <br>
+    <input type="Number" id="ipt_perdas"> <br><br>
+    <button onclick="calcular()">Calcular</button> <br><br>
+    <div id="div_mensagem"></div>
+
+
+</body>
+</html>
+
+<script>
+
+    function calcular(){
+
+        let valorEstoque = Number(ipt_valorEstoque.value);
+        let pallets = Number(ipt_qtdPallets.value);
+        let perdas = Number(ipt_perdas.value);
+        let sensores = pallets; 
+        let valorSensores = sensores*300; //instalamos 30 sensores por dia (premissa)
+        let dias = Math.ceil(sensores/30); // math.ceil sempre arredonda números decimais para cima.
+        let valorInstalacaoFinal = dias*600; // vaçpr da diária = 600
+        let valorFinal = valorInstalacaoFinal + valorSensores;
+        let ganhos = perdas*0.8;
+        let perdasEstimadas = perdas*0.2;   
+
+        div_mensagem.innerHTML = `Simulação:<br> Valor do Estoque: R$${valorEstoque}<br> Perdas atuais (Mensais): R$${perdas} <br> 
+        Perdas Estimadas (com sensores): R$${perdasEstimadas}<br> Ganho Estimado: R$${ganhos}<br> 
+        Valor de Instalação + sensores: R$${valorFinal} <br>Valor do estoque (sem sensores):     <span style="color: red;">R$${valorEstoque - perdas}</span><br> Valor do Estoque (com sensores):<span style="color: green;"> R$${valorEstoque - perdasEstimadas}</span>`
+
+    }
+
+    
+</script>
