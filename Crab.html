@@ -35,6 +35,7 @@ function calcular(){
 
     let baseCalculo = 0
 
+
     if(controle == 'manual'){
             baseCalculo = valorEstoque * 0.4;
     } else if(controle == 'planilha'){
@@ -62,6 +63,14 @@ function calcular(){
     Simulação baseada em características operacionais informadas
     </span>
     `;
+
+
+    if (pallets <= 0) {
+
+        alert(`Digite um valor valido`)
+        div_mensagem.innerHTML = ""
+        
+    }
 }
 
 </script>
