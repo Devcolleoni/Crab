@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Simulador de Ganho SIMA</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-
+    <div class="container">
     <h1>Descubra o potencial financeiro do seu estoque</h1>
 
     Quantos pallets cabem no seu estoque (em média)? <br>
@@ -22,7 +23,7 @@
     <button onclick="calcular()">Calcular potencial</button> <br><br>
 
     <div id="div_mensagem"></div>
-
+</div>
 </body>
 
 </html>
@@ -73,7 +74,7 @@
         Você pode estar perdendo R$ ${perdaMensal.toLocaleString()} todos os meses 
         </h2>
         
-        Com nosso sistema, você pode reduzir suas perdas em:
+        Com nosso sistema, você pode reduzir suas perdas em ate:
         <b>R$ ${economiaMensal.toLocaleString()} por mês</b><br><br>
 
         Isso representa uma economia de: <b>R$ ${economiaAnual.toLocaleString()} por ano</b>
