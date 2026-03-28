@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/simulador.css">
 </head>
+
 <body>
     <div class="header">
         <div class="container">
@@ -31,14 +33,93 @@
                 <!-- <p class="bar">|</p>
                 <a href="cadastro.html">Cadastro</a> -->
                 <div class="profile-account">
-                <i class="bi bi-person-circle"></i>
-            </div>
+                    <i class="bi bi-person-circle"></i>
+                </div>
             </div>
         </div>
     </div>
 
-     <footer>
+    <div class="simulador">
+        <div class="container">
+
+            <h1>Descubra o potencial financeiro do seu estoque</h1>
+
+            Quantos pallets cabem no seu estoque (em média)? <br>
+            <input type="number" id="ipt_pallets"> <br><br>
+
+            Qual o controle do estoque? <br>
+            <select id="select_controle">
+                <option selected disabled value="">Selecione o controle da empresa</option>
+                <option value="manual">Manual (papel)</option>
+                <option value="planilha">Planilha</option>
+                <option value="sistema">Sistema</option>
+            </select> <br><br>
+
+            <button onclick="calcular()">Calcular potencial</button> <br><br>
+
+            <div id="div_mensagem"></div>
+
+        </div>
+    </div>
+
+
+
+
+    <footer>
         <p>&copy; CRAB 2026 - Todos os direitos reservados</p>
-     </footer>
+    </footer>
 </body>
 </html>
+<script>
+
+    function calcular() {
+
+    let pallets = Number(ipt_pallets.value);
+    let controle = select_controle.value;
+
+    if (controle == "") {
+
+        alert(`Selecione o controle`)
+        exibir.innerHTML = ''
+        
+    }
+        
+
+    if (pallets <= 0) {
+        alert("Digite um valor válido");
+        div_mensagem.innerHTML = "";
+        return;
+    }
+
+    let valorMedioPallet = 1000;
+    let valorEstoque = pallets * valorMedioPallet;
+
+    let taxaPerda = 0;
+
+    if (controle == 'manual') {
+        taxaPerda = 0.4;
+    } else if (controle == 'planilha') {
+        taxaPerda = 0.3;
+    } else {
+        taxaPerda = 0.15;
+    }
+
+    let perdaMensal = valorEstoque * taxaPerda;
+
+    let taxaReducao = 0.5; // Quanto noss produto vai diminuir de perda
+
+    let economiaMensal = perdaMensal * taxaReducao;
+    let economiaAnual = economiaMensal * 12;
+
+    div_mensagem.innerHTML = `
+        <h2 style="color:red;"> 
+        Você pode estar perdendo R$ ${perdaMensal.toLocaleString()} todos os meses
+        </h2><br>
+        
+        Com nosso sistema, você pode reduzir suas perdas em ate:
+        <b>R$ ${economiaMensal.toLocaleString()} por mês</b><br><br>
+
+        Isso representa uma economia de: <b>R$ ${economiaAnual.toLocaleString()} por ano</b>
+    `;
+}
+</script>
