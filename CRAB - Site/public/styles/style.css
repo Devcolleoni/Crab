@@ -13,7 +13,6 @@ body {
     min-height: 100vh;
 }
 
-/* Header */
 
 .header .container {
     width: 100%;
@@ -43,6 +42,19 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.banner .container{
+    height: 500px;
+    width: 100%;
+    background-image: url('../assets/imgs/img.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
 
 .navbar li {
     list-style: none;
@@ -98,7 +110,6 @@ body {
     transition: 0.3s;
 }
 
-/* Footer */
 
 footer {
     width: 100%;
@@ -115,15 +126,16 @@ footer p {
     font-weight: 800;
 }
 
-/* Button */
+
 
 button {
-    background-color: #1b2c47;
+    background-color: #c73c12;
     padding: 12px 20px;
     border-radius: 8px;
     border: none;
     transition: 0.3s;
     cursor: pointer;
+    
 }
 
 button:hover {
