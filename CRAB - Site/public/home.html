@@ -6,76 +6,221 @@
     <title>CRAB - Home</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="styles/style.css">
-    <link rel="stylesheet" href="styles/home.css">
 </head>
 <body>
-    <div class="header">
+    <div id="header">
         <div class="container">
-            <a class="logo" href="#">CRAB</a>
+            <a class="logo" href="#home">CRAB</a>
             <ul class="navbar">
-                <li class="agora">
-                    <a href="home.html">Ínicio</a>
-                </li>
-                <li>
-                    <a href="about.html">Quem Somos</a>
-                </li>
-                <li>
-                    <a href="contato.html">Contato</a>
-                </li>
-                <li>
-                    <a href="simulador.html">Simulador</a>
-                </li>
+            <li><a href="#home">Ínicio</a></li>
+            <li><a href="#about">Quem Somos</a></li>
+            <li><a href="#simulador">Simulador</a></li>
+            <li><a href= "#contato">Contato</a></li>
             </ul>
             <div class="profile">
-                <a href="login.html">Login</a>
-                <!-- <p class="bar">|</p>
-                <a href="cadastro.html">Cadastro</a> -->
+                <a href="#N">Login</a>
                 <div class="profile-account">
                 <i class="bi bi-person-circle"></i>
-            </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="banner">
-        <div class="container">
-            <p>Carregamos o <span>Controle</span> <br> que o seu <span>Negócio</span> precisa</p>
+    <section id="home">
+        <div class="banner">
+            <h1>Carregamos o <span>Controle</span> <br>
+                que o seu <span>Negócio</span> precisa
+            </h1>
         </div>
-    </div>
+        <div class="home-container">
+        <div class="left">
+         <div class="texto">
+            <h2>CONHEÇA O SIMA</h2>
 
-    <div class="produto">
-        <div class="container">
-            <div class="info">
-                <h2>CONHEÇA O SIMA</h2>
-                <p>Produto desenvolvido para resolver o problema de má gestão de estoque.</p>
-                <p> - Identifca de forma automática toda a movimentação de entrada e saída de pallets</p>
-                <p> - Registra cada dado em tempo real e integra essas informações diretamente ao gerenciador do cliente</p>
+            <p>
+                O <span>SIMA (Sistema Inteligente de Monitoramento de Armazém)</span> é o produto principal da CRAB e foi desenvolvido
+                para resolver de vez o problema da má gestão de estoques. Por meio de sensores de bloqueio instalados nos pontos
+                estratégicos do armazém, o resultado é visibilidade total, rastreamento preciso e zero margem para perdas.
+                Tudo funcionando de forma automática, inteligente e contínua.
+            </p>
+
+            <p>
+                Nossa tecnologia de sensores customizados detecta a presença de paletes e envia os dados direto para uma
+                interface financeira. Saiba exatamente quanto custa cada m² ocioso e otimize o giro do seu atacado com dados
+                reais, não estimativas.
+            </p>
+
+            <button class="button"><a href="#simulador">Quero Simular</a></button>
+        </div>
+        </div>
+
+        <div class="right">
+            <img class="image" src="assets/imgs/3.png" alt="">
+        </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="about-container">
+            <div class="right">
+                <img class="image" src="assets/imgs/1.png" alt="">
             </div>
 
-            <div class="boxes">
-                <div class="box">
-                    <i class="bi bi-check2"></i>
-                    <h4>Visibilidade Total</h4>
-                    <p>Lorem ipsum dolor sit amet <br> consectetur adipisicing elit.</p>
-                </div>
-                <div class="box">
-                    <i class="bi bi-bullseye"></i>
-                    <h4>Rastreamento Preciso</h4>
-                    <p>Lorem ipsum dolor sit amet <br> consectetur adipisicing elit.</p>
-                </div>
-                <div class="box">
-                    <i class="bi bi-x-lg"></i>
-                    <h4>Zero Perdas</h4>
-                    <p>Lorem ipsum dolor sit amet <br> consectetur adipisicing elit.</p>
+            <div class="left">
+                <div class="texto">
+                    <h2>QUEM SOMOS</h2>
+                    <p>A <span>CRAB</span> nasceu de um grupo de estudantes que enxergaram um problema real no dia a dia das empresas logísticas e decidiram fazer algo a respeito. Unindo criatividade, tecnologia e muita colaboração, desenvolveram uma solução que combina hardware e software em perfeita sintonia  sensores inteligentes integrados a um sistema robusto de gerenciamento. Tudo pensado para dar às empresas o controle que elas sempre precisaram, mas nunca tiveram de verdade.</p>
+
+                    <p>Nossa <span>missão</span> é desenvolver soluções tecnológicas inteligentes que simplificam a gestão logística, garantindo controle, segurança e eficiência para empresas que não podem se dar ao luxo de perder.</p>
                 </div>
             </div>
-
-            <button><a href="../../Crab.html">Quero Simular</a></button>
         </div>
-    </div>
+    </section>
+
+    <section id="simulador">
+         <div class="container">
+
+            <h1>Descubra o potencial financeiro do seu estoque</h1>
+
+            Quantos pallets cabem no seu estoque (em média)? <br>
+            <input type="number" id="ipt_pallets"> <br><br>
+
+            Qual o controle do estoque? <br>
+            <select id="select_controle">
+                <option selected disabled value="">Selecione o controle da empresa</option>
+                <option value="manual">Manual (papel)</option>
+                <option value="planilha">Planilha</option>
+                <option value="sistema">Sistema</option>
+            </select> <br><br>
+
+            <button class="button" onclick="calcular()">Calcular potencial</button> <br><br>
+
+            <div id="div_mensagem"></div>
+
+        </div>
+    </section>
+
+    <section id="contato">
+        <div class="contato-container">
+            <div class="left">
+                <h2>ENTRE EM CONTATO</h2>
+                <div class="form">
+                    <div class="input">
+                        <p>Nome:</p>
+                        <input type="text">
+                    </div>
+                     <div class="input">
+                        <p>Telefone:</p>
+                        <input type="text">
+                    </div>
+                     <div class="input">
+                        <p>Email:</p>
+                        <input type="text">
+                    </div>
+                     <div class="input">
+                        <p>Assunto:</p>
+                        <textarea class="input-maior" maxlength="300"></textarea>
+                    </div>
+                </div>
+
+                <button class="button">Enviar</button>
+            </div>
+
+            <div class="right">
+                <img class="image" src="assets/imgs/2.png" alt="">
+            </div>
+        </div>
+    </section>
 
     <footer>
         <p>&copy; CRAB 2026 - Todos os direitos reservados</p>
     </footer>
 </body>
 </html>
+
+<script>
+
+// Seleciona todos os links que começam com "#"
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+
+  // Adiciona um evento de clique em cada link
+  link.addEventListener('click', function(e) {
+
+    // Impede o comportamento padrão do navegador (pular direto)
+    e.preventDefault();
+
+    // Pega o valor do href do link (ex: "#contato")
+    const id = this.getAttribute('href').trim();
+
+    // Seleciona a seção correspondente no HTML
+    const target = document.querySelector(id);
+
+    // Verifica se a seção existe
+    if (target) {
+
+      // Define um espaço extra (altura do header fixo)
+      const offset = 100;
+
+      // Calcula a posição da seção na página, descontando o header
+      const top = target.offsetTop - offset;
+
+      // Faz o scroll suave até a posição calculada
+      window.scrollTo({
+        top: top,
+        behavior: 'smooth'
+      });
+    }
+  });
+});
+
+    function calcular() {
+
+    let pallets = Number(ipt_pallets.value);
+    let controle = select_controle.value;
+
+    if (controle == "") {
+
+        alert(`Selecione o controle`)
+        exibir.innerHTML = ''
+        
+    }
+        
+
+    if (pallets <= 0) {
+        alert("Digite um valor válido");
+        div_mensagem.innerHTML = "";
+        return;
+    }
+
+    let valorMedioPallet = 1000;
+    let valorEstoque = pallets * valorMedioPallet;
+
+    let taxaPerda = 0;
+
+    if (controle == 'manual') {
+        taxaPerda = 0.4;
+    } else if (controle == 'planilha') {
+        taxaPerda = 0.3;
+    } else {
+        taxaPerda = 0.15;
+    }
+
+    let perdaMensal = valorEstoque * taxaPerda;
+
+    let taxaReducao = 0.5; // Quanto noss produto vai diminuir de perda
+
+    let economiaMensal = perdaMensal * taxaReducao;
+    let economiaAnual = economiaMensal * 12;
+
+    div_mensagem.innerHTML = `
+        <h2 style="color:red;"> 
+        Você pode estar perdendo R$ ${perdaMensal.toLocaleString()} todos os meses
+        </h2><br>
+        
+        Com nosso sistema, você pode reduzir suas perdas em ate:
+        <b>R$ ${economiaMensal.toLocaleString()} por mês</b><br><br>
+
+        Isso representa uma economia de: <b>R$ ${economiaAnual.toLocaleString()} por ano</b>
+    `;
+}
+</script>
