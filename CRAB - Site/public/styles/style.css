@@ -187,7 +187,9 @@ body {
     box-sizing: border-box;
     min-height: 600px;
     background-color: #1b2c47;
+    
 }
+
 
 .about-container .left {
     max-width: 800px;
@@ -392,6 +394,7 @@ footer p {
     color: white;
 }
 
+
 .button {
     background-color: #f17524;
     padding: 12px 20px;         
@@ -406,6 +409,22 @@ footer p {
     font-weight: bold;
 }
 
+.texto .button {
+    align-self: center;
+    padding: 12px 40px;
+
+}
 .button:hover {
-    background-color: #ea580c;
+transform:scale(1.05);
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+.separacao-secao1 {
+    height: 30px;
+    background: linear-gradient(180deg, #1b2c47 0%, #ffffff 100%);
+}
+
+.separacao-secao2 {
+    height: 30px;
+    background: linear-gradient(180deg, #ffffff  0%, #1b2c47 100%);
 }
