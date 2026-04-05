@@ -1,0 +1,149 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    overflow: hidden;   /*Pata nao ficar com barra de rolagem */       
+}
+
+.principal-login {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+
+
+.esquerda-login {
+    width: 45vw;
+    height: 100vh;
+    background: #0f172a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.card-login {
+    width: 70%;
+    max-height: 90vh;           
+    padding: 35px 30px;         
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.4);
+    overflow-y: auto;           
+}
+
+
+.card-login h1 {
+    color: #ff7a00;
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.subtitulo {
+    color: #cbd5e1;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 15px;
+}
+
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin: 12px 0;
+}
+
+.campo label {
+    color: #94a3b8;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.campo input {
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #1e293b;
+    background: #020617;
+    color: white;
+    outline: none;
+    font-size: 16px;
+}
+
+.campo input:focus {
+    border: 1px solid #ff7a00;
+}
+
+
+.btn-cadastro {
+    margin-top: 20px;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #ff7a00, #ffb347);
+    color: #0f172a;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.3s;
+}
+
+.btn-cadastro:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 15px #ff7a00;
+}
+
+
+.ja-tenho-conta {
+    text-align: center;
+    margin-top: 20px;
+    color: #cbd5e1;
+    font-size: 14px;
+}
+
+.ja-tenho-conta a {
+    color: #ff7a00;
+    text-decoration: none;
+}
+
+
+.direita-login {
+    width: 55vw;
+    height: 100vh;
+    background-image: url("IMG-CADASTRO.jpeg");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.overlay {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(15,23,42,0.85), rgba(15,23,42,0.92));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 40px;
+}
+
+.overlay h1 {
+    font-size: 42px;
+    color: #ff7a00;
+    margin-bottom: 12px;
+}
+
+.overlay p {
+    color: #e2e8f0;
+    font-size: 18px;
+    max-width: 380px;
+}
