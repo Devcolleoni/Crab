@@ -62,6 +62,10 @@
                 mensagem.innerHTML = "Preencha todos os campos!";
                 mensagem.style.color = "red";
                 return;
+            } if (!user.includes("@") || !user.includes(".com")) {
+                mensagem.innerHTML = "Digite um e-mail válido!";
+                mensagem.style.color = "red";
+                return;
             }
 
             if (user == "Brandao@gmail.com" && senhaDigitada == "Brandao777") {

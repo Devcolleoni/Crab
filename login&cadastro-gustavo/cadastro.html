@@ -20,25 +20,25 @@
 
           <div class="campo">
             <label>CNPJ *</label>
-            <input type="text" placeholder="00.000.000/0000-00" maxlength="18">
+            <input  id = "CNPJ" type="text" placeholder="00.000.000/0000-00">
           </div>
 
           <div class="campo">
             <label>E-mail Corporativo *</label>
-            <input type="email" placeholder="admin@suempresa.com.br">
+            <input  id = "emailc" type="email" placeholder="admin@suempresa.com.br">
           </div>
 
           <div class="campo">
             <label>Senha *</label>
-            <input type="password" placeholder="Digite sua senha">
+            <input id="pass" type="password" placeholder="Digite sua senha">
           </div>
 
           <div class="campo">
             <label>Confirmar Senha *</label>
-            <input type="password" placeholder="Confirme sua senha">
+            <input id="conpass" type="password" placeholder="Confirme sua senha">
           </div>
 
-          <button type="button" class="btn-cadastro">CADASTRAR EMPRESA</button>
+          <a href="../CRAB - Site/public/home.html"><button onclick="cadastrar()" type="button" class="btn-cadastro">CADASTRAR EMPRESA</button></a>
         </form>
 
         <div class="ja-tenho-conta">
@@ -58,4 +58,44 @@
   </div>
 
 </body>
+<script>
+
+function cadastrar(params) {
+  Email = emailc.value;
+  Pass = Number(pass.value);
+  ConPass = Number(conpass.value);
+  CNPJ = Number(CNPJ.value);
+
+  if (Email == "" || Pass == "" || ConPass == "" || CNPJ == "") {
+    alert("Preencha todos os campos obrigatórios.");
+    return;
+  } else if (Pass !== ConPass) {
+    alert("As senhas não coincidem.");
+    return;
+  } else {
+    alert("Cadastro realizado com sucesso!");
+   
+  } if (!Email.includes("@") || !Email.includes(".com")) {
+    alert("Por favor, insira um e-mail válido.");
+    return;
+  } else if (isNaN(CNPJ) || CNPJ.length !== 14) {
+    alert("Por favor, insira um CNPJ válido (apenas números, 14 dígitos).");
+    return;
+  } if (Pass.length < 6) {
+    alert("A senha deve conter pelo menos 6 caracteres.");
+    return;
+  } if (Pass.length > 20) {
+    alert("A senha deve conter no máximo 20 caracteres.");
+    return;
+  } else {
+    alert("Cadastro realizado com sucesso!");
+  }
+
+
+
+}
+
+
+
+</script>
 </html>
