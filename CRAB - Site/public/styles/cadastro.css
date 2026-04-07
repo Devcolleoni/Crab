@@ -117,7 +117,7 @@ body {
 .direita-login {
     width: 55vw;
     height: 100vh;
-    background-image: url("IMG-CADASTRO.jpeg");
+    background-image: url("../assets/imgs/IMG-CADASTRO.jpeg");
     background-size: cover;
     background-position: center;
     position: relative;
