@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRAB Logística</title>
+    <title>CRAB Logística - Login</title>
     <link rel="stylesheet" href="login.css">
 </head>
-
 <body>
 
     <div class="principal-login">
@@ -38,6 +36,11 @@
                 <button class="btn-login" onclick="entrar()">Entrar</button>
 
                 <p id="mensagem"></p>
+                <div class="cadastro-link">
+                    <p>Não tem conta? 
+                        <a href="cadastro.html" class="link-cadastro">Cadastre-se</a>
+                    </p>
+                </div>
 
             </div>
         </div>
@@ -51,8 +54,9 @@
 
     </div>
 
-    <script>
-
+</body>
+</html>
+ <script>
         function entrar() {
 
             let user = usuario.value;
@@ -78,9 +82,4 @@
             }
 
         }
-
     </script>
-
-</body>
-
-</html>
