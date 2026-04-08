@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRAB Logística - Login</title>
     <link rel="stylesheet" href="styles/login.css">
 </head>
+
 <body>
 
     <div class="principal-login">
@@ -28,7 +30,7 @@
 
                 <div class="opcoes">
                     <label class="relembrar">
-                        <input type="checkbox"> Lembrar senha
+                        <input id="lembrar" type="checkbox"> Lembrar senha
                     </label>
                     <a href="#" class="esqueci">Esqueci a senha</a>
                 </div>
@@ -37,7 +39,7 @@
 
                 <p id="mensagem"></p>
                 <div class="cadastro-link">
-                    <p>Não tem conta? 
+                    <p>Não tem conta?
                         <a href="cadastro.html" class="link-cadastro">Cadastre-se</a>
                     </p>
                 </div>
@@ -55,31 +57,51 @@
     </div>
 
 </body>
+
 </html>
- <script>
-        function entrar() {
+<script>
+    function entrar() {
 
-            let user = usuario.value;
-            let senhaDigitada = senha.value;
+        let user = usuario.value;
+        let senhaDigitada = senha.value;
 
-            if (user == "" || senhaDigitada == "") {
-                mensagem.innerHTML = "Preencha todos os campos!";
-                mensagem.style.color = "red";
-                return;
-            } if (!user.includes("@") || !user.includes(".com")) {
-                mensagem.innerHTML = "Digite um e-mail válido!";
-                mensagem.style.color = "red";
-                return;
-            }
-
-            if (user == "Brandao@gmail.com" && senhaDigitada == "Brandao777") {
-                mensagem.innerHTML = "Login realizado com sucesso!";
-                mensagem.style.color = "green";
-                alert("Bem vindo " + user);
-            } else {
-                mensagem.innerHTML = "Usuário ou senha inválidos!";
-                mensagem.style.color = "red";
-            }
-
+        if (user == "" || senhaDigitada == "") {
+            mensagem.innerHTML = "Preencha todos os campos!";
+            mensagem.style.color = "red";
+            return;
+        } if (!user.includes("@") || !user.includes(".com")) {
+            mensagem.innerHTML = "Digite um e-mail válido!";
+            mensagem.style.color = "red";
+            return;
         }
-    </script>
+
+        if (user == "Brandao@gmail.com" && senhaDigitada == "Brandao777") {
+
+            if (lembrar.checked) {
+                localStorage.setItem("email", user);
+                //localStorage.setItem("senha", senhaDigitada);
+            } else {
+                localStorage.removeItem("email");
+                //localStorage.removeItem("senha");
+            }
+
+            mensagem.innerHTML = "Login realizado com sucesso!";
+            mensagem.style.color = "green";
+            alert("Bem vindo " + user);
+        } else {
+            mensagem.innerHTML = "Usuário ou senha inválidos!";
+            mensagem.style.color = "red";
+        }
+
+    }
+
+    /*Executa qnd a pagina termina de carregar */
+    
+    window.onload = function () {
+        if (localStorage.getItem("email")) {
+            usuario.value = localStorage.getItem("email");
+            senha.value = localStorage.getItem("senha");
+            lembrar.checked = true;
+        }
+    }
+</script>
