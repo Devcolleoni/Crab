@@ -20,18 +20,20 @@ body {
 }
 
 /* Header */
+
+
 #header .container {
     width: 100%;
-    height: 100px;
+    height: 80px;
     padding: 30px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     gap: 50px;
-    background-color: #1b2c47;
+    background-color: #152339;
     font-weight: 600;
     position: fixed;
-    border-bottom: 4px solid #f17524;
+    border-bottom: 2px solid #f17524;
     z-index: 1000;
 }
 
@@ -89,7 +91,7 @@ body {
 }
 
 .profile i {
-    font-size: 28px;
+    font-size: 28px;    
     transition: 0.3s;
 }
 
@@ -98,24 +100,54 @@ body {
 .banner {
     width: 100%;
     min-height: 500px; /* altura do Figma */
-    background: linear-gradient(rgba(27, 44, 71, 0.85), rgba(27, 44, 71, 0.85)),
+    background: linear-gradient(rgba(20, 34, 58, 0.88), rgba(20, 34, 58, 0.88)),
         url('../assets/imgs/4.png');
     background-size: cover;
     background-position: center;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
+    min-height: 100vh;
+}
+
+
+.badge {
+    display: inline-block;
+    border: 1px solid rgb(241, 117, 36, 0.6);   
+    background: rgba(241, 117, 36, 0.05);
+    border-radius: 50px;
+    padding: 6px 30px;
+    font-size:0.85rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: #f17524;
+    margin-bottom: 25px;
+    text-transform: uppercase;
 }
 
 .banner h1 {
-    font-size: clamp(28px, 4vw, 54px);
+    font-size: clamp(32px, 5vw, 64px);
+    font-family: 'Poppins', sans-serif;
     font-weight: 800;
     color: white;
+    line-height: 1.1;
+
+}
+
+.banner p {
+    color: rgba(255,255,255,0.85);
+    font-size: clamp(16px, 1.2vw, 20px);
+    margin-top: 20px;
+    max-width: 700px;
+    line-height: 1.5;
+    margin-bottom: 40px;
+
 }
 
 .banner span {
-    color: #f17524;
+    color: hsl(24, 88%, 54%);
 }
 
 /* Home container */
@@ -130,6 +162,7 @@ body {
     box-sizing: border-box;
     min-height: 600px;
     margin-top: 0; /* banner já ocupa espaço */
+    
 }
 
 .left {
@@ -394,6 +427,12 @@ footer p {
     color: white;
 }
 
+.banner-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+}
 
 .button {
     background-color: #f17524;
@@ -408,6 +447,14 @@ footer p {
     font-size: 16px;           
     font-weight: bold;
 }
+
+.button.transparente {
+    background-color: rgba(255, 255, 255, 0.1); 
+    border-color: rgba(255, 255, 255, 0.3);    
+    color: white;
+    backdrop-filter: blur(8px);           
+}
+
 
 .texto .button {
     align-self: center;
