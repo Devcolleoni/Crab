@@ -199,7 +199,7 @@ body {
         width: 100%;
         max-width: 550px;
         height: 550px;
-        border-left: 8px solid rgba(20, 34, 58, 0.88);
+        border-left: 8px solid #1b2c47;
         border-radius: 30px;
         object-fit: cover;
     }
