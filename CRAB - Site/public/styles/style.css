@@ -99,7 +99,6 @@ body {
 
 .banner {
     width: 100%;
-    min-height: 500px; /* altura do Figma */
     background: linear-gradient(rgba(20, 34, 58, 0.88), rgba(20, 34, 58, 0.88)),
         url('../assets/imgs/4.png');
     background-size: cover;
@@ -152,61 +151,104 @@ body {
 
 /* Home container */
 
-.home-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly; 
-    gap: 2.5%; /* proporcional à tela */
-    width: 100%;
-    padding: 3%; /* proporcional */
-    box-sizing: border-box;
-    min-height: 600px;
-    margin-top: 0; /* banner já ocupa espaço */
+    .home-container {
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center; 
+        gap: 80px; 
+        padding: 80px 20px;
+        min-height: 100vh;
+        
+    }
+
+
+
+    .texto {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        
+    }
+
+    .texto h2 {
+        font-size: clamp(32px, 5vw, 54px);
+        color: #1b2c47;
+        font-weight: 800;
+        margin: 0 0 20px 0;
+        
+    }
+
+    .texto p span {
+        color: #070300;
+        font-weight: 700;
+    }
+
+    .texto p {
+        font-size: 20px;
+        text-align: left;
+        line-height: 1.6;
+        color: #4a4a4a;
+        font-weight: 550px;
+        
+
+    }
+
+    .home-container .image {
+        width: 100%;
+        max-width: 550px;
+        height: 550px;
+        border-left: 8px solid rgba(20, 34, 58, 0.88);
+        border-radius: 30px;
+        object-fit: cover;
+    }
+
+
+    .beneficios {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-top: 30px 0;
+    }
+
+    .beneficios .item{
+        font-weight: 600;
+        color:#1b2c47 ;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .item .badge {
+        margin-bottom: 0;
+        border-radius: 8px;
+        padding: 7px 5px;
+    }
+
+    .item-titulo {
+        font-weight: 700;
+        color: #1b2c47;
+        font-size: 16px;
+    }
     
-}
+    .item-descricao {
+        font-size: 13px;
+        color: #666;
+        font-weight: 400;
+        margin-top: 2px;
+    }
 
-.left {
-    max-width: 800px;
-}
+    .item-text {
+        display: flex;
+        flex-direction: column;
+    }
 
-.right {
-    max-width: 550px;
-}
-
-.texto {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
-.texto h2 {
-    font-size: clamp(28px, 5vw, 54px);
-    color: #1b2c47;
-    font-weight: 800;
-}
-
-.texto span {
-    color: #f17524;
-    font-weight: 600;
-}
-
-.texto p {
-    font-size: clamp(16px, 2vw, 22px);
-    text-align: justify;
-    line-height: 1.7;
-    color: black;
-    font-weight: 600;
-}
-
-
-.home-container .image {
-    width: 100%;
-    max-width: 550px;
-    height: 720px;
-    border-left: 8px solid #f17524;
-    border-radius: 20px;
-    object-fit: cover;
-}
+    .item .badge img {
+        width: 22px;
+        height: 22px;
+        background-size: cover;
+    }
 
 /* About container */
 
@@ -222,6 +264,7 @@ body {
     background-color: #1b2c47;
     
 }
+
 
 
 .about-container .left {
@@ -432,6 +475,11 @@ footer p {
     gap: 15px;
     justify-content: center;
     margin-top: 30px;
+}
+
+.conheca-button {
+    margin-top: 40px;
+    align-self: flex-start;
 }
 
 .button {
