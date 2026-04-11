@@ -5,9 +5,9 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Montserrat", sans-serif;
     height: 100vh;
-    overflow: hidden;   /*Pata nao ficar com barra de rolagem */       
+    overflow: hidden;   /*Para nao ficar com barra de rolagem */       
 }
 
 .principal-login {
@@ -40,7 +40,7 @@ body {
 
 
 .card-login h1 {
-    color: #ff7a00;
+    color: #f17524;
     font-size: 32px;
     text-align: center;
     margin-bottom: 8px;
@@ -77,7 +77,7 @@ body {
 }
 
 .campo input:focus {
-    border: 1px solid #ff7a00;
+    border: 1px solid #f17524;
 }
 
 
@@ -86,8 +86,8 @@ body {
     padding: 14px;
     border: none;
     border-radius: 10px;
-    background: linear-gradient(135deg, #ff7a00, #ffb347);
-    color: #0f172a;
+    background: #f17524;
+    color: white;
     font-weight: bold;
     font-size: 16px;
     cursor: pointer;
@@ -97,7 +97,6 @@ body {
 
 .btn-cadastro:hover {
     transform: scale(1.05);
-    box-shadow: 0px 0px 15px #ff7a00;
 }
 
 
@@ -109,7 +108,7 @@ body {
 }
 
 .ja-tenho-conta a {
-    color: #ff7a00;
+    color: #f17524;
     text-decoration: none;
 }
 
@@ -137,13 +136,13 @@ body {
 }
 
 .overlay h1 {
-    font-size: 42px;
-    color: #ff7a00;
-    margin-bottom: 12px;
+    font-size: 40px;
+    color: #f17524;
+    margin-bottom: 10px;
 }
 
 .overlay p {
-    color: #e2e8f0;
+    color: #94a3b8;
     font-size: 18px;
-    max-width: 380px;
+    max-width: 400px;
 }
