@@ -1,73 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/style.css">
-    <link rel="stylesheet" href="../styles/dashboard.css">
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <title>CRAB - Configurações</title>
+    <link rel="stylesheet" href="../styles/dashboard.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
-  <div id="header">
-        <div class="container">
-            <div class="start">
-                 <a class="logo" href="#home">CRAB</a>
-                <p>Bem Vindo(a), <span>Usuário</span></p>
-            </div>
-           
-            <ul class="navbar">
-            <li><a href="../home.html">Ínicio</a></li>
-            <li><a href="dashboard.html">Painel</a></li>
-            <li><a href="configuração.html">Configurações</a></li>
-            </ul>
-            
-            <div class="end">
-                <a href="ajuda.html">Ajuda</a>
-                <div class="profile-account">
-                    <a href="../login.html">Sair</a>
+
+   
+    <div class="sidebar">
+        <div class="logo">
+            <span>CRAB</span>
+        </div>
+        <div class="user-info">
+            <p>Bem-vindo(a), <strong>Usuário</strong></p>
+        </div>
+
+        <nav class="menu">
+            <a href="../home.html"><i class="bi bi-house"></i> Início</a>
+            <a href="dashboard.html"><i class="bi bi-speedometer2"></i> Painel</a>
+            <a href="configuração.html" class="active"><i class="bi bi-gear"></i> Configurações</a>
+            <a href="ajuda.html"><i class="bi bi-question-circle"></i> Ajuda</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="../login.html">Sair <i class="bi bi-box-arrow-right"></i></a> <!-- Puxa icones guys -->
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="main-content">
+        <header>
+            <h1>Configurações</h1>
+            <div class="data">11 de abril de 2026</div>
+        </header>
+
+        <div class="config-wrapper">
+            <div class="config-card">
+                <div class="config-header">
                     <i class="bi bi-person-circle"></i>
+                    <div>
+                        <h2>Perfil do Usuário</h2>
+                        <p>Gerencie suas informações pessoais e de acesso</p>
+                    </div>
+                </div>
+
+                <div class="config-form">
+                    <div class="campo">
+                        <label for="nomeUsuario">Usuário</label>
+                        <input type="text" id="nomeUsuario" placeholder="Seu nome de usuário">
+                    </div>
+
+                    <div class="campo">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="seu@email.com">
+                    </div>
+
+                    <div class="campo">
+                        <label for="senhaAtual">Senha Atual</label>
+                        <input type="password" id="senhaAtual" placeholder="Digite sua senha atual">
+                    </div>
+
+                    <div class="campo">
+                        <label for="novaSenha">Nova Senha</label>
+                        <input type="password" id="novaSenha" placeholder="Digite a nova senha">
+                    </div>
+
+                    <div class="campo">
+                        <label for="confirmarSenha">Confirmar Nova Senha</label>
+                        <input type="password" id="confirmarSenha" placeholder="Confirme a nova senha">
+                    </div>
+
+                    <button class="btn-salvar" onclick="salvarAlteracoes()">
+                        <i class="bi bi-check2-circle"></i>
+                        Salvar Alterações
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-<div class="principal-login">
+    <script>
+        function salvarAlteracoes() {
+            alert("Alterações salvas com sucesso! ✅");
+          
+        }
+    </script>
 
-        <div class="esquerda-perfil">
-            <div class="card-perfil">
-
-                <h1>Perfil</h1>
-
-                <div class="campo">
-                    <label>Usuário</label>
-                    <input type="text" id="usuario" placeholder="Digite seu usuário">
-                </div>
-
-                  <div class="campo">
-                    <label>Email</label>
-                    <input type="text" id="email" placeholder="Digite seu email">
-                </div>
-
-                <div class="campo">
-                    <label>Senha</label>
-                    <input type="password" id="senha" placeholder="Digite sua senha">
-                </div>
-
-
-                <button class="btn-login" onclick="">Salvar Alterações</button>
-
-            </div>
-        </div>
-
-        <div class="direita-perfil">
-            <div class="overlay">
-                <h1>Logística Inteligente</h1>
-                <p>Controle, eficiência e inovação para sua operação</p>
-            </div>
-        </div>
-
-    </div>
-    
 </body>
 </html>

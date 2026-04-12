@@ -1,73 +1,137 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/style.css">
-    <link rel="stylesheet" href="../styles/dashboard.css">
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <title>CRAB - Ajuda</title>
+    <link rel="stylesheet" href="../styles/dashboard.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        .support-contact a {
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
 </head>
 <body>
-  <div id="header">
-        <div class="container">
-            <div class="start">
-                 <a class="logo" href="#home">CRAB</a>
-                <p>Bem Vindo(a), <span>Usuário</span></p>
-            </div>
-           
-            <ul class="navbar">
-            <li><a href="../home.html">Ínicio</a></li>
-            <li><a href="dashboard.html">Painel</a></li>
-            <li><a href="configuração.html">Configurações</a></li>
-            </ul>
-            
-            <div class="end">
-                <a href="ajuda.html">Ajuda</a>
-                <div class="profile-account">
-                    <a href="../login.html">Sair</a>
-                    <i class="bi bi-person-circle"></i>
-                </div>
-            </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <span>CRAB</span>
+        </div>
+        <div class="user-info">
+            <p>Bem-vindo(a), <strong>Usuário</strong></p>
+        </div>
+
+        <nav class="menu">
+            <a href="../home.html"><i class="bi bi-house"></i> Início</a>
+            <a href="dashboard.html"><i class="bi bi-speedometer2"></i> Painel</a>
+            <a href="configuração.html"><i class="bi bi-gear"></i> Configurações</a>
+            <a href="ajuda.html" class="active"><i class="bi bi-question-circle"></i> Ajuda</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="../login.html">Sair <i class="bi bi-box-arrow-right"></i></a>
         </div>
     </div>
 
-<div class="principal-suporte">
 
-        <div class="esquerda-suporte">
-            <div class="card-suporte">
+    <div class="main-content">
+        <header>
+            <h1>Central de Ajuda</h1>
+            <div class="data">11 de abril de 2026</div>
+        </header>
 
-                <h1>Fale com o Suporte</h1>
+        <div class="help-wrapper">
 
-                <div class="campo">
-                    <label>Usuário</label>
-                    <input type="text" id="usuario" placeholder="Digite seu usuário">
+            <!-- Card Principal de Busca -->
+            <div class="help-search-card">
+                <h2>Como podemos ajudar você hoje?</h2>
+                <div class="search-box">
+                    <i class="bi bi-search"></i>
+                    <input type="text" id="buscaAjuda" placeholder="Digite sua dúvida">
                 </div>
-
-                  <div class="campo">
-                    <label>Email</label>
-                    <input type="text" id="email" placeholder="Digite seu email">
-                </div>
-
-                <div class="campo">
-                    <label>Assunto</label>
-                    <input type="text" id="assunto" placeholder="Ex... Problemas com a Dashboard">
-                </div>
-
-
-                <button class="btn-login" onclick="">Enviar</button>
-
             </div>
-        </div>
 
-        <div class="direita-suporte">
-            <div class="overlay">
-                <h1>Logística Inteligente</h1>
-                <p>Controle, eficiência e inovação para sua operação</p>
+            <!-- Seções de Ajuda -->
+            <div class="help-sections">
+                
+                <div class="help-card">
+                    <div class="help-icon">
+                        <i class="bi bi-boxes"></i>
+                    </div>
+                    <h3>Abastecimento Diário</h3>
+                    <p>Como registrar entradas, saídas e ocorrências de abastecimento.</p>
+                    <a href="#" class="help-link">Ver tutorial →</a>
+                </div>
+
+                <div class="help-card">
+                    <div class="help-icon">
+                        <i class="bi bi-graph-up"></i>
+                    </div>
+                    <h3>Relatórios e Gráficos</h3>
+                    <p>Entenda os gráficos de fluxo e taxa de abastecimento.</p>
+                    <a href="#" class="help-link">Ver tutorial →</a>
+                </div>
+
+                <div class="help-card">
+                    <div class="help-icon">
+                        <i class="bi bi-person-gear"></i>
+                    </div>
+                    <h3>Configurações de Perfil</h3>
+                    <p>Alterar senha, email e dados do usuário.</p>
+                    <a href="#" class="help-link">Ver tutorial →</a>
+                </div>
+
+                <div class="help-card">
+                    <div class="help-icon">
+                        <i class="bi bi-exclamation-triangle"></i>
+                    </div>
+                    <h3>Ocorrências e Problemas</h3>
+                    <p>Como registrar faltas, atrasos ou reabastecimentos.</p>
+                    <a href="#" class="help-link">Ver tutorial →</a>
+                </div>
             </div>
-        </div>
 
-</div>
-    
+            <!-- FAQ Rápido -->
+            <div class="faq-section"> 
+                <h2>Perguntas Frequentes</h2>
+                <div class="faq-item">
+                    <details>
+                        <summary>O que sao esses dados?</summary>
+                        <p>Seu dash.</p>
+                    </details>
+                </div>
+                <div class="faq-item">
+                    <details>
+                        <summary>Como visualizar o relatório do dia?</summary>
+                        <p>No dashboard.</p>
+                    </details>
+                </div>
+                <div class="faq-item">
+                    <details>
+                        <summary>Esqueci minha senha, o que fazer?</summary>
+                        <p>Como você esqueceu algo que você criou??</p>
+                    </details>
+                </div>
+            </div>
+
+      
+            <div class="support-contact">
+                <h3>Ainda precisa de ajuda?</h3>
+                <p>Entre em contato com nossa equipe de suporte.</p>
+                <a href="mailto:gustavo.carvalho@sptech.school?subject=Suporte%20CRAB&body=Olá,%20estou%20com%20uma%20dúvida%20no%20sistema%20CRAB.">
+                    <button class="btn-contato">
+                        <i class="bi bi-envelope"></i>
+                        Enviar Mensagem para Suporte 
+                    </button>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
 </body>
 </html>
