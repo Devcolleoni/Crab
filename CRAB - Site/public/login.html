@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRAB Logística - Login</title>
     <link rel="stylesheet" href="styles/login.css">
+    <a href=></a>
 </head>
 
 <body>
@@ -88,6 +89,8 @@
             mensagem.innerHTML = "Login realizado com sucesso!";
             mensagem.style.color = "green";
             alert("Bem vindo " + user);
+            
+            window.location.href = `../public/Dashboard - HTML/dashboard.html`;
          
         } else {
             mensagem.innerHTML = "Usuário ou senha inválidos!";

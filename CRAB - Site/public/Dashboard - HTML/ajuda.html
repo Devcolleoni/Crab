@@ -6,22 +6,14 @@
     <title>CRAB - Ajuda</title>
     <link rel="stylesheet" href="../styles/dashboard.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-
-    <style>
-        .support-contact a {
-            text-decoration: none;
-            color: inherit;
-        }
-    </style>
 </head>
 <body>
 
-    <!-- Sidebar -->
     <div class="sidebar">
         <div class="logo">
             <span>CRAB</span>
         </div>
-        <div class="user-info">
+        <div class="info-usuario">
             <p>Bem-vindo(a), <strong>Usuário</strong></p>
         </div>
 
@@ -29,88 +21,75 @@
             <a href="../home.html"><i class="bi bi-house"></i> Início</a>
             <a href="dashboard.html"><i class="bi bi-speedometer2"></i> Painel</a>
             <a href="configuração.html"><i class="bi bi-gear"></i> Configurações</a>
-            <a href="ajuda.html" class="active"><i class="bi bi-question-circle"></i> Ajuda</a>
+            <a href="ajuda.html" class="ativo"><i class="bi bi-question-circle"></i> Ajuda</a>
         </nav>
 
-        <div class="sidebar-footer">
+        <div class="rodape-sidebar">
             <a href="../login.html">Sair <i class="bi bi-box-arrow-right"></i></a>
         </div>
     </div>
 
-
-    <div class="main-content">
-        <header>
+    <div class="conteudo-principal">
+        <div class="cabecalho">
             <h1>Central de Ajuda</h1>
             <div class="data">11 de abril de 2026</div>
-        </header>
+        </div>
 
-        <div class="help-wrapper">
+        <div class="envoltorio-ajuda">
 
-            <!-- Card Principal de Busca -->
-            <div class="help-search-card">
+            <div class="cartao-busca-ajuda">
                 <h2>Como podemos ajudar você hoje?</h2>
-                <div class="search-box">
+                <div class="caixa-busca">
                     <i class="bi bi-search"></i>
                     <input type="text" id="buscaAjuda" placeholder="Digite sua dúvida">
                 </div>
             </div>
 
-            <!-- Seções de Ajuda -->
-            <div class="help-sections">
-                
-                <div class="help-card">
-                    <div class="help-icon">
-                        <i class="bi bi-boxes"></i>
-                    </div>
+            <div class="secoes-ajuda">
+                <div class="cartao-ajuda">
+                    <div class="icone-ajuda"><i class="bi bi-boxes"></i></div>
                     <h3>Abastecimento Diário</h3>
-                    <p>Como registrar entradas, saídas e ocorrências de abastecimento.</p>
-                    <a href="#" class="help-link">Ver tutorial →</a>
+                    <p>Não tive ideia do que colocar aqui</p>
+                    <a href="#" class="link-ajuda">Saiba mais →</a>
                 </div>
 
-                <div class="help-card">
-                    <div class="help-icon">
-                        <i class="bi bi-graph-up"></i>
-                    </div>
+                <div class="cartao-ajuda">
+                    <div class="icone-ajuda"><i class="bi bi-graph-up"></i></div>
                     <h3>Relatórios e Gráficos</h3>
                     <p>Entenda os gráficos de fluxo e taxa de abastecimento.</p>
-                    <a href="#" class="help-link">Ver tutorial →</a>
+                    <a href="#" class="link-ajuda">Chame a equipe →</a>
                 </div>
 
-                <div class="help-card">
-                    <div class="help-icon">
-                        <i class="bi bi-person-gear"></i>
-                    </div>
+                <div class="cartao-ajuda">
+                    <div class="icone-ajuda"><i class="bi bi-person-gear"></i></div>
                     <h3>Configurações de Perfil</h3>
                     <p>Alterar senha, email e dados do usuário.</p>
-                    <a href="#" class="help-link">Ver tutorial →</a>
+                    <a href="#" class="link-ajuda">va na sessao config →</a>
                 </div>
 
-                <div class="help-card">
-                    <div class="help-icon">
-                        <i class="bi bi-exclamation-triangle"></i>
-                    </div>
+                <div class="cartao-ajuda">
+                    <div class="icone-ajuda"><i class="bi bi-exclamation-triangle"></i></div>
                     <h3>Ocorrências e Problemas</h3>
-                    <p>Como registrar faltas, atrasos ou reabastecimentos.</p>
-                    <a href="#" class="help-link">Ver tutorial →</a>
+                    <p>Como Funciona o Registro do sensor</p>
+                    <a href="#" class="link-ajuda">O sensor le os dados e ja plota</a>
                 </div>
             </div>
 
-            <!-- FAQ Rápido -->
-            <div class="faq-section"> 
+            <div class="secao-faq">
                 <h2>Perguntas Frequentes</h2>
-                <div class="faq-item">
+                <div class="item-faq">
                     <details>
                         <summary>O que sao esses dados?</summary>
                         <p>Seu dash.</p>
                     </details>
                 </div>
-                <div class="faq-item">
+                <div class="item-faq">
                     <details>
                         <summary>Como visualizar o relatório do dia?</summary>
                         <p>No dashboard.</p>
                     </details>
                 </div>
-                <div class="faq-item">
+                <div class="item-faq">
                     <details>
                         <summary>Esqueci minha senha, o que fazer?</summary>
                         <p>Como você esqueceu algo que você criou??</p>
@@ -118,12 +97,11 @@
                 </div>
             </div>
 
-      
-            <div class="support-contact">
+            <div class="contato-suporte">
                 <h3>Ainda precisa de ajuda?</h3>
                 <p>Entre em contato com nossa equipe de suporte.</p>
                 <a href="mailto:gustavo.carvalho@sptech.school?subject=Suporte%20CRAB&body=Olá,%20estou%20com%20uma%20dúvida%20no%20sistema%20CRAB.">
-                    <button class="btn-contato">
+                    <button class="botao-contato">
                         <i class="bi bi-envelope"></i>
                         Enviar Mensagem para Suporte 
                     </button>
