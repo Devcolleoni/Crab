@@ -129,7 +129,7 @@ header h1 {
     font-weight: bold;
 }
 
-/* Gráficos */
+
 .charts {
     display: flex;
     gap: 25px;
@@ -154,7 +154,7 @@ header h1 {
     height: 260px;
 }
 
-/* Relatório */
+
 .reportar {
     background: white;
     border-radius: 16px;
@@ -206,7 +206,7 @@ th {
     color: #856404;
 }
 
-/* ====================== CONFIGURAÇÕES - ESTILO STARTUP ====================== */
+
 
 .config-wrapper {
     max-width: 720px;
@@ -301,7 +301,7 @@ th {
     box-shadow: 0 12px 25px rgba(241, 117, 36, 0.35);
 }
 
-/* Responsividade para telas menores */
+
 @media (max-width: 768px) {
     .config-card {
         padding: 35px 25px;
@@ -314,7 +314,7 @@ th {
     }
 }
 
-/* ====================== AJUDA - CENTRAL DE SUPORTE ====================== */
+
 
 .help-wrapper {
     max-width: 1100px;
@@ -366,7 +366,7 @@ th {
     box-shadow: 0 0 0 4px rgba(241, 117, 36, 0.15);
 }
 
-/* Cards de Seções */
+
 .help-sections {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -414,7 +414,7 @@ th {
     text-decoration: underline;
 }
 
-/* FAQ */
+
 .faq-section {
     background: white;
     padding: 40px;
@@ -447,7 +447,7 @@ th {
     line-height: 1.6;
 }
 
-/* Contato */
+
 .support-contact {
     text-align: center;
     background: white;
