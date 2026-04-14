@@ -398,10 +398,8 @@ body {
     gap: 60px; 
     padding: 100px 20px;
     min-height: 100vh;
-    background-color: #ffffff;
+        
 }
-
-.simulador-container img
 
 
 #simulador {
@@ -411,6 +409,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    background: linear-gradient(rgba(20, 34, 58, 0.88), rgba(20, 34, 58, 0.88)),
+        url('../assets/imgs/4.png') no-repeat center/cover; 
 }
 
 #simulador .container {
