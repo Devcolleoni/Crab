@@ -32,8 +32,8 @@ CREATE TABLE sensor(
 	id_sensor INT PRIMARY KEY AUTO_INCREMENT,
     dt_instalacao DATE,
 	statuss VARCHAR(10),
-    CONSTRAINT ch_status
-		CHECK (status IN ('Ativo','Inativo','Manutenção'))
+    CONSTRAINT ch_statuss
+		CHECK (statuss IN ('Ativo','Inativo','Manutenção'))
     );
     
 
