@@ -198,7 +198,7 @@
                 </div>
                 </div>
 
-                <button class="button">Enviar</button>
+                <button class="button" onclick="enviar()">Enviar</button>
             </div>
 
             <div class="right">
@@ -297,5 +297,11 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 
         Isso representa uma economia de: <b>R$ ${economiaAnual.toLocaleString()} por ano</b>
     `;
+}
+
+function enviar() {
+
+    alert('Olá mensagem enviada com sucesso, iremos analizar a mensagem enviada e entreremos em contato!')
+    
 }
 </script>
