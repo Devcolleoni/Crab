@@ -1,0 +1,201 @@
+/* Remove espaçamentos padrão do navegador e padroniza o tamanho dos elementos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+ 
+.sidebar {
+    width: 260px;
+    background: #0f172a;
+    color: white;
+    padding: 30px 20px;
+    position: fixed;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar .logo {
+    font-size: 32px;
+    font-weight: bold;
+    color: #f17524;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.sidebar .info-usuario {
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.sidebar .info-usuario p {
+    font-size: 15px;
+    color: #94a3b8;
+}
+
+.sidebar .menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    color: #cbd5e1;
+    text-decoration: none;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    transition: all 0.3s;
+}
+
+
+.rodape-sidebar {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid #334155;
+}
+
+.rodape-sidebar a {
+    color: #94a3b8;
+    text-decoration: none;
+}
+
+
+.conteudo-principal {
+    margin-left: 260px;
+    padding: 30px;
+    width: 100%;
+}
+
+
+/* Cor de fundo da página e espaçamento geral */
+
+
+body {
+  background-color: #f5f5f4;
+}
+ 
+/* Limita a largura do conteúdo e centraliza na tela */
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding-top: 30px;
+
+}
+ 
+/* Cabeçalho da seção */
+.cabecalho {
+  border-bottom: 2px solid #e0e0de;
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+}
+ 
+.cabecalho h2 {
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #111;
+}
+ 
+.cabecalho p {
+  font-size: 12px;
+  color: #aaa;
+  margin-top: 4px;
+}
+ 
+/* Contador de cadastros pendentes */
+.badge {
+  background-color: #111;
+  color: #fff;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-left: 8px;
+}
+
+/* Cada notificação <details> */
+details {
+  background-color: #ffffff;
+  border: 1.5px solid #e5e5e2;
+  border-left: 3px solid #111;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+ 
+/* Cabeçalho da notificação <summary> */
+summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  list-style: none; /* Remove a setinha padrão do navegador */
+}
+ 
+ 
+/* Círculo com as iniciais do usuário */
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #ebebea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+  flex-shrink: 0; /* Impede que o avatar encolha */
+}
+
+ 
+.info strong {
+  display: block;
+  font-size: 14px;
+  color: #111;
+}
+ 
+.info span {
+  font-size: 12px;
+  color: #aaa;
+}
+ 
+ 
+/* Seta indicando aberto/fechado */
+.seta {
+  font-size: 10px;
+  color: #ccc;
+  transition: transform 0.2s;
+}
+ 
+/* Rotaciona a seta quando o details está aberto */
+details[open] .seta {
+  transform: rotate(180deg);
+}
+ 
+.corpo {
+  border-top: 1px solid #f0f0ee;
+  padding: 16px;
+}
+ 
+.dados {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 20px;
+  margin-bottom: 16px;
+}
+ 
+.campo label {
+  display: block;
+  font-size: 10px;
+  color: #bbb;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+}
+ 
+.campo span {
+  font-size: 13px;
+  color: #222;
+}
+ 
