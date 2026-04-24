@@ -198,4 +198,46 @@ details[open] .seta {
   font-size: 13px;
   color: #222;
 }
- 
+
+/* Botão de solicitação */
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.buttons button {
+  width: 100px;
+  border: none;
+  padding: 15px;
+  border-radius: 15px;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+
+  transition: all 0.3s;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.buttons button:hover {
+  transform: scale(1.05);
+}
+
+.button button i {
+  font-size: 15px;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.button .accept {
+  background-color: greenyellow;
+}
+
+.button .reject {
+  background-color: red;
+}
