@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body class="fundo-adduser">
     <div class="sidebar">
         <div class="logo">
@@ -29,59 +31,142 @@
             <a href="../login.html">Sair <i class="bi bi-box-arrow-right"></i></a>
         </div>
     </div>
-        <div class="envoltorio-config">
-            <div class="cartao-config">
-                <div class="cabecalho-adduser">
-                    <i class="bi bi-person-plus-fill"></i>
-                    <div>
-                        <h2>Adicionar Novo Usuário</h2>
-                        <p>Crie um usuário novinho em folha.</p>
-                    </div>
+    <div class="envoltorio-config">
+        <div class="cartao-config">
+            <div class="cabecalho-adduser">
+                <i class="bi bi-person-plus-fill"></i>
+                <div>
+                    <h2>Adicionar Novo Usuário</h2>
+                    <p>Crie um usuário novinho em folha.</p>
+                </div>
+            </div>
+
+            <div class="config-form">
+                <div class="campo">
+                    <label for="nomeUsuario">Nome de Usuário*</label>
+                    <input type="text" id="ipt_nomeUsuario" placeholder="Nome de Usuário">
                 </div>
 
-                <div class="config-form">
-                    <div class="campo">
-                        <label for="nomeUsuario">Nome de Usuário*</label>
-                        <input type="text" id="ipt_nomeUsuario" placeholder="Nome de Usuário">
-                    </div>
+                <div class="campo">
+                    <label for="novaSenha">CPF*</label>
+                    <input type="text" id="ipt_cpf" placeholder="123.456.789-10" oninput="validarCPF()" maxLength=14>
+                    <div class="erro" id="div_cpf"></div>
+                </div>
 
-                    <div class="campo">
-                        <label for="novaSenha">CPF*</label>
-                        <input type="text" id="ipt_cpf" placeholder="123.456.789-10">
-                    </div>
+                <div class="campo">
+                    <label for="email">Email*</label>
+                    <input type="email" id="ipt_email" placeholder="seu@email.com" oninput="validarEmail()">
+                    <div class="erro" id="div_email"></div>
+                </div>
 
-                    <div class="campo">
-                        <label for="email">Email*</label>
-                        <input type="email" id="ipt_email" placeholder="seu@email.com">
-                    </div>
+                <div class="campo">
+                    <label for="senhaAtual">Senha*</label>
+                    <input type="password" id="ipt_senha" placeholder="Digite sua senha" oninput="validarSenha()">
+                    <div class="erro" id="div_senha"></div>
+                </div>
 
-                    <div class="campo">                      
-                        <label for="senhaAtual">Senha*</label>
-                        <input type="password" id="ipt_senha" placeholder="Digite sua senha">
-                    </div>
+                <div class="campo">
+                    <label for="confirmarSenha">Confirmar Senha*</label>
+                    <input type="password" id="ipt_confirmarSenha" placeholder="Confirme a senha"
+                        oninput="validarConfSenha()">
+                        <div class="erro" id="div_confSenha"></div>
+                </div>
+                <div class="botoes-adduser">
 
-                    <div class="campo">
-                        <label for="confirmarSenha">Confirmar Senha*</label>
-                        <input type="password" id="ipt_confirmarSenha" placeholder="Confirme a senha">
-                    </div>
-                    <div class="botoes-adduser">
+                    <button class="botao-adduser" onclick="adicionarUsuario()">
+                        Adicionar
+                    </button>
 
-                        <button class="botao-adduser" onclick="adicionarUsuario()">
-                            Adicionar
-                        </button>
-
-                        <button class="botao-adduser transparente" onclick="cancelar()">
-                            Cancelar
-                        </button>
-                    </div>
+                    <button class="botao-adduser transparente" onclick="cancelar()">
+                        Cancelar
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+    </div>
+    
 </body>
+
 </html>
 <script>
-    function adicionarUsuario(){
+    let numeros = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    let especiais = ["!", "@", "#", "$", "%", "&", "*"];
+
+    let validacaoSenha = false;
+    let validacaoConfSenha = false;
+    let validacaoEmail = false;
+    let validacaoCPF = false;
+
+    function validarSenha() {
+        let senha = ipt_senha.value;
+
+        let temEspecial = false;
+        let temNumero = false;
+        let temQuantidade = senha.length >= 8;
+        
+
+        for (let i = 0; i < senha.length; i++) {
+            let letraDigitada = senha[i]
+            if (numeros.includes(letraDigitada)) {
+                temNumero = true;
+            }
+            if (especiais.includes(letraDigitada)) {
+                temEspecial = true;
+            }
+        }
+        div_senha.innerHTML = "";
+        if (temNumero == false) {
+            div_senha.innerHTML += `Sua senha precisa ter pelo menos um número <br>`;
+        }  if (temEspecial == false) {
+            div_senha.innerHTML += `Sua senha precisa ter pelo menos um caractere especial <br>`;
+        }  if (temQuantidade == false) {
+            div_senha.innerHTML += `Sua senha precisa ter pelo menos 8 caracteres`;
+        }
+            if (temNumero && temEspecial && temQuantidade) {
+                validacaoSenha = true;
+            } else {
+                validacaoSenha = false;
+            }
+    }
+    function validarConfSenha() {
+        let senha = ipt_senha.value;
+        let confSenha = ipt_confirmarSenha.value;
+
+        if (senha != confSenha) {
+            div_confSenha.innerHTML = `As senhas não coincidem`;
+            validacaoConfSenha = false;
+        } else {
+            div_confSenha.innerHTML = "";
+            validacaoConfSenha = true;
+        }
+    }
+
+    function validarEmail() {
+        let email = ipt_email.value;
+
+        if (email.includes("@") && email.includes(".")) {
+            div_email.innerHTML = "";
+            validacaoEmail = true;
+        } else {
+            div_email.innerHTML = `Digite um email válido`;
+            validacaoEmail = false;
+        }
+    }
+    
+    function validarCPF() {
+        let cpf = ipt_cpf.value;
+
+        if (cpf.length == 14) {
+            div_cpf.innerHTML = "";
+            validacaoCPF = true;
+        } else {
+            div_cpf.innerHTML = `Digite um CPF válido`;
+            validacaoCPF = false;
+        }
+    }
+
+    function adicionarUsuario() {
 
         let nomeUsuario = ipt_nomeUsuario.value;
         let cpf = ipt_cpf.value;
@@ -89,15 +174,23 @@
         let senha = ipt_senha.value;
         let confirmarSenha = ipt_confirmarSenha.value;
 
+        if(validacaoSenha && validacaoConfSenha && validacaoEmail && validacaoCPF && nomeUsuario !="") {
+            alert("Usuário adicionado com sucesso!");
+            cancelar();
+        } else {
+            alert("Preencha todos os campos corretamente antes de adicionar o usuário.");
+        }
+        
+
 
     }
 
-    function cancelar(){
+    function cancelar() {
 
-        document.getElementById("ipt_nomeUsuario").reset();
-        document.getElementById("ipt_cpf").reset();
-        document.getElementById("ipt_email").reset();
-        document.getElementById("ipt_senha").reset();
-        document.getElementById("ipt_confirmarSenha").reset();
+        document.getElementById("ipt_nomeUsuario").value = "";
+        document.getElementById("ipt_cpf").value = "";
+        document.getElementById("ipt_email").value = "";
+        document.getElementById("ipt_senha").value = "";
+        document.getElementById("ipt_confirmarSenha").value = "";
     }
 </script>
