@@ -641,4 +641,11 @@ box-shadow:0 5px 15px rgba(0,0,0,0.2);
     background: linear-gradient(180deg, #ffffff  0%, #1b2c47 100%);
 }
 
-/* login */
+/* Fale conosco */
+
+.erro {
+    font-size: 12px;
+    color: red;
+    margin-top: 4px;
+    font: bold;
+}

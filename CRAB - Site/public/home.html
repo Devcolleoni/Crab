@@ -177,23 +177,28 @@
                 <div class="form">
                     <div class="input">
                         <p>Nome:</p>
-                        <input type="text">
+                        <input type="text" id="ipt_nome" oninput="validarNome()">
+                        <div class="erro" id="div_nome"></div>
                     </div>
                      <div class="input">
                         <p>CPF:</p>
-                        <input type="text">
+                        <input type="text" id="ipt_cpf" oninput="validarCPF()">
+                        <div class="erro" id="div_cpf"></div>
                     </div>
                      <div class="input">
                         <p>Email:</p>
-                        <input type="text">
+                        <input type="text" id="ipt_email" oninput="validarEmail()">
+                        <div class="erro" id="div_email"></div>
                     </div>
                      <div class="input">
-                        <p>Nome Empresa:</p>
-                        <input type="text">
+                        <p>Razão Social:</p>
+                        <input type="text" id="ipt_razaoSocial" oninput="validarRazaoSocial()">
+                        <div class="erro" id="div_empresa"></div>
                     </div>
                      <div class="input">
                         <p>CNPJ:</p>
-                        <input class="text"></input>
+                        <input class="text" id="ipt_cnpj" oninput="validarCNPJ()"></input>
+                        <div class="erro" id="div_cnpj"></div>
                     </div>
                 </div>
                 </div>
@@ -214,6 +219,71 @@
 </html>
 
 <script>
+
+let validacaoNome = false;
+let validacaoCPF = false;
+let validacaoEmail = false;
+let validacaoEmpresa = false;
+let validacaoCNPJ = false;
+
+function validarNome() {
+    let nome = ipt_nome.value
+    
+    if (nome.length >= 3) {
+        validacaoNome = true;
+        div_nome.innerHTML = "";
+    } else {
+        validacaoNome = false;
+        div_nome.innerHTML = 'Digite um nome válido (mínimo 3 caracteres)';
+    }
+}
+function validarCPF() {
+    let cpf = ipt_cpf.value;
+
+    if(cpf.length == 14 && cpf.includes(".") && cpf.includes("-")) {
+        validacaoCPF = true;
+        div_cpf.innerHTML = "";
+    } else {
+        validacaoCPF = false;
+        div_cpf.innerHTML = 'Digite um CPF válido (Ex: 123.456.789-10)';
+    }
+}
+function validarEmail() {
+    let email = ipt_email.value;
+
+    if (email.includes("@") && email.includes(".")) {
+        validacaoEmail = true;
+        div_email.innerHTML = "";
+    } else {
+        validacaoEmail = false;
+        div_email.innerHTML = 'Digite um email válido';
+    }
+}
+
+function validarRazaoSocial() {
+    let empresa = ipt_razaoSocial.value;
+
+    if (empresa.length >= 3) {
+        validacaoEmpresa = true;
+        div_empresa.innerHTML = "";
+    } else {
+        validacaoEmpresa = false;
+        div_empresa.innerHTML = 'Digite uma razão social válida (mínimo 3 caracteres)';
+    }
+}
+
+function validarCNPJ() {
+    let cnpj = ipt_cnpj.value;
+
+    if(cnpj.length == 18 && cnpj.includes(".") && cnpj.includes("/") && cnpj.includes("-")) {
+        validacaoCNPJ = true;
+        div_cnpj.innerHTML = "";
+    } else {
+        validacaoCNPJ = false;
+        div_cnpj.innerHTML = 'Digite um CNPJ válido (Ex: 12.345.678/0001-90)';
+    }
+}
+
 
 // Seleciona todos os links que começam com "#"
 document.querySelectorAll('a[href^="#"]').forEach(link => {
@@ -282,7 +352,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 
     let perdaMensal = valorEstoque * taxaPerda;
 
-    let taxaReducao = 0.5; // Quanto noss produto vai diminuir de perda
+    let taxaReducao = 0.5; // Quanto nosso produto vai diminuir de perda
 
     let economiaMensal = perdaMensal * taxaReducao;
     let economiaAnual = economiaMensal * 12;
@@ -296,12 +366,24 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
         <b>R$ ${economiaMensal.toLocaleString()} por mês</b><br><br>
 
         Isso representa uma economia de: <b>R$ ${economiaAnual.toLocaleString()} por ano</b>
+
+        <br> <br>
+        <p style="font-size: 12px; color: gray;">
+        *Fontes* <br>*ABRASEL - Sobre desperdícios alimentares, aplicados ao contexto logístico.<br>
+         * ABRALOG - Relata sobre a perda de cerca de 40% dos produtos em estoques com controle manual, 30% com planilhas e 15% com sistemas simples de gestão. <br>
+    </p>
     `;
 }
 
 function enviar() {
 
-    alert('Olá mensagem enviada com sucesso, iremos analizar a mensagem enviada e entreremos em contato!')
-    
+    if (validacaoNome && validacaoCPF && validacaoEmail && validacaoEmpresa && validacaoCNPJ) {
+       alert('Olá mensagem enviada com sucesso, iremos analizar a mensagem enviada e entreremos em contato!');
+    } else {
+        alert("Preencha todos os campos corretamente.");
+    }
+
 }
+    
+
 </script>
