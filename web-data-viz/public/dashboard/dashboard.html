@@ -44,7 +44,28 @@
     <div class="conteudo-principal">
         <div class="cabecalho">
             <h1>Painel</h1>
-            <div class="data">11 de abril de 2026</div>
+            <div id="config"><button onclick="AbrirConfiguracoes(document.getElementById('slc_setores').value)"><i style="font-size: 25px;"
+                        class="bi-three-dots-vertical"></i></button></div>
+        </div>
+
+        <div style="display: none;" id="aba-config" class="aba-config">
+            <div class="popup-conteudo" id="popup-conteudo">
+                <h3>Configurações</h3>
+                <button onclick="AbrirConfiguracoes()">X</button>
+                <section>
+                    <h4>Meta de Abastecimento</h4>
+                    <label for="ipt_meta">Meta:</label>
+                    <input type="number" id="ipt_meta" value="">
+                    <button onclick="salvarMeta(document.getElementById('slc_setores').value)">Salvar Meta</button>
+                </section>
+                <section>
+                    <h4>Setores</h4>
+                    <div id="lista_setores"></div>
+                    <label for="Adicionar_setor">Setores</label>
+                    <input type="text" id="Adicionar_setor">
+                    <button onclick="adicionarSetor()">Adicionar setor</button>
+                </section>
+            </div>
         </div>
 
 
@@ -87,176 +108,252 @@
                 </div>
             </div>
         </div>
-        <div class="secao-relatorio">
-            <h3>Relatório de Ocorrências</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Tipo</th>
-                        <th>Status</th>
-                        <th>Data</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>R1C3N2V1</td>
-                        <td>Sensor reativado</td>
-                        <td><span class="status ativado">Ativado</span></td>
-                        <td>11/04</td>
-                    </tr>
-                    <tr>
-                        <td>R4C1N2V2</td>
-                        <td>Sensor em Manutenção</td>
-                        <td><span class="status manutencao">Manutenção</span></td>
-                        <td>10/04</td>
-                    </tr>
-
-                    <tr>
-                        <td>R1C3N2V1</td>
-                        <td>Sensor Inativo</td>
-                        <td><span class="status desativado">Desativado</span></td>
-                        <td>10/04</td>
-
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
 
 
-    <script>
 
-        let Higiene_entrada = [30, 32, 35, 36, 38, 40, 41, 43, 44, 45, 47, 50];
-        let Higiene_saida = [25, 28, 30, 32, 34, 37, 38, 40, 41, 43, 45, 48];
+        <script>
 
-        let Laticinios_entrada = [20, 21, 20, 18, 16, 14, 12, 10, 9, 8, 7, 6];
-        let Laticinios_saida = [10, 9, 8, 7, 6, 5, 4, 3, 3, 2, 2, 1];
+            
 
-        let Acougue_entrada = [15, 20, 14, 22, 18, 25, 16, 21, 17, 23, 19, 26];
-        let Acougue_saida = [8, 17, 6, 18, 9, 21, 7, 16, 8, 19, 10, 22];
 
-        let Farinaceos_entrada = [28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6];
-        let Farinaceos_saida = [24, 23, 22, 21, 20, 19, 17, 16, 14, 12, 10, 8];
+            let metas = [{
+                setor: "Higiene",
+                numero: 80
+            }, {
+                setor: "Farinaceos",
+                numero: 80
+            }, {
+                setor: 'Laticinios',
+                numero: 80
+            }, {
+                setor: 'Açougue',
+                numero: 80
+            }]
 
-        let Higiene_taxa = [83, 87, 85, 88, 89, 92, 92, 93, 93, 95, 95, 96];
-        let Laticinios_taxa = [50, 42, 40, 38, 37, 35, 33, 30, 33, 25, 28, 16];
-        let Acougue_taxa = [53, 85, 42, 81, 50, 84, 43, 76, 47, 82, 52, 84];
-        let Farinaceos_taxa = [85, 88, 91, 95, 100, 105, 106, 114, 116, 120, 125, 133];
 
-        let labels = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+            let Higiene_entrada = [30, 32, 35, 36, 38, 40, 41, 43, 44, 45, 47, 50];
+            let Higiene_saida = [25, 28, 30, 32, 34, 37, 38, 40, 41, 43, 45, 48];
 
-        let fluxoChart = new Chart(document.getElementById('fluxoChart'), {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [
-                    {
-                        label: 'Entrada de produtos novos',
-                        data: Higiene_entrada,
-                        borderColor: 'Green',
-                        tension: 0.3
-                    },
-                    {
-                        label: 'Saida de produtos do armazém',
-                        data: Higiene_saida,
-                        borderColor: 'Red',
-                        tension: 0.3
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: { beginAtZero: true }
-                },
-                plugins: {
-                    legend: { position: 'top' }
+            let Laticinios_entrada = [20, 21, 20, 18, 16, 14, 12, 10, 9, 8, 7, 6];
+            let Laticinios_saida = [10, 9, 8, 7, 6, 5, 4, 3, 3, 2, 2, 1];
+
+            let Acougue_entrada = [15, 20, 14, 22, 18, 25, 16, 21, 17, 23, 19, 26];
+            let Acougue_saida = [8, 17, 6, 18, 9, 21, 7, 16, 8, 19, 10, 22];
+
+            let Farinaceos_entrada = [28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6];
+            let Farinaceos_saida = [24, 23, 22, 21, 20, 19, 17, 16, 14, 12, 10, 8];
+
+            let Higiene_taxa = [83, 87, 85, 88, 89, 92, 92, 93, 93, 95, 95, 96];
+            let Laticinios_taxa = [50, 42, 40, 38, 37, 35, 33, 30, 33, 25, 28, 16];
+            let Acougue_taxa = [53, 85, 42, 81, 50, 84, 43, 76, 47, 82, 52, 84];
+            let Farinaceos_taxa = [85, 88, 91, 95, 100, 105, 106, 114, 116, 120, 125, 133];
+
+            let labels = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+           function renderizarSetores (){
+
+            lista_setores.innerHTML = " "
+
+            for (let i = 0; i < metas.length; i++) {
+                    lista_setores.innerHTML += `Setor: ${metas[i].setor} <button onclick="removerSetores('${metas[i].setor}')">Remover</button><br>`
+                
+            }
+
+
+           }
+
+           function adicionarSetor(params) {
+                let add = Adicionar_setor.value            
+
+                let setor = {
+                    setor: add,
+                    numero: 80
                 }
-            }
-        });
 
-        let taxaChart = new Chart(document.getElementById('taxaChart'), {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [
-                    {
-                        label: '% abastecido (Vãos)',
-                        data: Higiene_taxa,
-                        borderColor: 'Red',
-                        backgroundColor: 'rgba(241, 117, 36, 0.12)',
-                        borderWidth: 2.5,
-                        pointRadius: 4,
-                        pointBackgroundColor: 'Red',
-                        fill: true,
-                        tension: 0.35
-                    },
-                    {
-                        label: 'Meta 80%',
-                        data: [80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80],
-                        borderColor: 'Green',
-                        borderWidth: 1.5,
-                        borderDash: [6, 4],
-                        pointRadius: 0,
-                        fill: false
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: true },
-                    tooltip: {
-                        callbacks: {
-                            label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}%`
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        min: 30,
-                        max: 100,
-                        ticks: { callback: v => v + '%' }
-                    }
-                }
-            }
-        });
+                metas.push(setor)
 
-
-
-
-
-        function filtrarSetor(setor) {
-            if (setor === 'Higiene') {
-                fluxoChart.data.datasets[0].data = Higiene_entrada
-                taxaChart.data.datasets[0].data = Higiene_taxa
-                fluxoChart.data.datasets[1].data = Higiene_saida
-
-            } else if (setor === 'Laticinios') {
-                taxaChart.data.datasets[0].data = Laticinios_taxa
-                fluxoChart.data.datasets[0].data = Laticinios_entrada
-                fluxoChart.data.datasets[1].data = Laticinios_saida
-
-            } else if (setor === 'Açougue') {
-                taxaChart.data.datasets[0].data = Acougue_taxa
-                fluxoChart.data.datasets[0].data = Acougue_entrada
-                fluxoChart.data.datasets[1].data = Acougue_saida
-
-            } else if (setor === 'Farinaceos') {
-                taxaChart.data.datasets[0].data = Farinaceos_taxa
-                fluxoChart.data.datasets[0].data = Farinaceos_entrada
-                fluxoChart.data.datasets[1].data = Farinaceos_saida
-            }
-
-            fluxoChart.update()
-            taxaChart.update()
+            slc_setores.innerHTML += `<option value="${add}">${add}</option>`
+                renderizarSetores()
         }
 
+            function removerSetores(setor) {
+                
+                for (let i = 0; i < metas.length; i++) {
+                        
+                 if (metas[i].setor == setor) {
+                    metas.splice(i,1)
+                        renderizarSetores()
 
-    </script>
+                        for (let j = 0; j < slc_setores.options.length; j++) {
+                     if (slc_setores.options[j].value == setor) {
+
+                            slc_setores.options[j].remove()
+
+                                       }
+}
+
+
+                 }   
+
+
+                }
+            }
+
+
+            function AbrirConfiguracoes(setor) {
+
+                if (document.getElementById("aba-config").style.display == "none") {
+                    document.getElementById("aba-config").style.display = "block"
+                } else if (!(document.getElementById("aba-config").style.display == "none")) {
+                    document.getElementById("aba-config").style.display = "none"
+                }
+
+                
+
+                 for (let i = 0; i < metas.length; i++) {
+
+                    if (metas[i].setor == setor) {
+                        document.getElementById("ipt_meta").value = metas[i].numero
+                    }
+                }
+            }
+
+            
+            function salvarMeta(setor) {
+                let ValorMeta = Number(ipt_meta.value)
+
+                
+                 for (let i = 0; i < metas.length; i++) {
+
+                    if (metas[i].setor == setor) {
+                        metas[i].numero = ValorMeta
+                        let meta =  []
+                            for (let j = 0; j < 12; j++) {
+                                
+                                    meta.push(ValorMeta)
+                    
+                    
+                       }
+                       taxaChart.data.datasets[1].data = meta
+                       taxaChart.update()
+                    }
+                }
+                 
+            }
+
+
+            let fluxoChart = new Chart(document.getElementById('fluxoChart'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Entrada de produtos novos',
+                            data: Higiene_entrada,
+                            borderColor: 'Green',
+                            tension: 0.3
+                        },
+                        {
+                            label: 'Saida de produtos do armazém',
+                            data: Higiene_saida,
+                            borderColor: 'Red',
+                            tension: 0.3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true }
+                    },
+                    plugins: {
+                        legend: { position: 'top' }
+                    }
+                }
+            });
+
+            let taxaChart = new Chart(document.getElementById('taxaChart'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: '% abastecido (Vãos)',
+                            data: Higiene_taxa,
+                            borderColor: 'Red',
+                            backgroundColor: 'rgba(241, 117, 36, 0.12)',
+                            borderWidth: 2.5,
+                            pointRadius: 4,
+                            pointBackgroundColor: 'Red',
+                            fill: true,
+                            tension: 0.35
+                        },
+                        {
+                            label: 'Meta 80%',
+                            data: [80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80],
+                            borderColor: 'Green',
+                            borderWidth: 1.5,
+                            borderDash: [6, 4],
+                            pointRadius: 0,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: true },
+                        tooltip: {
+                            callbacks: {
+                                label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}%`
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            min: 30,
+                            max: 100,
+                            ticks: { callback: v => v + '%' }
+                        }
+                    }
+                }
+            });
+
+
+
+
+
+            function filtrarSetor(setor) {
+                if (setor === 'Higiene') {
+                    fluxoChart.data.datasets[0].data = Higiene_entrada
+                    taxaChart.data.datasets[0].data = Higiene_taxa
+                    fluxoChart.data.datasets[1].data = Higiene_saida
+
+                } else if (setor === 'Laticinios') {
+                    taxaChart.data.datasets[0].data = Laticinios_taxa
+                    fluxoChart.data.datasets[0].data = Laticinios_entrada
+                    fluxoChart.data.datasets[1].data = Laticinios_saida
+
+                } else if (setor === 'Açougue') {
+                    taxaChart.data.datasets[0].data = Acougue_taxa
+                    fluxoChart.data.datasets[0].data = Acougue_entrada
+                    fluxoChart.data.datasets[1].data = Acougue_saida
+
+                } else if (setor === 'Farinaceos') {
+                    taxaChart.data.datasets[0].data = Farinaceos_taxa
+                    fluxoChart.data.datasets[0].data = Farinaceos_entrada
+                    fluxoChart.data.datasets[1].data = Farinaceos_saida
+                }
+
+                fluxoChart.update()
+                taxaChart.update()
+              
+            }
+
+            renderizarSetores()
+        </script>
 
 </body>
 
