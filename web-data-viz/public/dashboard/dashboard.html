@@ -50,20 +50,31 @@
 
         <div style="display: none;" id="aba-config" class="aba-config">
             <div class="popup-conteudo" id="popup-conteudo">
-                <h3>Configurações</h3>
-                <button onclick="AbrirConfiguracoes()">X</button>
-                <section>
-                    <h4>Meta de Abastecimento</h4>
-                    <label for="ipt_meta">Meta:</label>
-                    <input type="number" id="ipt_meta" value="">
-                    <button onclick="salvarMeta(document.getElementById('slc_setores').value)">Salvar Meta</button>
+                <div class="topo">
+                    <h3>Configurações</h3>
+                    <button onclick="AbrirConfiguracoes()">X</button>
+                </div>
+                <section class="meta">
+                    <h4>Meta de Abastecimento (%)</h4>
+                    <div id="meta-info">
+                        <div class="left">
+                            <label for="ipt_meta">Meta:</label>
+                            <input type="number" id="ipt_meta" value="">
+                        </div>
+                        <div class="right">
+                            <button onclick="salvarMeta(document.getElementById('slc_setores').value)">Salvar Meta</button>
+                        </div>
+                    </div>
                 </section>
-                <section>
-                    <h4>Setores</h4>
+                <section class="setores">
+                    <h4>Meus Setores</h4>
                     <div id="lista_setores"></div>
-                    <label for="Adicionar_setor">Setores</label>
-                    <input type="text" id="Adicionar_setor">
-                    <button onclick="adicionarSetor()">Adicionar setor</button>
+                    
+                    <div class="novo-setor">
+                        <label for="Adicionar_setor">Novo Setor</label>
+                        <input placeholder="Digite o nome do setor" type="text" id="Adicionar_setor">
+                        <button onclick="adicionarSetor()">Adicionar Setor</button>
+                    </div>
                 </section>
             </div>
         </div>
@@ -155,10 +166,14 @@
             lista_setores.innerHTML = " "
 
             for (let i = 0; i < metas.length; i++) {
-                    lista_setores.innerHTML += `Setor: ${metas[i].setor} <button onclick="removerSetores('${metas[i].setor}')">Remover</button><br>`
-                
+                lista_setores.innerHTML += `
+                <div class="setor">
+                    <span>Setor: ${metas[i].setor}</span>
+                    <button onclick="removerSetores('${metas[i].setor}')">
+                        Remover
+                    </button>
+                </div>`;
             }
-
 
            }
 

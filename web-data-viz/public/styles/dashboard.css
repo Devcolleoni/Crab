@@ -23,15 +23,122 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+#config button {
+    background-color: #0f172a;
+    color: #f17524;
+    border: none;
+    border-radius: 10px;
+    padding: 5px;
+    transition: all 0.3s;
+}
+
+#config button:hover {
+    background-color: #f17524;
+    color: white;
+    transform: scale(1.05);
+}
+
 .popup-conteudo {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #94a3b8;
+    background-color: #FFF;
     padding: 2%;
     border-radius: 5%;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 
+    color: #0f172a;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.popup-conteudo input {
+    border: 2px solid #0f172a;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.popup-conteudo button {
+    background-color: #f17524;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 15px;
+    border: none;
+
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.popup-conteudo button:hover {
+    background: #e05e10;
+    transform: scale(1.05);
+}
+
+.popup-conteudo .topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.popup-conteudo .topo button {
+    background-color: transparent !important;
+    color: #f17524;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    height: fit-content;
+    font-size: 18px;
+    transition: all 0.3s;
+}
+
+.popup-conteudo .topo button:hover {
+    color: #0f172a;
+}
+
+.popup-conteudo .meta {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.popup-conteudo #meta-info {
+    display: flex;
+    justify-content: space-between;
+    color: #4a4a4a;
+}
+
+.popup-conteudo .setores {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#lista_setores {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #4a4a4a;
+}
+
+.setor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.popup-conteudo .novo-setor {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.popup-conteudo .novo-setor label{
+    font-weight: bold;
 }
 
 .sidebar {
