@@ -1,0 +1,190 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f8f9fa;
+    color: #333;
+    display: flex;
+    min-height: 100vh;
+}
+
+
+.sidebar {
+    width: 260px;
+    background: #0f172a;
+    color: white;
+    padding: 30px 20px;
+    position: fixed;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    font-size: 32px;
+    font-weight: bold;
+    color: #f17524;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.info-usuario {
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.info-usuario p {
+    font-size: 15px;
+    color: #94a3b8;
+}
+
+
+.menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    color: #cbd5e1;
+    text-decoration: none;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    transition: all 0.3s;
+}
+
+.menu a:hover, 
+.menu a.ativo {
+    background: #1e2937;
+    color: #f17524;
+}
+
+.rodape-sidebar {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid #334155;
+}
+
+.rodape-sidebar a {
+    color: #94a3b8;
+    text-decoration: none;
+}
+
+
+/* gerenciamento filiais */
+
+#gerenciamento-filiais {
+    margin-left: 260px;
+    padding: 40px;
+    width: 100%;
+}
+
+.cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 34px;
+}
+
+.cabecalho h1{
+    font-size: 28px;
+    color: #f17524;
+}
+
+.cabecalho button {
+    background: #f17524;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 12px 22px;
+    border-radius: 12px;
+    font-size: 15px;
+}
+
+.buscar {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 10px 10px rgba(0,0,0,.05);
+}
+
+.buscar input{
+    width: 100%;
+    padding: 10px;
+    border:  1px solid #94a3b8 ;
+    border-radius: 12px;
+    font-size: 18px;
+    outline: none;
+}
+
+.buscar input:focus {
+    border-color: #f17524;
+}
+
+.filiais-container {
+    margin-top: 30px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    overflow: hidden;
+}
+
+.filiais-container .cabecalho {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 30px;
+    border-bottom: 1px solid #ddd;
+}
+
+.filiais-container .cabecalho h3{
+    color: #f17524;
+    font-size: 16px;
+}
+
+.filial {
+    display: flex;
+    align-items: center;
+    padding: 25px 30px;
+    border-bottom: 1px solid #eee;
+}
+
+.sigla { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    background: #f17524;
+    font-size: 20px;
+    color: white;
+    border-radius: 12px;
+}
+
+.texto-filial{
+    margin-left: 20px;
+}
+
+.texto-filial h3 {
+    margin-bottom: 6px;
+    color: #0f172a;
+}
+
+.texto-filial p {
+    color: #1e2937;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.acoes {
+    display: flex;
+    margin-left: auto;
+    gap: 20px;
+}
+
+.item {
+    cursor: pointer;
+    font-weight: 600;
+    color: #f17524;
+}
