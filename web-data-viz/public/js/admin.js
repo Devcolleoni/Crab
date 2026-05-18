@@ -44,12 +44,6 @@
 
 function criarCampoCadastro(){
 
-    var nomeVar = ipt_nome.value;
-    var cpfVar = ipt_cpf.value;
-    var emailVar = ipt_email.value;
-    var razaoSocialVar = ipt_razaoSocial.value;
-    var cnpjVar = ipt_cnpj.value;
-
     const deteils = criarElemento("details");
     const summary = criarElemento("summary");
     const divAvatar = criarElemento("div", "avatar");

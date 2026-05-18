@@ -7,6 +7,8 @@
     <title>CRAB Logística - Login</title>
     <link rel="stylesheet" href="styles/login.css">
 
+    <script defer src="./js/login.js"></script>
+
     <a href=''></a>
 </head>
 
@@ -22,20 +24,25 @@
 
                 <div class="campo">
                     <label>Usuário / Email</label>
-                    <input type="text" id="usuario" placeholder="Digite seu usuário">
+                    <input type="text" id="ipt_usuario" placeholder="seuemail@dominio.com">
                 </div>
 
                 <div class="campo">
                     <label>Senha</label>
-                    <input type="password" id="senha" placeholder="Digite sua senha">
+                    <input type="password" id="ipt_senha" placeholder="Digite sua senha">
                 </div>
 
-                <div class="opcoes">
+                <div class="campo">
+                    <label>Código da Empresa</label>
+                    <input type="text" id="ipt_codigo_empresa" placeholder="#E352L3">
+                </div>
+
+                <!-- <div class="opcoes">
                     <label class="relembrar">
                         <input id="lembrar" type="checkbox"> Lembrar senha
                     </label>
                     <a href="#" class="esqueci">Esqueci a senha</a>
-                </div>
+                </div> -->
 
                 <button class="btn-login" onclick="entrar()">Entrar</button>
 
@@ -61,62 +68,3 @@
 </body>
 
 </html>
-<script>
-    function entrar() {
-
-        let user = usuario.value;
-        let senhaDigitada = senha.value;
-
-        if (user == "" || senhaDigitada == "") {
-            mensagem.innerHTML = "Preencha todos os campos!";
-            mensagem.style.color = "red";
-            return;
-        } if (!user.includes("@") || !user.includes(".com")) {
-            mensagem.innerHTML = "Digite um e-mail válido!";
-            mensagem.style.color = "red";
-            return;
-        }
-
-        if (user == "Crab@institucional.com.br" && senhaDigitada == "Crab777") {
-
-            if (lembrar.checked) {
-                localStorage.setItem("email", user);
-                localStorage.setItem("senha", senhaDigitada);
-            } else {
-                localStorage.removeItem("email");
-                localStorage.removeItem("senha");
-            }
-
-            mensagem.innerHTML = "Login realizado com sucesso!";
-            mensagem.style.color = "green";
-            alert("Bem vindo " + user);
-
-            window.location.href = `../public/Dashboard - HTML/dashboard.html`;
-
-        } else if (user == 'Admin@gmail.com' && senhaDigitada == 'admin777') {
-
-            mensagem.innerHTML = "Login realizado com sucesso!";
-            mensagem.style.color = "green";
-            alert("Bem vindo Administrador ");
-
-            window.location.href = `/dashboard/admin.html`;
-
-
-
-        } else {
-            mensagem.innerHTML = "Usuário ou senha inválidos!";
-            mensagem.style.color = "red";
-        }
-
-    }
-
-    /*Executa qnd a pagina termina de carregar */
-
-    window.onload = function () {
-        if (localStorage.getItem("email")) {
-            usuario.value = localStorage.getItem("email");
-            senha.value = localStorage.getItem("senha");
-            lembrar.checked = true;
-        }
-    }
-</script>
