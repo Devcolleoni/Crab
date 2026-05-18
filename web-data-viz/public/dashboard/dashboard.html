@@ -126,6 +126,34 @@
 
             
 
+            function entrada(params) {
+                        
+                    
+                    fetch("/dashboard/entrada")
+                    .then(res => res.json())
+                    .then (dados => {
+
+                        let entrada = []
+                        let saida = []
+                            console.log(dados)
+                        for (let i = 0; i < dados.length; i++) {
+                            
+                            if (dados[i].abastecido == 1) {
+                                entrada.push(dados[i].abastecido)
+                            } else if (dados[i].abastecido == 0) {
+                                saida.push(dados[i].abastecido)
+                            } 
+                        }
+
+                        fluxo(entrada, saida)
+
+                    }).catch(err => console.error("Erro na entrada ou na saida:", err));
+
+
+                }
+
+
+
 
             let metas = [{
                 setor: "Higiene",
@@ -159,7 +187,7 @@
             let Acougue_taxa = [53, 85, 42, 81, 50, 84, 43, 76, 47, 82, 52, 84];
             let Farinaceos_taxa = [85, 88, 91, 95, 100, 105, 106, 114, 116, 120, 125, 133];
 
-            let labels = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+            let labels = ['Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro','Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio'];
 
            function renderizarSetores (){
 
@@ -250,13 +278,14 @@
                     
                        }
                        taxaChart.data.datasets[1].data = meta
+                       taxaChart.data.datasets[1].label = ` Meta:${meta[0]}%`
                        taxaChart.update()
                     }
                 }
                  
             }
 
-
+            function fluxo(entrada, saida){
             let fluxoChart = new Chart(document.getElementById('fluxoChart'), {
                 type: 'line',
                 data: {
@@ -264,13 +293,13 @@
                     datasets: [
                         {
                             label: 'Entrada de produtos novos',
-                            data: Higiene_entrada,
+                            data: entrada,
                             borderColor: 'Green',
                             tension: 0.3
                         },
                         {
                             label: 'Saida de produtos do armazém',
-                            data: Higiene_saida,
+                            data: saida,
                             borderColor: 'Red',
                             tension: 0.3
                         }
@@ -287,7 +316,7 @@
                     }
                 }
             });
-
+        }
             let taxaChart = new Chart(document.getElementById('taxaChart'), {
                 type: 'line',
                 data: {
@@ -368,6 +397,11 @@
             }
 
             renderizarSetores()
+
+                    
+                    window.onload = entrada()
+
+
         </script>
 
 </body>
