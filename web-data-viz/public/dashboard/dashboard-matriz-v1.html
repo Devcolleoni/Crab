@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRAB - Dashboard Matriz</title>
+    <link rel="stylesheet" href="../styles/dashboard-matriz.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <span>CRAB</span>
+        </div>
+        <div class="info-usuario">
+            <p>Bem-vindo(a), <strong>Usuário</strong></p>
+        </div>
+
+        <nav class="menu">
+            <select name="Setores" id="slc_setores" onchange="filtrarSetor(this.value)">
+                <option value="Higiene">Higiene</option>
+                <option value="Laticinios">Laticinios</option>
+                <option value="Açougue">Açougue</option>
+                <option value="Farinaceos">Farinaceos</option>
+            </select>
+            <a href="../home.html"><i class="bi bi-house"></i> Início</a>
+            <a href="dashboard.html" class="ativo"><i class="bi bi-speedometer2"></i> Painel</a>
+            <a href="configuração.html"><i class="bi bi-gear"></i> Configurações</a>
+            <a href="ajuda.html"><i class="bi bi-question-circle"></i> Ajuda</a>
+            <a href="adduser.html"><i class="bi bi-person-plus"></i> Adicionar Usuário</a>
+        </nav>
+
+        <div class="rodape-sidebar">
+            <a href="../login.html">Sair <i class="bi bi-box-arrow-right"></i></a>
+        </div>
+    </div>
+    <div class="conteudo-principal">
+
+        <div class="cabecalho">
+            <h1>Dashboard Geral</h1>
+        </div>
+
+        <div class="metricas-topo">
+            <div class="cartao-alerta-principal">
+                <span class="label">Lojas em alerta</span>
+                <span class="valor">2/12</span>
+            </div>
+            <div class="cartao-stat stat-vermelho">
+                <div class="stat-label">Saída abaixo<br>do ideal</div>
+                <span class="stat-numero">2</span>
+            </div>
+            <div class="cartao-stat stat-amarelo">
+                <div class="stat-label">Estoque com<br>poucos produtos</div>
+                <span class="stat-numero">3</span>
+            </div>
+            <div class="cartao-stat stat-azul">
+                <div class="stat-label">Lojas com<br>estoque estável</div>
+                <span class="stat-numero">7</span>
+            </div>
+        </div>
+
+        <div class="painel-lojas">
+            <h2>Lojas</h2>
+
+            <div class="grid-filiais" id="grid-filiais"></div>
+        </div>
+
+    </div>
+
+    <script>
+
+        let filiais = [
+            { nome: 'Filial 1', status: 'vermelho', entrada: 83, saida: 22 },
+            { nome: 'Filial 2', status: 'amarelo',  entrada: 86, saida: 79 },
+            { nome: 'Filial 3', status: 'amarelo',  entrada: 80, saida: 61 },
+            { nome: 'Filial 4', status: 'amarelo',  entrada: 83, saida: 69 },
+            { nome: 'Filial 5', status: 'azul',     entrada: 90, saida: 65 },
+            { nome: 'Filial 6', status: 'azul',     entrada: 91, saida: 80 },
+            { nome: 'Filial 7', status: 'vermelho', entrada: 80, saida: 29 },
+            { nome: 'Filial 8', status: 'azul',     entrada: 88, saida: 82 },
+        ]
+
+        function renderizarGrid() {
+            let grid = document.getElementById('grid-filiais')
+
+            for (let i = 0; i < filiais.length; i++) {
+                let f = filiais[i]
+
+                grid.innerHTML += `
+                    <div class="cartao-filial status-${f.status}">
+                        <div class="filial-header">
+                            <h3>${f.nome}</h3>
+                        </div>
+                        <div class="filial-body">
+                            <p>Entrada: <span>${f.entrada}%</span></p>
+                            <p>Saída: <span>${f.saida}%</span></p>
+                        </div>
+                    </div>
+                `
+            }
+        }
+
+        renderizarGrid()
+
+    </script>
+
+</body>
+</html>
