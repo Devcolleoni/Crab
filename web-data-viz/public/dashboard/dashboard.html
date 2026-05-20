@@ -79,6 +79,48 @@
             </div>
         </div>
 
+        <div style="display: none;" class="popup-editar-setor" id="popup-editar-setor">
+                <div class="topo">
+                    <h3>Editar Setor</h3>
+                    <button onclick="">X</button>
+                </div>
+                <section class="editar-setor">
+                   <div class="campo">
+                        <label for="">Nome do setor</label>
+                        <input id="ipt_setor" type="text">
+                   </div>
+
+                    <div class="campo">
+                        <label for="">Status</label>
+                        <select name="" id="sel_status">
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                        </select>
+                   </div>
+
+                   <div class="campo">
+                        <label for="">Defina o intervalo entre os vãos</label>
+                        <div class="inputs">
+                            <div class="input">
+                                <label for="">Inicial:</label>
+                                <input id="ipt_vao_inicial" type="number">
+                            </div>
+
+                            <div class="input">
+                                <label for="">Final:</label>
+                                <input id="ipt_vao_final" type="number">
+                            </div>
+                        </div>
+                   </div>
+
+                   <div class="botoes">
+                        <button>Cancelar</button>
+                        <button>Salvar</button>
+                   </div>
+
+                </section>
+        </div>
+
 
         <div class="metricas">
             <div class="cartao-metrica">
@@ -197,9 +239,14 @@
                 lista_setores.innerHTML += `
                 <div class="setor">
                     <span>Setor: ${metas[i].setor}</span>
-                    <button onclick="removerSetores('${metas[i].setor}')">
-                        Remover
-                    </button>
+                    <div class= "botoes">
+                        <button onclick="removerSetores('${metas[i].setor}')">
+                            Remover
+                        </button>
+                        <button onclick="">
+                            Editar
+                        </button>
+                    </div>
                 </div>`;
             }
 

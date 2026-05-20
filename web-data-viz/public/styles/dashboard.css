@@ -106,6 +106,10 @@ body {
     gap: 10px;
 }
 
+.popup-conteudo .meta input {
+    outline: none;
+}
+
 .popup-conteudo #meta-info {
     display: flex;
     justify-content: space-between;
@@ -137,8 +141,115 @@ body {
     align-items: center;
 }
 
+.popup-conteudo .novo-setor input {
+    outline: none;
+}
+
 .popup-conteudo .novo-setor label{
     font-weight: bold;
+}
+
+/* Pop-up editar setor */
+.popup-editar-setor {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #FFF;
+    padding: 2%;
+    border-radius: 5%;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    color: #0f172a;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.popup-editar-setor input {
+    border: 2px solid #0f172a;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.popup-editar-setor button {
+    background-color: #f17524;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 15px;
+    border: none;
+
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.popup-editar-setor button:hover {
+    background: #e05e10;
+    transform: scale(1.05);
+}
+
+.popup-editar-setor .topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.popup-editar-setor .topo button {
+    background-color: transparent !important;
+    color: #f17524;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    height: fit-content;
+    font-size: 18px;
+    transition: all 0.3s;
+}
+
+.popup-editar-setor .topo button:hover {
+    color: #0f172a;
+}
+
+.popup-editar-setor .campo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #f17524;
+    font-weight: bold;
+}
+
+.popup-editar-setor .campo input {
+    outline: none;
+}
+
+.popup-editar-setor .editar-setor {
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
+}
+
+.popup-editar-setor select {
+    border-radius: 10px;
+    border: 2px solid #0f172a;
+    padding: 5px;
+    outline: none;
+}
+
+.campo .inputs {
+    display: flex;
+    gap: 20px;
+}
+
+.campo .inputs input {
+    width: 50px;
+}
+
+.editar-setor .botoes {
+    display: flex;
+    gap: 10px;
+    justify-content: right;
 }
 
 .sidebar {
