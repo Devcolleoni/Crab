@@ -31,11 +31,13 @@
         </div>
     </div>
 
+
+
     <section id="gerenciamento-filiais">
         <div class="cabecalho">
             <h1>Gerenciar Filiais</h1>
 
-            <button>Adicionar Filial</button>
+            <button onclick="abrirModal('modalFilial')">Adicionar Filial</button>
         </div>
 
         <div class="buscar">
@@ -56,13 +58,13 @@
                         <h3>Atacadão SP centro</h3>
                         <p>email@gmail.com</p>
                         <p>00.000.000/0000-00</p>
-                        </div>
+                    </div>
 
-                      <div class="acoes">
-                            <div class="item">editar</div>
-                            <div class="item">excluir</div>
-                        </div>
-                    
+                    <div class="acoes">
+                        <div class="item">editar</div>
+                        <div class="item">excluir</div>
+                    </div>
+
                 </div>
 
                 <div class="filial">
@@ -71,13 +73,13 @@
                         <h3>Atacadão BH centro</h3>
                         <p>email@gmail.com</p>
                         <p>00.000.000/0000-00</p>
-                        </div>
+                    </div>
 
-                        <div class="acoes">
-                            <div class="item">editar</div>
-                            <div class="item">excluir</div>
-                        </div>
-                    
+                    <div class="acoes">
+                        <div class="item">editar</div>
+                        <div class="item">excluir</div>
+                    </div>
+
                 </div>
 
 
@@ -87,19 +89,124 @@
                         <h3>Atacadão PE centro</h3>
                         <p>email@gmail.com</p>
                         <p>00.000.000/0000-00</p>
-                        </div>
+                    </div>
 
-                        <div class="acoes">
-                            <div class="item">editar</div>
-                            <div class="item">excluir</div>
-                        </div>
-                    
+                    <div class="acoes">
+                        <div class="item">editar</div>
+                        <div class="item">excluir</div>
+                    </div>
+
                 </div>
 
             </div>
         </div>
+
+        
+    
+
+    <div class="envoltorio-config" id="modalFilial">
+        <div class="cartao-config">
+            <div class="cabecalho-adduser">
+                <i class="bi bi-person-plus-fill"></i>
+                <div>
+                    <h2>Adicionar Nova Filial</h2>
+                    <p>Cadastre uma nova filial ao seu sistema</p>
+                       
+                </div>
+            </div>
+
+            <div class="config-form">
+                <div class="campo">
+                    <label for="nomeUsuario">Razão Social:</label>
+                    <input type="text" id="ipt_razaoSocial" placeholder="Nome Filial">
+                </div>
+
+                <div class="campo">
+                    <label for="novaSenha">Cnpj:</label>
+                    <input type="text" id="ipt_cnpj" placeholder="00.000.000/0000-00">
+                </div>
+
+                <div class="campo">
+                    <label for="email">Cep:</label>
+                    <input type="text" id="ipt_cep" placeholder="00000-000">
+                </div>
+
+            </div>
+            <div class="botoes-adduser">
+
+                <button class="botao-adduser" onclick="fecharModal('modalFilial')">Voltar</button>
+                <button class="botao-adduser" onclick="trocarModal('modalFilial', 'modalResponsavel')">Próximo</button>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="envoltorio-config" id="modalResponsavel">
+        <div class="cartao-config">
+            <div class="cabecalho-adduser">
+                <i class="bi bi-person-plus-fill"></i>
+                <div>
+                    <h2>Adicionar O Responsavel</h2>
+                    <p>Atribue um responvel pela sua Filial</p>
+                       
+                </div>
+            </div>
+
+            <div class="config-form">
+                <div class="campo">
+                    <label for="nomeUsuario">Nome Responsavel:</label>
+                    <input type="text" id="ipt_nome" placeholder="Responsavel">
+                </div>
+
+                <div class="campo">
+                    <label for="cpf">CPF Responsavel:</label>
+                    <input type="text" id="ipt_cpf" placeholder="000-000-000-00">
+                </div>
+
+                <div class="campo">
+                    <label for="novaSenha">Email:</label>
+                    <input type="email" id="ipt_email" placeholder="responvel@gmail.com">
+                </div>
+
+                <div class="campo">
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="ipt_senha" placeholder="********">
+                </div>
+
+            </div>
+            <div class="botoes-adduser">
+
+                <button class="botao-adduser" onclick="trocarModal('modalResponsavel', 'modalFilial')">Voltar</button>
+                <button class="botao-adduser">Finalizar</button>
+
+            </div>
+        </div>
+    </div>
+    
     </section>
+
+
+
+
+
+
+
+
 
 </body>
 
 </html>
+<script>
+    function abrirModal(idModal) {
+        document.getElementById(idModal).style.display = "flex" 
+    }
+
+    function fecharModal(idModal) {
+        document.getElementById(idModal).style.display = "none" 
+    }
+
+    function trocarModal(fechar, abrir) {
+        document.getElementById(fechar).style.display = "none"
+        document.getElementById(abrir).style.display = "flex"
+    }
+</script>
