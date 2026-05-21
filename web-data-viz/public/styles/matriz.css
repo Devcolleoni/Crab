@@ -288,3 +288,34 @@ body {
     text-decoration: none;
     color: white;
 }
+
+
+.icons-list{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: end;
+    y: 15px;
+    padding-bottom: 20px;
+    gap: 5px;
+}
+
+.icons-list p { 
+    display: flex;
+    font-size: x-large;
+    justify-self: start;
+}
+
+.icons-list img {
+    width: 40px;
+    height: 40px;
+    background-color: darkgray;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+.conteudo-principal {
+    margin-left: 260px;
+    padding: 30px;
+    width: 100%;
+}

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../styles/matriz.css">
+    <link rel="stylesheet" href="../styles/dashboard-matriz.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
@@ -28,6 +29,87 @@
             <a href="../login.html">Sair <i class="bi bi-box-arrow-right"></i></a>
         </div>
     </div>
-    
+    <div class="rodape-sidebar">
+            <a href="../login.html">Sair <i class="bi bi-box-arrow-right"></i></a>
+        </div>
+    </div>
+    <d  iv class="conteudo-principal">
+
+        <div class="cabecalho">
+            <h1>Dashboard Geral</h1>
+        </div>
+
+        <div class="metricas-topo">
+            <div class="cartao-alerta-principal">
+                <span class="label">Lojas em alerta</span>
+                <span class="valor">2/12</span>
+            </div>
+            <div class="cartao-stat stat-vermelho">
+                <div class="stat-label">Saída abaixo<br>do ideal</div>
+                <span class="stat-numero">2</span>
+            </div>
+            <div class="cartao-stat stat-amarelo">
+                <div class="stat-label">Estoque com<br>poucos produtos</div>
+                <span class="stat-numero">3</span>
+            </div>
+            <div class="cartao-stat stat-azul">
+                <div class="stat-label">Lojas com<br>estoque estável</div>
+                <span class="stat-numero">7</span>
+            </div>
+        </div>
+
+        <div class="painel-lojas">
+            <div class="topo-lista">
+            <div class="title-list">
+                <p style="justify-self: start;">Lojas</p>
+            </div>
+            <div class="icons-list">
+                <img onclick="filtrar()" src="../assets/imgs/filter.png" alt="">
+                <img onclick="ordenar()" src="../assets/imgs/order.png" alt="">
+                <img onclick="formatarGrid()" src="../assets/imgs/list.png" alt="">
+            </div>
+            </div>
+            <div class="grid-filiais" id="grid-filiais"></div>
+        </div>
+
+    </div>
+
+    <script>
+
+        let filiais = [
+            { nome: 'Filial 1', status: 'vermelho', entrada: 83, saida: 22 },
+            { nome: 'Filial 2', status: 'amarelo',  entrada: 86, saida: 79 },
+            { nome: 'Filial 3', status: 'amarelo',  entrada: 80, saida: 61 },
+            { nome: 'Filial 4', status: 'amarelo',  entrada: 83, saida: 69 },
+            { nome: 'Filial 5', status: 'azul',     entrada: 90, saida: 65 },
+            { nome: 'Filial 6', status: 'azul',     entrada: 91, saida: 80 },
+            { nome: 'Filial 7', status: 'vermelho', entrada: 80, saida: 29 },
+            { nome: 'Filial 8', status: 'azul',     entrada: 88, saida: 82 },
+        ]
+
+        function renderizarGrid() {
+            let grid = document.getElementById('grid-filiais')
+
+            for (let i = 0; i < filiais.length; i++) {
+                let f = filiais[i]
+
+                grid.innerHTML += `
+                    <div class="cartao-filial status-${f.status}">
+                        <div class="filial-header">
+                            <h3>${f.nome}</h3>
+                        </div>
+                        <div class="filial-body">
+                            <p>Entrada: <span>${f.entrada}%</span></p>
+                            <p>Saída: <span>${f.saida}%</span></p>
+                        </div>
+                    </div>
+                `
+            }
+        }
+
+        renderizarGrid()
+
+    </script>
+
 </body>
 </html>
