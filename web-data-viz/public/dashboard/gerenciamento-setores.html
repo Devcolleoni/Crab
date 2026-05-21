@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Setor</title>
+    <link rel="stylesheet" href="../styles/setor.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <span>CRAB</span>
+        </div>
+        <div class="info-usuario">
+            <p>Bem-vindo(a), <strong>Usuário</strong></p>
+        </div>
+        <nav class="menu">
+            <a href="../home.html"><i class="bi bi-house"></i> Início</a>
+            <a href="dashboard.html"><i class="bi bi-speedometer2"></i> Painel</a>
+            <a href="gerenciamento-setores.html" class="ativo"><i class="bi bi-signpost-2-fill"></i> Gerenciar Setores</a>
+            <a href="configuração.html"><i class="bi bi-gear"></i> Configurações</a>
+            <a href="ajuda.html"><i class="bi bi-question-circle"></i> Ajuda</a>
+            <a href="adduser.html"><i class="bi bi-person-plus"></i> Adicionar Usuário</a>
+        </nav>
+        <div class="rodape-sidebar">
+            <a href="../login.html">Sair <i class="bi bi-box-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <section id="gerenciamento-setores">
+        <div class="cabecalho">
+            <h1>Gerenciar Setores</h1>
+            <button onclick="abrirModal('modalSetor')">Adicionar Setor</button>
+        </div>
+
+        <div class="buscar">
+            <input type="text" id="ipt_setor" placeholder="Buscar por nome">
+        </div>
+
+        <div class="setores-container">
+            <div class="cabecalho">
+                <h3>Setor</h3>
+                <h3>Açôes</h3>
+            </div>
+
+            <div class="card-setores">
+                <div class="setor">
+                    <div class="info-setor">
+                          <div class="sigla">S</div>
+                            <div class="texto-setor">
+                                <h3>Setor 1</h3>
+                                <div class="ativo">
+                                    <p>Ativo</p>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="acoes">
+                        <button class="botao" onclick="abrirModal('modalEditarSetor')">Editar</button>
+                        <button class="botao" onclick="">Remover</button>
+                    </div>
+                </div>
+
+                <div class="setor">
+                    <div class="sigla">S</div>
+                    <div class="texto-setor">
+                        <h3>Setor 2</h3>
+                        <div class="inativo">
+                            <p>Inativo</p>
+                        </div>
+                    </div>
+                    <div class="acoes">
+                        <button class="botao" onclick="abrirModal('modalEditarSetor')">Editar</button>
+                        <button class="botao" onclick="">Remover</button>
+                    </div>
+                </div>
+
+                <div class="setor">
+                    <div class="sigla">S</div>
+                    <div class="texto-setor">
+                        <h3>Setor 3</h3>
+                        <div class="ativo">
+                            <p>Ativo</p>
+                        </div>
+                    </div>
+                    <div class="acoes">
+                        <button class="botao" onclick="abrirModal('modalEditarSetor')">Editar</button>
+                        <button class="botao" onclick="">Remover</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="envoltorio-config" id="modalSetor">
+        <div class="cartao-config">
+            <div class="cabecalho-addsetor">
+                <i class="bi bi-signpost-2-fill"></i>
+                <div>
+                    <h2>Adicionar Novo Setor</h2>
+                    <p>Cadastre um novo setor no seu sistema</p>
+                </div>
+            </div>
+
+            <div class="config-form">
+                <div class="campo">
+                    <label for="nomeSetor">Nome do Setor:</label>
+                    <input type="text" id="ipt_razaoSocial" placeholder="Ex... Higiene">
+                </div>
+
+                <div class="campo">
+                    <label for="sel_status">Status</label>
+                    <select id="sel_status">
+                        <option value="ativo">Ativo</option>
+                        <option value="inativo">Inativo</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label>Defina o intervalo entre os vãos</label>
+                    <div class="inputs">
+                        <div class="input">
+                            <label for="ipt_vao_inicial">Inicial:</label>
+                            <input id="ipt_vao_inicial" type="number">
+                        </div>
+                        <div class="input">
+                            <label for="ipt_vao_final">Final:</label>
+                            <input id="ipt_vao_final" type="number">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="botoes">
+                <button class="botao" onclick="fecharModal('modalSetor')">Cancelar</button>
+                <button class="botao" onclick="">Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="envoltorio-config" id="modalEditarSetor">
+        <div class="cartao-config">
+            <div class="cabecalho-addsetor">
+                <i class="bi bi-signpost-2-fill"></i>
+                <div>
+                    <h2>Editar Setor</h2>
+                    <p>Altere as informações do seu setor</p>
+                </div>
+            </div>
+
+            <div class="config-form">
+                <div class="campo">
+                    <label for="nomeSetor">Nome do Setor:</label>
+                    <input type="text" id="ipt_razaoSocial" placeholder="Ex... Higiene">
+                </div>
+
+                <div class="campo">
+                    <label for="sel_status">Status</label>
+                    <select id="sel_status">
+                        <option value="ativo">Ativo</option>
+                        <option value="inativo">Inativo</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label>Defina o intervalo entre os vãos</label>
+                    <div class="inputs">
+                        <div class="input">
+                            <label for="ipt_vao_inicial">Inicial:</label>
+                            <input id="ipt_vao_inicial" type="number">
+                        </div>
+                        <div class="input">
+                            <label for="ipt_vao_final">Final:</label>
+                            <input id="ipt_vao_final" type="number">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="botoes">
+                <button class="botao" onclick="fecharModal('modalEditarSetor')">Cancelar</button>
+                <button class="botao" onclick="">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal Adicionar Setor
+        function abrirModal(idModal) {
+            document.getElementById(idModal).style.display = "flex";
+        }
+
+        function fecharModal(idModal) {
+            document.getElementById(idModal).style.display = "none";
+        }
+
+        // Modal Editar Setor
+        function abrirModal(idModal) {
+            document.getElementById(idModal).style.display = "flex";
+        }
+
+        function fecharModal(idModal) {
+            document.getElementById(idModal).style.display = "none";
+        }
+
+
+    </script>
+</body>
+</html>
