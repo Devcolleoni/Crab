@@ -60,6 +60,7 @@ let validacaoCPF = false;
 let validacaoEmail = false;
 let validacaoEmpresa = false;
 let validacaoCNPJ = false;
+let validacaoCEP = false
 
 function validarNome() {
     let nome = ipt_nome.value;
@@ -116,6 +117,18 @@ function validarCNPJ() {
     } else {
         validacaoCNPJ = false;
         div_cnpj.innerHTML = 'Digite um CNPJ válido (Ex: 12.345.678/0001-90)';
+    }
+}
+
+function validarCEP() {
+    let cep = ipt_cep.value;
+    
+    if (cep.length == 9 && cep.includes('-')) {
+        validacaoCEP = true;
+        div_nome.innerHTML = "";
+    } else {
+        validacaoCEP = false;
+        div_nome.innerHTML = 'O cep deve ter 9 digitos incluindo (-)';
     }
 }
 
@@ -180,6 +193,48 @@ const { createElement } = require("react");
           emailServer: emailVar,
           razaoSocialServer: razaoSocialVar,
           cnpjServer: cnpjVar,
+        }),
+      })
+        .then(function (resposta) {
+          console.log("resposta: ", resposta);
+
+          if (resposta.ok) {
+
+            alert("Sua mensagem foi enviada com sucesso, iremos analisar e entreremos em contato!")
+            enviarParaTelaAdm();
+            limparFormulario();
+
+          } else {
+            throw "Houve um erro ao tentar realizar o cadastro!";
+          }
+        })
+        .catch(function (resposta) {
+          console.log(`#ERRO: ${resposta}`);
+        });
+    } else {
+      alert("Erro: dados inválidos!")
+    }
+
+    return false;
+  }
+
+  function cadastrarFilial() {
+
+    var razaoSocialVar = ipt_razaoSocial.value;
+    var cnpjVar = ipt_cnpj.value;
+    var cepVar = ipt_cep.value;
+
+    if (validacaoEmpresa && validacaoCNPJ && validacaoCEP){
+ 
+      fetch("/usuarios/cadastrar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          razaoSocialServer: razaoSocialVar,
+          cnpjServer: cnpjVar,
+          cepServer: cepVar,
         }),
       })
         .then(function (resposta) {

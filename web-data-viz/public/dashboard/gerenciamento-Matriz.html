@@ -118,24 +118,24 @@
             <div class="config-form">
                 <div class="campo">
                     <label for="nomeUsuario">Razão Social:</label>
-                    <input type="text" id="ipt_razaoSocial" placeholder="Nome Filial">
+                    <input type="text" id="ipt_razaoSocial" placeholder="Nome Filial" oninput="validarRazaoSocial()" >
                 </div>
 
                 <div class="campo">
                     <label for="novaSenha">Cnpj:</label>
-                    <input type="text" id="ipt_cnpj" placeholder="00.000.000/0000-00">
+                    <input type="text" id="ipt_cnpj" placeholder="00.000.000/0000-00" oninput="validar()">
                 </div>
 
                 <div class="campo">
                     <label for="email">Cep:</label>
-                    <input type="text" id="ipt_cep" placeholder="00000-000">
+                    <input type="text" id="ipt_cep" placeholder="00000-000" oninput="validarCEP()">
                 </div>
 
             </div>
             <div class="botoes-adduser">
 
                 <button class="botao-adduser" onclick="fecharModal('modalFilial')">Voltar</button>
-                <button class="botao-adduser" onclick="trocarModal('modalFilial', 'modalResponsavel')">Próximo</button>
+                <button class="botao-adduser" onclick="cadastrarFilial(),trocarModal('modalFilial', 'modalResponsavel')">Próximo</button>
 
             </div>
         </div>
@@ -146,20 +146,20 @@
             <div class="cabecalho-adduser">
                 <i class="bi bi-person-plus-fill"></i>
                 <div>
-                    <h2>Adicionar O Responsavel</h2>
-                    <p>Atribue um responvel pela sua Filial</p>
+                    <h2>Adicionar O Responsável</h2>
+                    <p>Atribue um responsável pela sua Filial</p>
                        
                 </div>
             </div>
 
             <div class="config-form">
                 <div class="campo">
-                    <label for="nomeUsuario">Nome Responsavel:</label>
+                    <label for="nomeUsuario">Nome Responsável:</label>
                     <input type="text" id="ipt_nome" placeholder="Responsavel">
                 </div>
 
                 <div class="campo">
-                    <label for="cpf">CPF Responsavel:</label>
+                    <label for="cpf">CPF Responsável:</label>
                     <input type="text" id="ipt_cpf" placeholder="000-000-000-00">
                 </div>
 
