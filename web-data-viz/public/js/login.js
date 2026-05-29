@@ -101,6 +101,8 @@
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.id;
+                    alert("Autenticado!")
+
 
                     setTimeout(function () {
                         window.location = "./dashboard/dashboard.html";

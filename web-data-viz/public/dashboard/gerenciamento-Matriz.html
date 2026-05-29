@@ -118,7 +118,7 @@
             <div class="config-form">
                 <div class="campo">
                     <label for="nomeUsuario">Razão Social:</label>
-                    <input type="text" id="ipt_razaoSocial" placeholder="Nome Filial" oninput="validarRazaoSocial()" >
+                    <input type="text" id="ipt_razaoSocial" placeholder="Razão Filial" oninput="validarRazaoSocial()" >
                 </div>
 
                 <div class="campo">
@@ -135,7 +135,7 @@
             <div class="botoes-adduser">
 
                 <button class="botao-adduser" onclick="fecharModal('modalFilial')">Voltar</button>
-                <button class="botao-adduser" onclick="cadastrarFilial(),trocarModal('modalFilial', 'modalResponsavel')">Próximo</button>
+                <button class="botao-adduser" onclick="mandarFilial(),trocarModal('modalFilial', 'modalResponsavel')">Próximo</button>
 
             </div>
         </div>
@@ -208,5 +208,37 @@
     function trocarModal(fechar, abrir) {
         document.getElementById(fechar).style.display = "none"
         document.getElementById(abrir).style.display = "flex"
+    }
+
+
+    function mandarFilial(params) {
+        
+        fetch("/filial/mandar", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+
+            
+
+          }),
+        })
+          .then(function (resposta) {
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+            
+                alert("Filial Cadastrada!")
+
+            }
+
+
+        })
+
+
+
+
+
     }
 </script>
