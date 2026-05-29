@@ -123,7 +123,7 @@
 
                 <div class="campo">
                     <label for="novaSenha">Cnpj:</label>
-                    <input type="text" id="ipt_cnpj" placeholder="00.000.000/0000-00" oninput="validar()">
+                    <input type="text" id="ipt_cnpj" placeholder="00.000.000/0000-00" oninput="validarCPNJ()">
                 </div>
 
                 <div class="campo">
@@ -208,5 +208,76 @@
     function trocarModal(fechar, abrir) {
         document.getElementById(fechar).style.display = "none"
         document.getElementById(abrir).style.display = "flex"
+    }
+
+    function validarRazaoSocial() {
+    let empresa = ipt_razaoSocial.value;
+
+    if (empresa.length >= 3) {
+        validacaoEmpresa = true;
+        
+    } else {
+        validacaoEmpresa = false;
+        
+    }
+}
+
+    function validarCPNJ() {
+    let cnpj = ipt_cnpj.value;
+
+    if(cnpj.length == 18 && cnpj.includes(".") && cnpj.includes("/") && cnpj.includes("-")) {
+        validacaoCNPJ = true;
+        
+    } else {
+        validacaoCNPJ = false;
+        
+    }
+}
+
+function validarCEP() {
+    let cep = ipt_cep.value;
+    
+    if (cep.length == 9 && cep.includes('-')) {
+        validacaoCEP = true;
+        
+    } else {
+        validacaoCEP = false;
+
+    }
+}
+
+
+    function cadastrarFilial() {
+
+        let razaoSocial = ipt_razaoSocial.value
+        let cpnj = ipt_cnpj.value
+        let cep = ipt_cep.value
+
+        fetch("/filial/cadastrarFilial", {
+            method: "POST", 
+            headers: {
+                "Content-Type": "application/json",
+            },
+        body: JSON.stringify({
+            razaoSocialServer: razaoSocial,
+            cnpjServer: cpnj,
+            cepServer: cep
+        })
+
+    })
+
+    .then(
+        function (resposta) {
+            if (resposta.ok) {
+                console.log('Filial Cadastrada')
+
+            }
+        }
+    )
+
+    .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      }
+    )
     }
 </script>

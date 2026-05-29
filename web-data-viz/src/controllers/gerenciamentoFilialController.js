@@ -1,9 +1,12 @@
+const filialModel = require("../models/filialModel")
+
 function cadastrarFilial(req, res) {
 
     // Crie uma variável que vá recuperar os valores do arquivo gerenciamento-matriz.html
     var razaoSocialVar = req.body.razaoSocialServer;
     var cnpjVar = req.body.cnpjServer;
     var cepVar = req.body.cepServer;
+    
 
     // Faça as validações dos valores
     if (razaoSocialVar == undefined) {
@@ -15,7 +18,7 @@ function cadastrarFilial(req, res) {
     } else {
 
         // Passe os valores como parâmetro e vá para o arquivo filialModel.js
-        Model.cadastrarFilial(razaoSocialVar, cnpjVar, cepVar)
+        filialModel.cadastrarFilial(razaoSocialVar, cnpjVar, cepVar)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -33,7 +36,7 @@ function cadastrarFilial(req, res) {
     }
 }
 
-function cadastrarGerente(req, res) {
+/* function cadastrarGerente(req, res) {
 
     // Crie uma variável que vá recuperar os valores do arquivo gerenciamento-matriz.html
     var nomeVar = req.body.razaoSocialServer;
@@ -69,4 +72,9 @@ function cadastrarGerente(req, res) {
                 }
             );
     }
+}
+    */
+
+module.exports = {
+    cadastrarFilial
 }

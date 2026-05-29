@@ -218,44 +218,4 @@ const { createElement } = require("react");
     return false;
   }
 
-  function cadastrarFilial() {
-
-    var razaoSocialVar = ipt_razaoSocial.value;
-    var cnpjVar = ipt_cnpj.value;
-    var cepVar = ipt_cep.value;
-
-    if (validacaoEmpresa && validacaoCNPJ && validacaoCEP){
- 
-      fetch("/usuarios/cadastrar", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          razaoSocialServer: razaoSocialVar,
-          cnpjServer: cnpjVar,
-          cepServer: cepVar,
-        }),
-      })
-        .then(function (resposta) {
-          console.log("resposta: ", resposta);
-
-          if (resposta.ok) {
-
-            alert("Sua mensagem foi enviada com sucesso, iremos analisar e entreremos em contato!")
-            enviarParaTelaAdm();
-            limparFormulario();
-
-          } else {
-            throw "Houve um erro ao tentar realizar o cadastro!";
-          }
-        })
-        .catch(function (resposta) {
-          console.log(`#ERRO: ${resposta}`);
-        });
-    } else {
-      alert("Erro: dados inválidos!")
-    }
-
-    return false;
-  }
+  

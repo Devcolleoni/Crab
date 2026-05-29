@@ -6,3 +6,5 @@ var gerenciamentoFilialController = require('../controllers/gerenciamentoFilialC
 router.post("/cadastrarFilial", function (req, res) {
     gerenciamentoFilialController.cadastrarFilial(req, res)
 })
+
+module.exports = router;
