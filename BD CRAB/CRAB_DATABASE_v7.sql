@@ -102,6 +102,11 @@ CONSTRAINT const_fk_sensor
 	FOREIGN KEY (id_sensor) REFERENCES sensor (id_sensor)
 );
 
+CREATE TABLE setor(
+id_setor INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(100)
+);
+
 INSERT INTO cargo (nome) VALUES
 ('Admin'),
 ('Dono'),
