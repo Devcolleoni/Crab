@@ -1,90 +1,159 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin — Novos Cadastros</title>
-  <link rel="stylesheet" href="../styles/admin.css"/>
+  <link rel="stylesheet" href="../styles/admin.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-  <script defer src="../js/admin.js"></script>
 </head>
+
 <body>
 
-<div class="sidebar">
-<div class="logo">
-    <span>CRAB</span>
-</div>
-<div class="info-usuario">
-    <p>Bem-vindo(a), <strong>ADMIN</strong></p>
-</div>
-
-<div class="rodape-sidebar">
-    <a href="../login.html">Sair <i class="bi bi-box-arrow-right"></i></a>
-</div>
-</div>
-<div class="container">
-
-  <div class="cabecalho">
-    <h2>Novos Cadastros <span class="badge">3 pendentes</span></h2>
-    <p>Usuários aguardando envio de senha temporária</p>
+  <div class="sidebar">
+    <div class="logo">
+      <span>CRAB</span>
+    </div>
+    <div class="info-usuario">
+      <p>Bem-vindo(a), <strong>ADMIN</strong></p>
+    </div>
+    <div class="rodape-sidebar">
+      <a href="../login.html">Sair <i class="bi bi-box-arrow-right"></i></a>
+    </div>
   </div>
 
-  <p class="data-label">Hoje</p>
-  
-  <details>
-    <summary>
-      <div class="avatar">AL</div>
-      <div class="info" style="flex: 1">
-        <strong>Ana Lima preencheu o formulário de cadastro</strong>
-        <span>ana.lima@email.com</span>
-      </div>
-      <span class="horario">Há 15 min</span>
-      <span class="seta">▼</span>
-    </summary>
-    <div class="corpo">
-      <div class="dados">
-        <div class="campo">
-          <label>Nome</label>
-          <span>Ana Paula Lima</span>
-        </div>
-        <div class="campo">
-          <label>CPF</label>
-          <span>000.000.000-00</span>
-        </div>
-        <div class="campo">
-          <label>E-mail</label>
-          <span>ana.lima@email.com</span>
-        </div>
-        <div class="campo">
-          <label>Razão Social</label>
-          <span>Sua Empresa</span>
-        </div>
-        <div class="campo">
-          <label>CNPJ</label>
-          <span>00.000.000/0000-00</span>
-        </div>
-        <div class="campo">
-          <label>Data de cadastro</label>
-          <span>21/04/2026 — 14h10</span>
-        </div>
-        <div class="buttons">
-          <div class="button">
-            <button class="accept">
-              <i class="bi bi-check-lg"></i>Aceitar
-            </button>
-          </div>
-          <div class="button">
-            <button class="reject">
-              <i class="bi bi-ban"></i>Recusar
-            </button>
-          </div>
-        </div>
-      </div>
+  <div class="container">
+    <div class="cabecalho">
+      <h2>Novos Cadastros <span class="badge" id="total-pendentes">0 pendentes</span></h2>
+      <p>Usuários aguardando envio de senha temporária</p>
     </div>
-  </details>
+
+    <p class="data-label">Hoje</p>
+
+    <div id="lista-usuarios">
+    </div>
+  </div>
+
+  <script>
+    function admin() {
+      fetch("/admin/buscar")
+        .then(res => res.json())
+        .then(dados => {
+
+          const lista = document.getElementById('lista-usuarios');
+          const badge = document.getElementById('total-pendentes');
+
+          badge.textContent = `${dados.length} pendentes`;
+
+          lista.innerHTML = '';
+
+          if (dados.length === 0) {
+            lista.innerHTML = '<p>Nenhum cadastro pendente no momento.</p>';
+            return;
+          }
+
+          for (let i = 0; i < dados.length; i++) {
+            let registro = dados[i];
+
+            let iniciais = registro.nome.substring(0, 2).toUpperCase();
+
+            let estruturaHtml = `
+            <details>
+              <summary>
+                <div class="avatar">${iniciais}</div>
+                <div class="info" style="flex: 1">
+                  <strong>${registro.nome} preencheu o formulário de cadastro</strong>
+                  <span>${registro.email || 'Sem e-mail'}</span>
+                </div>
+                <span class="horario">Pendente</span>
+                <span class="seta">▼</span>
+              </summary>
+              <div class="corpo">
+                <div class="dados">
+                  <div class="campo">
+                    <label>Nome</label>
+                    <span>${registro.nome}</span>
+                  </div>
+                  <div class="campo">
+                    <label>CPF</label>
+                    <span>${registro.cpf || 'Não informado'}</span>
+                  </div>
+                  <div class="campo">
+                    <label>E-mail</label>
+                    <span>${registro.email || 'Não informado'}</span>
+                  </div>
+                  <div class="campo">
+                    <label>Razão Social</label>
+                    <span>${registro.razao_social || 'Não informado'}</span>
+                  </div>
+                  <div class="campo">
+                    <label>CNPJ</label>
+                    <span>${registro.cnpj || 'Não informado'}</span>
+                  </div>
+                  <div class="campo">
+                    <label>Data de cadastro</label>
+                    <span>${registro.data_cadastro || 'Recém criado'}</span>
+                  </div>
+                  <div class="buttons">
+                    <div class="button">
+                      <button class="accept" <button class="accept" onclick="aceitarUsuario('${registro.nome}', '${registro.cpf}', '${registro.email}', '${registro.razao_social}', '${registro.cnpj}')">
+                      <i class="bi bi-check-lg"></i> Aceitar
+                      </button>
+                    </div>
+                    <div class="button">
+                      <button class="reject" onclick="recusarUsuario('${registro.id}')">
+                        <i class="bi bi-ban"></i>Recusar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </details>
+          `;
+
+            lista.innerHTML += estruturaHtml;
+          }
+        })
+        .catch(err => {
+          console.error("Erro ao buscar dados:", err);
+          document.getElementById('lista-usuarios').innerHTML = '<p style="color:red;">Erro ao carregar dados do servidor.</p>';
+        });
+    }
+
+    window.onload = admin;
+
+function aceitarUsuario(nome, cpf, email, razao, cnpj) {
+  fetch("/admin/aceitar", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+          nomeServer: nome,
+          cpfServer: cpf,
+          emailServer: email,
+          razaoServer: razao,
+          cnpjServer: cnpj
+      })
+  }).then(res => {
+        if (res.ok) {
+          alert("Usuário aceito com sucesso!");
+          admin(); 
+        } else {
+          alert("Erro ao aceitar o usuário.");
+        }
+      })
+      .catch(err => console.error("Erro na requisição:", err));
+}
 
 
-</div>
+
+
+
+
+  </script>
 
 </body>
+
 </html>

@@ -3,9 +3,12 @@ var router = express.Router();
 
 var adminController = require("../controllers/adminController");
 
-//Recebendo os dados do html e direcionando para a função cadastrar de usuarioController.js
-router.post("/buscar", function (req, res) {
+router.get  ("/buscar", function (req, res) {
     adminController.buscar(req, res);
+})
+
+router.post  ("/aceitar", function (req, res) {
+    adminController.aceitar(req, res);
 })
 
 module.exports = router;

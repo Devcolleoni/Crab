@@ -1,4 +1,4 @@
-var usuarioModel = require("../models/adminModel");
+var adminModel = require("../models/adminModel");
 
 // function autenticar(req, res) {
 //     var email = req.body.emailServer;
@@ -64,6 +64,36 @@ var usuarioModel = require("../models/adminModel");
         });
     }
 
+    function aceitar(req, res) {
+    var nomeVar = req.body.nomeServer;
+    var cpfVar = req.body.cpfServer;
+    var emailVar = req.body.emailServer;
+    var razao_socialVar = req.body.razaoServer;
+    var cnpjVar = req.body.cnpjServer;
+
+    if (nomeVar == undefined || cpfVar == undefined || emailVar == undefined || razao_socialVar == undefined || cnpjVar == undefined) {
+        res.status(400).send("Seus dados estão undefined! Verifique o corpo da requisição.");
+        return;
+    }
+
+    adminModel.aceitar(nomeVar, cpfVar, emailVar, razao_socialVar, cnpjVar)
+        .then(function (resultado) {
+            console.log("Cadastro aceito e distribuído com sucesso!");
+            res.status(201).json({ 
+                mensagem: "Usuário e Matriz criados com sucesso!",
+                resultado: resultado 
+            });
+        })
+        .catch(function (erro) {
+            console.log(erro);
+            console.log("\nHouve um erro ao realizar a inserção dos dados: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+
+
+
     module.exports = {
-        buscar
+        buscar, aceitar
     }
