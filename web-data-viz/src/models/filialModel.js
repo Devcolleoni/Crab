@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var database = require("../database/config")
 
 function cadastrarFilial(razaoSocialserver, cnpjVar, cepVar) {
@@ -13,3 +14,5 @@ function cadastrarFilial(razaoSocialserver, cnpjVar, cepVar) {
 module.exports = {
     cadastrarFilial
 }
+=======
+>>>>>>> dc9960a185e71518cc337f06391d3e52ee389c8e

@@ -32,18 +32,7 @@
                     <input type="password" id="ipt_senha" placeholder="Digite sua senha">
                 </div>
 
-                <div class="campo">
-                    <label>Código da Empresa</label>
-                    <input type="text" id="ipt_codigo_empresa" placeholder="#E352L3">
-                </div>
-
-                <!-- <div class="opcoes">
-                    <label class="relembrar">
-                        <input id="lembrar" type="checkbox"> Lembrar senha
-                    </label>
-                    <a href="#" class="esqueci">Esqueci a senha</a>
-                </div> -->
-
+            
                 <button class="btn-login" onclick="entrar()">Entrar</button>
 
                 <p id="mensagem"></p>
@@ -66,5 +55,43 @@
     </div>
 
 </body>
+<script>
 
+    function entrar() {
+
+        let EmailVar = ipt_usuario.value
+        let SenhaVar = ipt_senha.value  
+
+         fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                emailServer: EmailVar,
+                senhaServer: SenhaVar
+            })
+        }).then(function(resposta) {
+            if (resposta.ok) {
+                resposta.json().then(json => {  
+                    sessionStorage.EMAIL_USUARIO = json.email
+                    sessionStorage.NOME_USUARIO = json.nome
+                    sessionStorage.ID_USUARIO = json.id
+                    setTimeout(() => window.location = "index.html", 1000)
+                    mensagem.style.color =  `green`
+                    mensagem.innerHTML = `Login feito com sucesso! redirecionando para a tela inicial.`
+                    localStorage.setItem('logado', 'true')
+                })
+            } else {
+                resposta.text().then(texto => {
+                    mensagem.innerHTML = "Email e/ou senha inválido(s)"
+                })
+            }
+        }).catch(erro => console.log(erro))
+    }
+
+
+
+
+
+    
+</script>
 </html>
