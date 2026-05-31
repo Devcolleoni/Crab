@@ -17,11 +17,11 @@ function autenticar(req, res) {
 
                 if (resultadoAutenticar.length == 1) {
                     console.log(resultadoAutenticar);
-                    res.json({
-                        id: resultadoAutenticar[0].id,
-                        email: resultadoAutenticar[0].email,
-                        senha: resultadoAutenticar[0].senha,
-                    });
+                   res.json({
+                  id_usuario: resultadoAutenticar[0].id_usuario,
+                  nome: resultadoAutenticar[0].nome,
+                  email: resultadoAutenticar[0].email,
+});     
                 } else if (resultadoAutenticar.length == 0) {
                     res.status(403).send("Email e/ou senha inválido(s)");
                 } else {
@@ -80,7 +80,33 @@ function cadastrar(req, res) {
     }
 }
 
+  function Atualizar(req, res) {
+    var SenhaVar = req.body.NovaServer;
+    var idVar = req.body.idServer;
+    var Antigavar = req.body.AntigaServer
+    var Emailvar = req.body.EmailServer
+
+    usuarioModel.Atualizar(SenhaVar, idVar, Antigavar, Emailvar)
+        .then(function (resultado) {
+            console.log("Senha atualizada!");
+            res.status(201).json({ 
+                mensagem: "Senha atualizada com sucesso!",
+                resultado: resultado 
+            });
+        })
+        .catch(function (erro) {
+            console.log(erro);
+            console.log("\nHouve um erro ao realizar a inserção dos dados: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        })};
+
+
+
+
+
+
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    Atualizar
 }

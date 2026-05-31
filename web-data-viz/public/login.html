@@ -57,37 +57,6 @@
 </body>
 <script>
 
-    function entrar() {
-
-        let EmailVar = ipt_usuario.value
-        let SenhaVar = ipt_senha.value  
-
-         fetch("/usuarios/autenticar", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                emailServer: EmailVar,
-                senhaServer: SenhaVar
-            })
-        }).then(function(resposta) {
-            if (resposta.ok) {
-                resposta.json().then(json => {  
-                    sessionStorage.EMAIL_USUARIO = json.email
-                    sessionStorage.NOME_USUARIO = json.nome
-                    sessionStorage.ID_USUARIO = json.id
-                    setTimeout(() => window.location = "index.html", 1000)
-                    mensagem.style.color =  `green`
-                    mensagem.innerHTML = `Login feito com sucesso! redirecionando para a tela inicial.`
-                    localStorage.setItem('logado', 'true')
-                })
-            } else {
-                resposta.text().then(texto => {
-                    mensagem.innerHTML = "Email e/ou senha inválido(s)"
-                })
-            }
-        }).catch(erro => console.log(erro))
-    }
-
 
 
 

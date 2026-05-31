@@ -102,7 +102,7 @@
                       </button>
                     </div>
                     <div class="button">
-                      <button class="reject" onclick="recusarUsuario('${registro.id}')">
+                      <button class="reject" onclick="recusarUsuario('${registro.cpf}')">
                         <i class="bi bi-ban"></i>Recusar
                       </button>
                     </div>
@@ -148,7 +148,29 @@ function aceitarUsuario(nome, cpf, email, razao, cnpj) {
 }
 
 
+  function recusarUsuario(cpf) {
+    
+    fetch("/admin/recusar", {
+       method: "POST",
+      headers: {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+          cpfServer: cpf,
+          
+      })
+    }).then(res => {
+        if (res.ok) {
+          alert("Usuário recusado com sucesso!");
+          admin(); 
+        } else {
+          alert("Erro ao recusar o usuário.");
+        }
+      })
+      .catch(err => console.error("Erro na requisição:", err));
 
+
+  }
 
 
 

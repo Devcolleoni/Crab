@@ -63,7 +63,7 @@
 
                     <div class="campo">
                         <label for="novaSenha">Nova Senha</label>
-                        <input type="password" id="novaSenha" placeholder="Digite a nova senha">
+                        <input type="password" id="senhaNova" placeholder="Digite a nova senha">
                     </div>
 
                     <div class="campo">
@@ -81,9 +81,43 @@
 
     <script>
         function salvarAlteracoes() {
-            alert("Alterações salvas com sucesso! ");
+           let id = sessionStorage.getItem("ID_USUARIO")
+            let senha = senhaNova.value
+            let senhaantiga = senhaAtual.value
+            let Email = email.value
+                fetch("/usuarios/Atualizar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+               idServer: id,
+               NovaServer: senha,
+               AntigaServer: senhaantiga,
+               EmailServer: Email
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
 
-            
+            if (resposta.ok) {
+                console.log(resposta);
+                alert("Senha Atualizada!!")
+                resposta.json().then(json => {
+
+                   
+                });
+
+            } else {
+                console.log("Houve um erro ao atualizar a senha!!");
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+
+
         }
     </script>
 

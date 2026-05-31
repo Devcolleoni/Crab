@@ -98,15 +98,16 @@
                 resposta.json().then(json => {
                     console.log(json);
                     console.log(JSON.stringify(json));
+                     console.log("JSON COMPLETO:", json)
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.ID_USUARIO = json.id;
+                    sessionStorage.setItem("ID_USUARIO", json.id_usuario);
                     alert("Autenticado!")
 
 
                     setTimeout(function () {
                         window.location = "./dashboard/dashboard.html";
-                    }, 1000); // apenas para exibir o loading
+                    }, 10000); // apenas para exibir o loading
 
                 });
 

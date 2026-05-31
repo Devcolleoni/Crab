@@ -11,4 +11,8 @@ router.post  ("/aceitar", function (req, res) {
     adminController.aceitar(req, res);
 })
 
+router.post  ("/recusar", function (req, res) {
+    adminController.recusar(req, res);
+})
+
 module.exports = router;
