@@ -11,17 +11,19 @@ CREATE TABLE cadastro (
     razao_social VARCHAR(45) NOT NULL
 );
 
+show tables;
+
 CREATE TABLE matriz(
 	id_matriz INT PRIMARY KEY AUTO_INCREMENT,
     razao_social VARCHAR(45) NOT NULL,
     cnpj CHAR(18) NOT NULL UNIQUE,
-    cep CHAR(9) NOT NULL,
-    codigo_ativacao VARCHAR(10) NOT NULL UNIQUE
+    cep CHAR(9) NULL
     );
     
 CREATE TABLE filial(
 	id_filial INT AUTO_INCREMENT,
     id_matriz INT,
+    
     razao_social VARCHAR(45) NOT NULL,
     cnpj CHAR(18) NOT NULL UNIQUE,
     cep CHAR(9) NOT NULL,
@@ -42,21 +44,33 @@ CREATE TABLE usuario(
     nome VARCHAR(40) NOT NULL,
     cpf CHAR(14) NOT NULL,
     email VARCHAR(45),
-    senha VARCHAR(45),
-    id_cargo INT,
-    id_filial INT,
-    id_matriz INT,
-    
-    CONSTRAINT const_fk_cargo
-		FOREIGN KEY (id_cargo) REFERENCES cargo (id_cargo),
-    CONSTRAINT const_fk_filial
-		FOREIGN KEY (id_filial, id_matriz) REFERENCES filial (id_filial, id_matriz)
+    senha VARCHAR(45)
     );
+    
+CREATE TABLE funcionario(
+	id_usuario_filial INT AUTO_INCREMENT,
+	id_matriz INT,
+    id_filial INT NULL,
+    id_usuario INT,
+    id_cargo INT,
+    
+    CONSTRAINT const_fk_filial 
+		FOREIGN KEY (id_matriz, id_filial) REFERENCES filial (id_matriz, id_filial),
+	CONSTRAINT const_fk_usuario
+		FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario),
+	CONSTRAINT const_fk_cargo
+		FOREIGN KEY (id_cargo) REFERENCES cargo (id_cargo),
+	CONSTRAINT pk_funcionario
+		PRIMARY KEY (id_usuario_filial, id_matriz, id_usuario)
+);
+    
+    
     
 CREATE TABLE sensor(
 	id_sensor INT PRIMARY KEY AUTO_INCREMENT,
     dt_instalacao DATE,
 	statuss VARCHAR(10),
+    
     CONSTRAINT ch_statuss
 		CHECK (statuss IN ('Ativo','Inativo','Manutenção'))
     );
@@ -67,35 +81,47 @@ CREATE TABLE coleta(
     id_sensor INT,
     dt_coleta DATETIME DEFAULT CURRENT_TIMESTAMP,
     abastecido BOOLEAN,
+    
     CONSTRAINT id_sensor_const
 		FOREIGN KEY (id_sensor) REFERENCES sensor (id_sensor),
 	PRIMARY KEY (id_coleta, id_sensor)
-    );
+   );
 
-CREATE TABLE enderecamento(
-id_enderecamento INT PRIMARY KEY AUTO_INCREMENT,
-codigo VARCHAR(30),
+
+CREATE TABLE setor(
+id_setor INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(100)
+);
+
+
+CREATE TABLE vao(
+id_vao INT PRIMARY KEY AUTO_INCREMENT,
+valor INT,
 id_filial INT,
-CONSTRAINT const_fk_filial_2
-	FOREIGN KEY (id_filial) REFERENCES filial (id_filial),
+id_matriz INT,
 id_sensor INT,
-CONSTRAINT const_fk_sensor_2
+id_setor INT,
+
+CONSTRAINT const_fk_setor
+	FOREIGN KEY (id_setor) REFERENCES setor (id_setor),
+CONSTRAINT const_fk_filial_2
+	FOREIGN KEY (id_matriz, id_filial) REFERENCES filial (id_matriz, id_filial),
+CONSTRAINT const_fk_sensor
 	FOREIGN KEY (id_sensor) REFERENCES sensor (id_sensor)
 );
 
+select * from usuario;
+
+select * from matriz;
+select * from cadastro;
 INSERT INTO cargo (nome) VALUES
 ('Admin'),
 ('Dono'),
 ('Gerente'),
 ('Funcionario');
 
-INSERT INTO matriz (razao_social, cnpj, cep, codigo_ativacao) VALUES 
-('Crab', '12.345.678/0001-95', '01414-905', 'C27D09');
 
-INSERT INTO filial (id_matriz, razao_social, cnpj, cep) VALUES 
-(1, 'Crab', '12.345.678/0001-95', '01414-905');
 
-INSERT INTO usuario (nome, cpf, email, senha, id_cargo, id_filial, id_matriz) VALUES 
-('CrabAdmin', '426.855.202-09', 'crabadmin@sptech.school', 'CrabAdmin@123', 1, 1, 1);
-        
+
+
 
