@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
-<body>
+<body onload="listarFiliais()">
 
     <div class="sidebar">
         <div class="logo">
@@ -51,52 +51,8 @@
                 <h3>Açôes</h3>
             </div>
 
-            <div class="card-filiais">
-                <div class="filial">
-                    <div class="sigla">SP</div>
-                    <div class="texto-filial">
-                        <h3>Atacadão SP centro</h3>
-                        <p>email@gmail.com</p>
-                        <p>00.000.000/0000-00</p>
-                    </div>
-
-                    <div class="acoes">
-                        <div class="item">editar</div>
-                        <div class="item">excluir</div>
-                    </div>
-
-                </div>
-
-                <div class="filial">
-                    <div class="sigla">BH</div>
-                    <div class="texto-filial">
-                        <h3>Atacadão BH centro</h3>
-                        <p>email@gmail.com</p>
-                        <p>00.000.000/0000-00</p>
-                    </div>
-
-                    <div class="acoes">
-                        <div class="item">editar</div>
-                        <div class="item">excluir</div>
-                    </div>
-
-                </div>
-
-
-                <div class="filial">
-                    <div class="sigla">PE</div>
-                    <div class="texto-filial">
-                        <h3>Atacadão PE centro</h3>
-                        <p>email@gmail.com</p>
-                        <p>00.000.000/0000-00</p>
-                    </div>
-
-                    <div class="acoes">
-                        <div class="item">editar</div>
-                        <div class="item">excluir</div>
-                    </div>
-
-                </div>
+            <div class="card-filiais" id="div_filiais">
+                
 
             </div>
         </div>
@@ -322,5 +278,64 @@ function validarCEP() {
          .catch(function (resposta) {
         console.log(`#ERRO: ${resposta}`);
         })
+    }
+
+    function listarFiliais() {
+
+         
+        console.log("Entrou na função");
+
+        fetch("/filial/listarFiliais/1") 
+        .then(function(resposta) {
+            console.log("Status:", resposta.status)
+            
+        return resposta.text();
+
+         
+
+        })
+
+        .then(function(filiais) {
+
+            
+
+            filiais = JSON.parse(filiais)
+        
+            console.log("Dados recebidos:", filiais);
+
+            div_filiais.innerHTML = ""
+
+            for (let i = 0; i < filiais.length; i++) {
+
+                let filial = filiais[i]
+
+                div_filiais.innerHTML += `
+                
+                <div class= "filial"> 
+
+                    <div class="sigla">
+                        ${i + 1}
+                    </div>
+
+                <div class="texto-filial">
+                    <h3>${filial.razao_social}</h3>
+                    <p>${filial.email}</p>
+                    <p>${filial.cnpj}</p>
+                </div>
+
+                <div class="acoes">
+                    <div class="item">editar</div>
+                    <div class="item">excluir</div>
+                </div>
+
+                </div>
+
+                `
+            }
+        })
+
+        .catch(function(erro){
+            console.log("ERRO:", erro);
+        });
     }
 </script>

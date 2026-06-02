@@ -11,4 +11,8 @@ router.post("/cadastrarResponsavel", function (req, res) {
     gerenciamentoFilialController.cadastrarResponsavel(req, res)
 })
 
+router.get("/listarFiliais/:idMatriz", function(req, res) {
+    gerenciamentoFilialController.listarFiliais(req, res)
+})
+
 module.exports = router;
