@@ -7,4 +7,8 @@ router.post("/cadastrarFilial", function (req, res) {
     gerenciamentoFilialController.cadastrarFilial(req, res)
 })
 
+router.post("/cadastrarResponsavel", function (req, res) {
+    gerenciamentoFilialController.cadastrarResponsavel(req, res)
+})
+
 module.exports = router;

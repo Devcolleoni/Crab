@@ -36,18 +36,20 @@ function cadastrarFilial(req, res) {
     }
 }
 
-/* function cadastrarGerente(req, res) {
+function cadastrarResponsavel(req, res) {
 
     // Crie uma variável que vá recuperar os valores do arquivo gerenciamento-matriz.html
-    var nomeVar = req.body.razaoSocialServer;
-    var cpfVar = req.body.cpfServer;
-    var emailVar = req.body.emailVar;
-    var senhaVar = req.body.senhavar;
+    var nomeVar = req.body.nomeResponsavelServer;
+    var cpfVar = req.body.cpfResponsavelServer;
+    var emailVar = req.body.emailResponsavelServer;
+    var senhaVar = req.body.senhaResponsavelServer;
+    var idMatrizVar = req.body.idMatrizServer;
+    var idFilialVar = req.body.idFilialServer;
 
     // Faça as validações dos valores
     if (nomeVar == undefined) {
         res.status(400).send("O nome está undefined!");
-    } else if (cpfjVar == undefined) {
+    } else if (cpfVar == undefined) {
         res.status(400).send("O CPF está undefined!");
     } else if (emailVar == undefined) {
         res.status(400).send("O email está undefined!");
@@ -56,7 +58,7 @@ function cadastrarFilial(req, res) {
     }else {
 
         // Passe os valores como parâmetro e vá para o arquivo filialModel.js
-        Model.cadastrarGerente(nomeVar, cpfVar, emailVar, senhaVar)
+        filialModel.cadastrarResponsavel(nomeVar, cpfVar, emailVar, senhaVar, idMatrizVar, idFilialVar)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -73,8 +75,9 @@ function cadastrarFilial(req, res) {
             );
     }
 }
-    */
+    
 
 module.exports = {
-    cadastrarFilial
+    cadastrarFilial,
+    cadastrarResponsavel
 }

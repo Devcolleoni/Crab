@@ -1,17 +1,40 @@
 
 var database = require("../database/config")
 
-function cadastrarFilial(razaoSocialserver, cnpjVar, cepVar) {
-     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", razaoSocialserver, cnpjVar, cepVar);
+function cadastrarFilial(razaoSocialVar, cnpjVar, cepVar) {
+     console.log("ACESSEI O FILIAL MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", razaoSocialVar, cnpjVar, cepVar);
 
      var instrucaoSql = `
-         INSERT INTO  filial (razao_social, cnpj, cep, id_matriz) VALUES ('${razaoSocialserver}','${cnpjVar}','${cepVar}', 1);
+         INSERT INTO  filial (razao_social, cnpj, cep, id_matriz) VALUES ('${razaoSocialVar}','${cnpjVar}','${cepVar}', 1);
          `;
          console.log("Executando a instrução SQL: \n" + instrucaoSql);
          return database.executar(instrucaoSql);
 }
 
+function cadastrarResponsavel(nomeVar, cpfVar, emailVar, senhaVar, idMatriz, idFilial) {
+    console.log("ACESSEI O FILIAL MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", nomeVar, cpfVar, emailVar, senhaVar);
+
+    var instrucaoSql = `
+    INSERT INTO usuario (nome, cpf, email, senha) VALUES ('${nomeVar}','${cpfVar}','${emailVar}','${senhaVar}');
+    `
+
+     console.log("Executando a instrução SQL: \n" + instrucaoSql);
+
+        return database.executar(instrucaoSql)
+        .then((resultado) => {
+
+            let idUsuario = resultado.insertId
+
+            var instrucaoResponsavel = `
+            INSERT INTO funcionario (id_matriz, id_filial, id_usuario, id_cargo) VALUES ('${idMatriz}', '${idFilial}', '${idUsuario}', 3);
+            `;
+
+            return database.executar(instrucaoResponsavel);
+        })
+}
+
 module.exports = {
-    cadastrarFilial
+    cadastrarFilial,
+    cadastrarResponsavel
 }
 

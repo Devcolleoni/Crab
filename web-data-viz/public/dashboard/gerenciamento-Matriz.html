@@ -177,7 +177,7 @@
             <div class="botoes-adduser">
 
                 <button class="botao-adduser" onclick="trocarModal('modalResponsavel', 'modalFilial')">Voltar</button>
-                <button class="botao-adduser">Finalizar</button>
+                <button class="botao-adduser" onclick="cadastrarResponsavel()">Finalizar</button>
 
             </div>
         </div>
@@ -279,5 +279,48 @@ function validarCEP() {
         console.log(`#ERRO: ${resposta}`);
       }
     )
+    }
+
+    function cadastrarResponsavel() {
+
+        let nomeResponsavel = ipt_nome.value
+        let cpfResponsavel = ipt_cpf.value
+        let emailResponsavel = ipt_email.value
+        let senhaResponsavel = ipt_senha.value
+
+        fetch("/filial/cadastrarResponsavel", {
+            method: "POST", 
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                nomeResponsavelServer: nomeResponsavel,
+                cpfResponsavelServer: cpfResponsavel,
+                emailResponsavelServer: emailResponsavel,
+                senhaResponsavelServer: senhaResponsavel,
+                idMatrizServer: 1,
+                idFilialServer: 1
+            })
+        })
+
+        .then(
+            function (resposta) {
+                if (resposta.ok) {
+                    console.log("Responsavel cadastrado a filial")
+
+            fecharModal('modalResponsavel')
+
+            ipt_nome.value = ""
+            ipt_cpf.value = ""
+            ipt_email.value = ""
+            ipt_senha.value = ""
+
+                }
+            }
+        )
+
+         .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+        })
     }
 </script>
