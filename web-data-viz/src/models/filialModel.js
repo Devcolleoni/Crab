@@ -27,7 +27,8 @@ function cadastrarResponsavel(nomeVar, cpfVar, emailVar, senhaVar, idMatriz, idF
 
             var instrucaoResponsavel = `
             INSERT INTO funcionario (id_matriz, id_filial, id_usuario, id_cargo) VALUES ('${idMatriz}', '${idFilial}', '${idUsuario}', 3);
-            `;
+            `
+            ;
 
             return database.executar(instrucaoResponsavel);
         })
