@@ -965,3 +965,9 @@ th {
     padding: 12px;
     min-height: 60px;
 }
+.config-cabecalho{
+    display: flex;
+}
+.config-cabecalho div {
+    margin-left: 10px;
+}
