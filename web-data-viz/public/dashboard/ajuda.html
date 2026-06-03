@@ -67,6 +67,13 @@
                     <p>Como Funciona o Registro do sensor</p>
                     <a href="#" class="link-ajuda">Todas as informações na tela inicial →</a>
                 </div>
+
+                <div class="cartao-ajuda">
+                    <div class="icone-ajuda"><i class="bi bi-download"></i></div>
+                    <h3>Manual de Instalação</h3>
+                    <p>Acesse o manual e saiba mais.</p>
+                    <a href="#" class="link-ajuda">Baixar Manual →</a>
+                </div>
             </div>
 
             <div class="secao-faq">
@@ -93,17 +100,79 @@
 
             <div class="contato-suporte">
                 <h3>Ainda precisa de ajuda?</h3>
-                <p>Entre em contato com nossa equipe de suporte.</p>
-                <a href="mailto:gustavo.carvalho@sptech.school?subject=Suporte%20CRAB&body=Olá,%20estou%20com%20uma%20dúvida%20no%20sistema%20CRAB.">
+                <p>Entre em contato com nossa equipe de suporte através do Jira.</p>
+                <a href="https://agamenon.atlassian.net/jira/core/projects/CRAB/form/67?from=directory"  target="_blank">
                     <button class="botao-contato">
-                        <i class="bi bi-envelope"></i>
-                        Enviar Mensagem para Suporte 
+                        <i class="bi bi-headset"></i>
+                        Acessar o Jira
                     </button>
                 </a>
             </div>
 
+            <div class="bob-ia">
+                 <button onclick="abrirModal()" class="botao-chatbox">
+                    <i class="bi bi-robot"></i>
+                    <p>Chatbox</p>    
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="bob-modal">
+        <div class="modal-caixa">
+
+            <div class="modal-cabecalho">
+                <div class="modal-info">
+                    <div class="modal-avatar">
+                        <i class="bi bi-robot"></i>
+                    </div>
+                    <div>
+                        <p class="modal-titulo">BobIA</p>
+                        <p class="modal-subtitulo">Assistente inteligente</p>
+                    </div>
+                </div>
+                <button class="modal-fechar" onclick="fecharModal()">X</button>
+            </div>
+
+            <div class="modal-corpo">
+                <textarea id="pergunta" placeholder="Digite a sua pergunta..."></textarea>
+                <button class="modal-botao-gerar" onclick="gerarResposta()">Gerar Resposta</button>
+                <div class="modal-resposta-container">
+                    <hr>
+                    <p class="modal-resposta-label">Resposta da IA</p>
+                    <div id="resposta"></div>
+                </div>
+            </div>
         </div>
     </div>
 
 </body>
 </html>
+
+<script>
+
+    function abrirModal() {
+        document.getElementById("bob-modal").style.display = "flex"
+    }
+
+    function fecharModal() {
+        document.getElementById("bob-modal").style.display = "none"
+    }
+
+    async function gerarResposta() {
+            const pergunta = document.getElementById('pergunta').value;
+
+            const response = await fetch('/perguntar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ pergunta })
+            });
+
+            const data = await response.json();
+
+            resposta.style.display = 'block';
+            document.getElementById('resposta').innerText = data.resultado;
+    }
+</script>
