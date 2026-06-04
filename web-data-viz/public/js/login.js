@@ -106,10 +106,13 @@
                     alert("Autenticado!")
 
 
-                    setTimeout(function () {
-                        window.location = "./dashboard/dashboard.html";
-                    }, 10000); // apenas para exibir o loading
+                     let rotas = {
+        1: "./dashboard/admin.html",
+        2: "./dashboard/Matriz.html",
+        3: "./dashboard/dashboard.html"
+    };
 
+    window.location = rotas[json.id_cargo] ?? "./dashboard/dashboard.html";
                 });
 
             } else {
