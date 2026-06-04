@@ -27,13 +27,27 @@ async function aceitar(nomeVar, cpfVar, emailVar, razao_socialVar, cnpjVar) {
         DELETE FROM cadastro WHERE cpf = ('${cpfVar}');
     `;
 
-    var instrucaoSql4 = `
-        UPDATE usuario 
-        SET senha = 'EDK00${cpfVar.toString().slice(-1)}' 
-        WHERE cpf = ('${cpfVar}') 
-        AND id_usuario > 0; 
+  var senhaProv = `EDK00${cpfVar.toString().slice(-1)}`;
 
-    `
+var instrucaoSql4 = `
+    UPDATE usuario 
+    SET senha = '${senhaProv}' 
+    WHERE cpf = '${cpfVar}'
+    AND id_usuario > 0; 
+`;
+    var instrucaoSql5 = `
+    INSERT INTO funcionario (id_matriz, id_filial, id_usuario, id_cargo)
+    SELECT 
+        m.id_matriz,
+        NULL,        
+        u.id_usuario,
+        2           
+    FROM usuario u
+    JOIN matriz m ON m.cnpj = '${cnpjVar}'
+    WHERE u.cpf = '${cpfVar}'
+    LIMIT 1;
+`;
+
 
     try {
         console.log("Executando a 1ª instrução SQL (Usuario): \n" + instrucaoSql);
@@ -47,6 +61,9 @@ async function aceitar(nomeVar, cpfVar, emailVar, razao_socialVar, cnpjVar) {
 
          console.log("Executando a 4ª instrução SQL (Delete): \n" + instrucaoSql4);
         var resultadoUpdate = await database.executar(instrucaoSql4);
+
+        console.log("Executando a 5ª instrução SQL (Delete): \n" + instrucaoSql5);
+        var resultadoUpdate = await database.executar(instrucaoSql5);
 
         return resultadoMatriz;
 

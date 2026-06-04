@@ -102,6 +102,7 @@
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.setItem("ID_USUARIO", json.id_usuario);
+                    sessionStorage.setItem("ID_CARGO", json.id_cargo);
                     alert("Autenticado!")
 
 
