@@ -1,9 +1,72 @@
+window.onload = () => {
+    txAbastecimentoKpi()
+    vaosOciosidade()
+}; 
+
+function txAbastecimentoKpi() {
+
+    fetch("/dashboard/entrada")
+        .then(res => res.json())
+        .then(dados => {
+            console.log("Dados puros recebidos da API:", dados);
+
+            let nomeFilial = [];
+            let qtdVao = [];
+            let qtdVaoAbastecido = [];
+            
+            for (let i = 0; i < dados.length; i++) {
+                nomeFilial.push(dados[i].Filial);
+                qtdVao.push(Number(dados[i].Qtd_vao));
+                qtdVaoAbastecido.push(Number(dados[i].Qtd_vao_abastecido));
+            }
+
+            console.log("Nomes capturados:", nomeFilial);
+            console.log("Vãos totais:", qtdVao);
+            console.log("Vãos abastecidos:", qtdVaoAbastecido);
+
+            let txAbastecimento = `${(100 * qtdVaoAbastecido[0] / qtdVao[0]).toFixed(1)}%`;
+            p_tx_abastecimento.innerHTML = txAbastecimento;
+
+        })
+        .catch(err => {
+            console.error("Erro no fetch:", err);
+        });
+
+}
+function vaosOciosidade() {
+
+    fetch("/dashboard/entrada2")
+        .then(res => res.json())
+        .then(dados => {
+            console.log("Dados puros recebidos da API:", dados);
+
+            let dt_coleta = [];
+            let horas = [];
+            let minutos = [];
+            
+            for (let i = 0; i < dados.length; i++) {
+                
+                dt_coleta.push(dados[i].dt_coleta);
+                horas.push(Number(dados[i].horas));
+                minutos.push(Number(dados[i].minutos));
+            }
+
+            console.log("Data coleta:", dt_coleta);
+            console.log("Horas coleta:", horas);
+            console.log("Minutos coleta:", minutos);
+
+        })
+        .catch(err => {
+            console.error("Erro no fetch:", err);
+        });
+
+}
 
 
 
 
 
-
+                    
 const ctx = document.getElementById('statusSetorChart');
 
 let setor1 = ``;

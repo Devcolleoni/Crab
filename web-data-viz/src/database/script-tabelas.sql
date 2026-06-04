@@ -63,20 +63,39 @@
         CONSTRAINT pk_funcionario
             PRIMARY KEY (id_usuario_filial, id_matriz, id_usuario)
     );
-        
-        
-        
-    CREATE TABLE sensor(
+    
+    CREATE TABLE setor(
+    id_setor INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100)
+    );
+
+
+    CREATE TABLE vao(
+    id_vao INT PRIMARY KEY AUTO_INCREMENT,
+    numero INT,
+    id_filial INT,
+    id_matriz INT,
+    id_setor INT,
+
+    CONSTRAINT const_fk_setor
+        FOREIGN KEY (id_setor) REFERENCES setor (id_setor),
+    CONSTRAINT const_fk_filial_2
+        FOREIGN KEY (id_matriz, id_filial) REFERENCES filial (id_matriz, id_filial)
+    );
+    
+        CREATE TABLE sensor(
         id_sensor INT PRIMARY KEY AUTO_INCREMENT,
         dt_instalacao DATE,
         statuss VARCHAR(10),
+        id_vao INT,
         
+		CONSTRAINT const_fk_vao
+			FOREIGN KEY (id_vao) REFERENCES vao (id_vao),
         CONSTRAINT ch_statuss
             CHECK (statuss IN ('Ativo','Inativo','Manutenção'))
         );
         
-
-    CREATE TABLE coleta(
+	CREATE TABLE coleta(
         id_coleta INT AUTO_INCREMENT,
         id_sensor INT,
         dt_coleta DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -86,73 +105,114 @@
             FOREIGN KEY (id_sensor) REFERENCES sensor (id_sensor),
         PRIMARY KEY (id_coleta, id_sensor)
     );
-
-
-    CREATE TABLE setor(
-    id_setor INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100)
-    );
-
-
-    CREATE TABLE vao(
-    id_vao INT PRIMARY KEY AUTO_INCREMENT,
-    valor INT,
-    id_filial INT,
-    id_matriz INT,
-    id_sensor INT,
-    id_setor INT,
-
-    CONSTRAINT const_fk_setor
-        FOREIGN KEY (id_setor) REFERENCES setor (id_setor),
-    CONSTRAINT const_fk_filial_2
-        FOREIGN KEY (id_matriz, id_filial) REFERENCES filial (id_matriz, id_filial),
-    CONSTRAINT const_fk_sensor
-        FOREIGN KEY (id_sensor) REFERENCES sensor (id_sensor)
-    );
-
-    select * from usuario;
-
-    select * from matriz;
-    select * from cadastro;
-    INSERT INTO cargo (nome) VALUES
-    ('Admin'),
-    ('Dono'),
-    ('Gerente'),
-    ('Funcionario');
     
-    -- 1. Tabela CADASTRO (Independente)
+INSERT INTO cargo (nome) VALUES
+('Admin'),
+('Dono'),
+('Gerente'),
+('Funcionario');
+
+-- ====================================================================
+-- 1. TABELAS INDEPENDENTES (Cadastro, Matriz, Setor, Usuario)
+-- ====================================================================
+
 INSERT INTO cadastro (nome, cpf, email, cnpj, razao_social) VALUES
-('Mateus Galeani', '111.222.333-44', 'mateus@crab.com', '12.345.678/0001-99', 'Crab Tech Matriz'),
-('João Silva', '555.666.777-88', 'joao@logistica.com', '98.765.432/0001-11', 'Logistica Silva LTDA');
+('Mateus Galeani', '111.222.333-44', 'mateus@crabtech.com', '12.345.678/0001-99', 'Crab Tech Soluções'),
+('João Silva', '555.666.777-88', 'joao@atacadista.com', '98.765.432/0001-11', 'Silva Atacadista LTDA');
 
--- 2. Tabela MATRIZ (Independente)
-
-select * from matriz;
-
-DESCRIBE matriz;
 INSERT INTO matriz (razao_social, cnpj, cep) VALUES
-('Atacadista Central', '12.345.678/0001-99', '01001-000');
+('Silva Atacadista Central', '98.765.432/0001-11', '01001-000');
 
--- 3. Tabela FILIAL (Depende de matriz)
-INSERT INTO filial (id_matriz, razao_social, cnpj, cep) VALUES
-(1, 'Filial Sul', '12.345.678/0002-00', '04002-000'),
-(1, 'Filial Norte', '12.345.678/0003-00', '02002-000');
+INSERT INTO setor (nome) VALUES
+('Carga Seca'),    -- ID 1
+('Refrigerados'),  -- ID 2
+('Expedição');     -- ID 3
 
--- (Nota: O INSERT na tabela 'cargo' já estava no seu script, então pulei essa etapa)
-
--- 4. Tabela USUARIO (Independente)
 INSERT INTO usuario (nome, cpf, email, senha) VALUES
-('Matheus Barros', '123.123.123-12', 'mbarros@crab.com', 'senha123'),
-('Matheus Dos Santos', '321.321.321-32', 'msantos@crab.com', 'senha321'),
-('Rafael Biaggi', '999.888.777-66', 'rbiaggi@crab.com', 'senha789'),
-('Lucas Coelho', '444.444.444-44', 'lcoelho@crab.com', 'senha000');
+('Matheus Barros', '123.123.123-12', 'mbarros@atacadista.com', 'senha123'),
+('Matheus Dos Santos', '321.321.321-32', 'msantos@atacadista.com', 'senha321'),
+('Rafael Biaggi', '999.888.777-66', 'rbiaggi@atacadista.com', 'senha789'),
+('Lucas Coelho', '444.444.444-44', 'lcoelho@atacadista.com', 'senha000');
 
--- 5. Tabela FUNCIONARIO (Depende de matriz, filial, usuario, cargo)
--- Relacionando os usuários acima com as filiais e cargos específicos
+
+-- ====================================================================
+-- 2. TABELAS DE HIERARQUIA CORPORATIVA (Filial, Funcionario)
+-- ====================================================================
+
+-- Inserindo as 2 Filiais (dependentes da matriz ID 1)
+INSERT INTO filial (id_matriz, razao_social, cnpj, cep) VALUES
+(1, 'Silva Atacadista - Filial Sul', '98.765.432/0002-22', '04002-000'),
+(1, 'Silva Atacadista - Filial Norte', '98.765.432/0003-33', '02002-000');
+
+-- O cargo já foi inserido no seu script (Admin=1, Dono=2, Gerente=3, Funcionario=4)
+-- Associando os usuários às filiais
 INSERT INTO funcionario (id_matriz, id_filial, id_usuario, id_cargo) VALUES
-(1, 1, 1, 2), -- Matheus Barros como Dono (2) na Filial Sul
-(1, 1, 2, 3), -- Matheus Dos Santos como Gerente (3) na Filial Sul
-(1, 2, 3, 4); -- Rafael Biaggi como Funcionario (4) na Filial Norte
+(1, 1, 1, 2), -- Matheus Barros (Dono) na Filial Sul
+(1, 1, 2, 3), -- Matheus Dos Santos (Gerente) na Filial Sul
+(1, 2, 3, 4), -- Rafael Biaggi (Funcionário) na Filial Norte
+(1, 2, 4, 1); -- Lucas Coelho (Admin) na Filial Norte
+
+
+-- ====================================================================
+-- 3. MAPEAMENTO FÍSICO DO ARMAZÉM (Tabela Vao)
+-- ====================================================================
+-- Criando 50 posições físicas primeiro. A coluna 'numero' recebe a numeração do vão.
+
+INSERT INTO vao (numero, id_matriz, id_filial, id_setor) VALUES
+-- FILIAL 1 (Sul) - Vãos 1 ao 25
+(1, 1, 1, 1), (2, 1, 1, 1), (3, 1, 1, 1), (4, 1, 1, 1), (5, 1, 1, 1), (6, 1, 1, 1), (7, 1, 1, 1), (8, 1, 1, 1), (9, 1, 1, 1), (10, 1, 1, 1), -- Setor 1
+(11, 1, 1, 2), (12, 1, 1, 2), (13, 1, 1, 2), (14, 1, 1, 2), (15, 1, 1, 2), (16, 1, 1, 2), (17, 1, 1, 2), (18, 1, 1, 2), (19, 1, 1, 2), (20, 1, 1, 2), -- Setor 2
+(21, 1, 1, 3), (22, 1, 1, 3), (23, 1, 1, 3), (24, 1, 1, 3), (25, 1, 1, 3), -- Setor 3
+
+-- FILIAL 2 (Norte) - Vãos 26 ao 50
+(26, 1, 2, 1), (27, 1, 2, 1), (28, 1, 2, 1), (29, 1, 2, 1), (30, 1, 2, 1), (31, 1, 2, 1), (32, 1, 2, 1), (33, 1, 2, 1), (34, 1, 2, 1), (35, 1, 2, 1), -- Setor 1
+(36, 1, 2, 2), (37, 1, 2, 2), (38, 1, 2, 2), (39, 1, 2, 2), (40, 1, 2, 2), (41, 1, 2, 2), (42, 1, 2, 2), (43, 1, 2, 2), (44, 1, 2, 2), (45, 1, 2, 2), -- Setor 2
+(46, 1, 2, 3), (47, 1, 2, 3), (48, 1, 2, 3), (49, 1, 2, 3), (50, 1, 2, 3); -- Setor 3
+
+
+-- ====================================================================
+-- 4. HARDWARE E LEITURAS (Tabela Sensor e Coleta)
+-- ====================================================================
+-- Agora os Sensores são atrelados aos Vãos já existentes (id_vao)
+
+INSERT INTO sensor (dt_instalacao, statuss, id_vao) VALUES
+-- Sensores da Filial Sul (Vãos 1 ao 25)
+('2026-06-01', 'Ativo', 1), ('2026-06-01', 'Ativo', 2), ('2026-06-01', 'Ativo', 3), ('2026-06-01', 'Ativo', 4), ('2026-06-01', 'Ativo', 5),
+('2026-06-01', 'Ativo', 6), ('2026-06-01', 'Ativo', 7), ('2026-06-01', 'Ativo', 8), ('2026-06-01', 'Ativo', 9), ('2026-06-01', 'Ativo', 10),
+('2026-06-01', 'Ativo', 11), ('2026-06-01', 'Ativo', 12), ('2026-06-01', 'Ativo', 13), ('2026-06-01', 'Ativo', 14), ('2026-06-01', 'Ativo', 15),
+('2026-06-01', 'Ativo', 16), ('2026-06-01', 'Ativo', 17), ('2026-06-01', 'Ativo', 18), ('2026-06-01', 'Ativo', 19), ('2026-06-01', 'Ativo', 20),
+('2026-06-01', 'Ativo', 21), ('2026-06-01', 'Ativo', 22), ('2026-06-01', 'Manutenção', 23), ('2026-06-01', 'Ativo', 24), ('2026-06-01', 'Ativo', 25),
+
+-- Sensores da Filial Norte (Vãos 26 ao 50)
+('2026-06-02', 'Ativo', 26), ('2026-06-02', 'Ativo', 27), ('2026-06-02', 'Ativo', 28), ('2026-06-02', 'Ativo', 29), ('2026-06-02', 'Ativo', 30),
+('2026-06-02', 'Ativo', 31), ('2026-06-02', 'Ativo', 32), ('2026-06-02', 'Ativo', 33), ('2026-06-02', 'Ativo', 34), ('2026-06-02', 'Ativo', 35),
+('2026-06-02', 'Ativo', 36), ('2026-06-02', 'Ativo', 37), ('2026-06-02', 'Inativo', 38), ('2026-06-02', 'Ativo', 39), ('2026-06-02', 'Ativo', 40),
+('2026-06-02', 'Ativo', 41), ('2026-06-02', 'Ativo', 42), ('2026-06-02', 'Ativo', 43), ('2026-06-02', 'Ativo', 44), ('2026-06-02', 'Ativo', 45),
+('2026-06-02', 'Ativo', 46), ('2026-06-02', 'Manutenção', 47), ('2026-06-02', 'Ativo', 48), ('2026-06-02', 'Ativo', 49), ('2026-06-02', 'Inativo', 50);
+
+-- Inserindo as Leituras (Coletas)
+INSERT INTO coleta (id_sensor, abastecido) VALUES
+-- Leituras da Filial Sul
+(1, 1), (2, 1), (3, 0), (4, 1), (5, 0), (6, 1), (7, 0), (8, 1), (9, 1), (10, 0),
+(11, 1), (12, 1), (13, 1), (14, 1), (15, 0), (16, 1), (17, 1), (18, 0), (19, 1), (20, 1),
+(21, 0), (22, 1), (23, 0), (24, 0), (25, 1),
+-- Leituras da Filial Norte
+(26, 1), (27, 0), (28, 1), (29, 1), (30, 0), (31, 1), (32, 1), (33, 0), (34, 1), (35, 1),
+(36, 1), (37, 1), (38, 1), (39, 0), (40, 1), (41, 1), (42, 1), (43, 1), (44, 0), (45, 1),
+(46, 0), (47, 0), (48, 1), (49, 0), (50, 0);
+
+CREATE VIEW vw_tx_abastecimento AS
+SELECT 
+    f.razao_social AS Filial,
+    COUNT(v.id_vao) AS Qtd_vao,
+    IFNULL(SUM(c.abastecido), 0) AS Qtd_vao_abastecido
+FROM filial f
+LEFT JOIN vao v ON f.id_filial = v.id_filial AND f.id_matriz = v.id_matriz
+LEFT JOIN sensor s ON v.id_vao = s.id_vao
+LEFT JOIN coleta c ON s.id_sensor = c.id_sensor
+GROUP BY f.razao_social;
+SELECT * FROM vw_tx_abastecimento;
+    
 
 
 
