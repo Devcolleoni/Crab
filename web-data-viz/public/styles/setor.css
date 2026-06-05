@@ -151,13 +151,15 @@ body {
 .setor {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     padding: 25px 30px;
     border-bottom: 1px solid #eee;
 }
 
 .info-setor {
     display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
 .sigla { 
@@ -172,34 +174,14 @@ body {
     border-radius: 12px;
 }
 
-.texto-setor{
-    margin-left: 20px;
-}
-
 .texto-setor h3 {
     margin-bottom: 6px;
     color: #0f172a;
 }
 
-.ativo {
-    background-color: lightgreen;
-    color: green;
-    border-radius: 10px;
-    padding: 5px;
-    text-align: center;
-}
-
-.inativo {
-    background-color: lightgrey;
-    color: grey;
-    border-radius: 10px;
-    padding: 5px;
-    text-align: center;
-}
-
 .acoes {
     display: flex;
-    margin-left: auto;
+    align-items: center;
     gap: 20px;
 }
 

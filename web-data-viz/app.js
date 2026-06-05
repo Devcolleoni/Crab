@@ -24,6 +24,7 @@ var aquariosRouter = require("./src/routes/aquarios");
 var empresasRouter = require("./src/routes/empresas");
 var dash = require("./src/routes/dashboard")
 var gerenciamentoFilialRouter = require("./src/routes/filial");
+var setoresRouter = require("./src/routes/setores");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -40,6 +41,7 @@ app.use("/aquarios", aquariosRouter);
 app.use("/empresas", empresasRouter);
 app.use("/dashboard", dash)
 app.use("/filial", gerenciamentoFilialRouter)
+app.use("/setores", setoresRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`
