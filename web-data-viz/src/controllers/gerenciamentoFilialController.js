@@ -6,9 +6,14 @@ function cadastrarFilial(req, res) {
     var razaoSocialVar = req.body.razaoSocialServer;
     var cnpjVar = req.body.cnpjServer;
     var cepVar = req.body.cepServer;
+
     var idMatrizVar = req.body.idMatrizServer
     console.log(req.body)
     console.log("ID MATRIZ:", idMatrizVar)
+
+
+    var idMatrizVar = req.body.idMatriz
+    
 
 
     // Faça as validações dos valores
