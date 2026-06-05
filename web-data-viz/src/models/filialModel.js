@@ -2,14 +2,20 @@
 var database = require("../database/config")
 
 function cadastrarFilial(razaoSocialVar, cnpjVar, cepVar, idMatrizVar) {
-     console.log("ACESSEI O FILIAL MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", razaoSocialVar, cnpjVar, cepVar, idMatrizVar);
+    console.log("ACESSEI O FILIAL MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", razaoSocialVar, cnpjVar, cepVar, idMatrizVar);
+    
+    console.log("razaoSocialVar:", razaoSocialVar)
+    console.log("cnpjVar:", cnpjVar)
+    console.log("cepVar:", cepVar)
+    console.log("idMatrizVar:", idMatrizVar)
 
-     var instrucaoSql = `
+    var instrucaoSql = `
          INSERT INTO  filial (razao_social, cnpj, cep, id_matriz) VALUES ('${razaoSocialVar}','${cnpjVar}','${cepVar}', ${idMatrizVar});
          `;
-         console.log("Executando a instrução SQL: \n" + instrucaoSql);
-         console.log("ID MATRIZ:", idMatrizVar)
-         return database.executar(instrucaoSql);
+    console.log("SQL:", instrucaoSql)
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    console.log("ID MATRIZ:", idMatrizVar)
+    return database.executar(instrucaoSql);
 }
 
 function cadastrarResponsavel(nomeVar, cpfVar, emailVar, senhaVar, idMatriz, idFilial) {
@@ -19,9 +25,9 @@ function cadastrarResponsavel(nomeVar, cpfVar, emailVar, senhaVar, idMatriz, idF
     INSERT INTO usuario (nome, cpf, email, senha) VALUES ('${nomeVar}','${cpfVar}','${emailVar}','${senhaVar}');
     `
 
-     console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
 
-        return database.executar(instrucaoSql)
+    return database.executar(instrucaoSql)
         .then((resultado) => {
 
             let idUsuario = resultado.insertId
@@ -29,7 +35,7 @@ function cadastrarResponsavel(nomeVar, cpfVar, emailVar, senhaVar, idMatriz, idF
             var instrucaoResponsavel = `
             INSERT INTO funcionario (id_matriz, id_filial, id_usuario, id_cargo) VALUES ('${idMatriz}', '${idFilial}', '${idUsuario}', 3);
             `
-            ;
+                ;
 
             return database.executar(instrucaoResponsavel);
         })

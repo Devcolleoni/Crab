@@ -7,7 +7,9 @@ function cadastrarFilial(req, res) {
     var cnpjVar = req.body.cnpjServer;
     var cepVar = req.body.cepServer;
     var idMatrizVar = req.body.idMatrizServer
-    
+    console.log(req.body)
+    console.log("ID MATRIZ:", idMatrizVar)
+
 
     // Faça as validações dos valores
     if (razaoSocialVar == undefined) {
@@ -20,11 +22,16 @@ function cadastrarFilial(req, res) {
 
         // Passe os valores como parâmetro e vá para o arquivo filialModel.js
         filialModel.cadastrarFilial(razaoSocialVar, cnpjVar, cepVar, idMatrizVar)
-            .then(
-                function (resultado) {
-                    res.json(resultado);
-                }
-            ).catch(
+            .then(function (resultado) {
+
+                console.log("Resultado do insert:", resultado);
+
+                res.json({
+                    idFilial: resultado.insertId
+                });
+
+            })
+            .catch(
                 function (erro) {
                     console.log(erro);
                     console.log(
@@ -56,7 +63,7 @@ function cadastrarResponsavel(req, res) {
         res.status(400).send("O email está undefined!");
     } else if (senhaVar == undefined) {
         res.status(400).send("A senha está undefined!");
-    }else {
+    } else {
 
         // Passe os valores como parâmetro e vá para o arquivo filialModel.js
         filialModel.cadastrarResponsavel(nomeVar, cpfVar, emailVar, senhaVar, idMatrizVar, idFilialVar)
@@ -83,18 +90,18 @@ function listarFiliais(req, res) {
 
     filialModel.listarFiliais(idMatriz)
 
-    .then(function(resultado) {
-        res.status(200).json(resultado)
-    })
-    .catch(function(erro) {
-        console.log(erro)
-        res.status(500).json(erro.sqlMessage)
-    })
+        .then(function (resultado) {
+            res.status(200).json(resultado)
+        })
+        .catch(function (erro) {
+            console.log(erro)
+            res.status(500).json(erro.sqlMessage)
+        })
 }
-    
+
 
 module.exports = {
     cadastrarFilial,
     cadastrarResponsavel,
-    listarFiliais   
+    listarFiliais
 }

@@ -210,6 +210,8 @@ function validarCEP() {
         let cep = ipt_cep.value
         let idMatriz = sessionStorage.getItem("ID_MATRIZ")
 
+        console.log("ID_MATRIZ:", sessionStorage.getItem("ID_MATRIZ"));
+
         fetch("/filial/cadastrarFilial", {
             method: "POST", 
             headers: {
@@ -219,7 +221,7 @@ function validarCEP() {
             razaoSocialServer: razaoSocial,
             cnpjServer: cpnj,
             cepServer: cep,
-            idMatriz: idMatriz
+            idMatrizServer: idMatriz
         })
 
     })
@@ -227,7 +229,22 @@ function validarCEP() {
     .then(
         function (resposta) {
             if (resposta.ok) {
-                console.log('Filial Cadastrada')
+                
+                resposta.json().then(function(json) {
+
+                    console.log(json)
+
+                    sessionStorage.setItem(
+                        "ID_FILIAL_ATUAL",
+                        json.idFilial
+                    )
+
+                    console.log(
+                        "FILIAL CADASTRADA:",
+                        sessionStorage.getItem("ID_FILIAL_ATUAL")
+                    )
+                })
+
 
             }
         }
@@ -256,8 +273,8 @@ function validarCEP() {
                 cpfResponsavelServer: cpfResponsavel,
                 emailResponsavelServer: emailResponsavel,
                 senhaResponsavelServer: senhaResponsavel,
-                idMatrizServer: 1,
-                idFilialServer: 1
+                idMatrizServer: sessionStorage.getItem("ID_MATRIZ"),
+                idFilialServer: sessionStorage.getItem("ID_FILIAL_ATUAL")
             })
         })
 
@@ -284,10 +301,11 @@ function validarCEP() {
 
     function listarFiliais() {
 
+        let idMatriz = sessionStorage.getItem("ID_MATRIZ")
          
-        console.log("Entrou na função");
+        console.log("ID MATRIZ FRONT:", idMatriz);
 
-        fetch("/filial/listarFiliais/1") 
+        fetch(`/filial/listarFiliais/${idMatriz}`) 
         .then(function(resposta) {
             console.log("Status:", resposta.status)
             
