@@ -208,6 +208,7 @@ function validarCEP() {
         let razaoSocial = ipt_razaoSocial.value
         let cpnj = ipt_cnpj.value
         let cep = ipt_cep.value
+        let idMatriz = sessionStorage.getItem("ID_MATRIZ")
 
         fetch("/filial/cadastrarFilial", {
             method: "POST", 
@@ -217,7 +218,8 @@ function validarCEP() {
         body: JSON.stringify({
             razaoSocialServer: razaoSocial,
             cnpjServer: cpnj,
-            cepServer: cep
+            cepServer: cep,
+            idMatriz: idMatriz
         })
 
     })

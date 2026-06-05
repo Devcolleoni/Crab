@@ -6,6 +6,7 @@ function cadastrarFilial(req, res) {
     var razaoSocialVar = req.body.razaoSocialServer;
     var cnpjVar = req.body.cnpjServer;
     var cepVar = req.body.cepServer;
+    var idMatrizVar = req.body.idMatrizServer
     
 
     // Faça as validações dos valores
@@ -18,7 +19,7 @@ function cadastrarFilial(req, res) {
     } else {
 
         // Passe os valores como parâmetro e vá para o arquivo filialModel.js
-        filialModel.cadastrarFilial(razaoSocialVar, cnpjVar, cepVar)
+        filialModel.cadastrarFilial(razaoSocialVar, cnpjVar, cepVar, idMatrizVar)
             .then(
                 function (resultado) {
                     res.json(resultado);

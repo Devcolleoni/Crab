@@ -103,6 +103,7 @@
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.setItem("ID_USUARIO", json.id_usuario);
                     sessionStorage.setItem("ID_CARGO", json.id_cargo);
+                    sessionStorage.setItem("ID_MATRIZ", json.id_matriz)
                     alert("Autenticado!")
 
 

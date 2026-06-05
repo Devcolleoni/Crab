@@ -1,13 +1,14 @@
 
 var database = require("../database/config")
 
-function cadastrarFilial(razaoSocialVar, cnpjVar, cepVar) {
-     console.log("ACESSEI O FILIAL MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", razaoSocialVar, cnpjVar, cepVar);
+function cadastrarFilial(razaoSocialVar, cnpjVar, cepVar, idMatrizVar) {
+     console.log("ACESSEI O FILIAL MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", razaoSocialVar, cnpjVar, cepVar, idMatrizVar);
 
      var instrucaoSql = `
-         INSERT INTO  filial (razao_social, cnpj, cep, id_matriz) VALUES ('${razaoSocialVar}','${cnpjVar}','${cepVar}', 1);
+         INSERT INTO  filial (razao_social, cnpj, cep, id_matriz) VALUES ('${razaoSocialVar}','${cnpjVar}','${cepVar}', ${idMatrizVar});
          `;
          console.log("Executando a instrução SQL: \n" + instrucaoSql);
+         console.log("ID MATRIZ:", idMatrizVar)
          return database.executar(instrucaoSql);
 }
 
@@ -41,8 +42,8 @@ function listarFiliais(idMatriz) {
         FROM filial f
         LEFT JOIN funcionario func ON func.id_filial = f.id_filial
         LEFT JOIN usuario u ON u.id_usuario = func.id_usuario
-        WHERE f.id_matriz = ${idMatriz}
-        AND func.id_cargo = 3; `
+        WHERE f.id_matriz = ${idMatriz};
+        `
 
     console.log("Executando SQL:\n" + instrucaoSql);
 
