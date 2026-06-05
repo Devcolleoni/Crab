@@ -1,8 +1,8 @@
-    CREATE DATABASE crab;
+	CREATE DATABASE IF NOT EXISTS crab;
     
     USE crab;
 
-    CREATE TABLE cadastro (
+    CREATE TABLE IF NOT EXISTS cadastro (
         id_cadastro INT PRIMARY KEY AUTO_INCREMENT,
         nome VARCHAR(45) NOT NULL,
         cpf CHAR(14) NOT NULL,
@@ -11,16 +11,14 @@
         razao_social VARCHAR(45) NOT NULL
     );
 
-    show tables;
-
-    CREATE TABLE matriz(
+    CREATE TABLE IF NOT EXISTS matriz(
         id_matriz INT PRIMARY KEY AUTO_INCREMENT,
         razao_social VARCHAR(45) NOT NULL,
         cnpj CHAR(18) NOT NULL UNIQUE,
         cep CHAR(9) NULL
         );
         
-    CREATE TABLE filial(
+    CREATE TABLE IF NOT EXISTS filial(
         id_filial INT AUTO_INCREMENT,
         id_matriz INT,
         
@@ -34,12 +32,12 @@
             PRIMARY KEY (id_filial, id_matriz)
     );
 
-    CREATE TABLE cargo(
+    CREATE TABLE IF NOT EXISTS cargo(
     id_cargo INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(45)
     );
         
-    CREATE TABLE usuario(
+    CREATE TABLE IF NOT EXISTS usuario(
         id_usuario INT PRIMARY KEY AUTO_INCREMENT,
         nome VARCHAR(40) NOT NULL,
         cpf CHAR(14) NOT NULL,
@@ -47,8 +45,8 @@
         senha VARCHAR(45)
         );
         
-    CREATE TABLE funcionario(
-        id_usuario_filial INT AUTO_INCREMENT,
+    CREATE TABLE IF NOT EXISTS funcionario(
+        id_funcionario INT AUTO_INCREMENT,
         id_matriz INT,
         id_filial INT NULL,
         id_usuario INT,
@@ -61,16 +59,16 @@
         CONSTRAINT const_fk_cargo
             FOREIGN KEY (id_cargo) REFERENCES cargo (id_cargo),
         CONSTRAINT pk_funcionario
-            PRIMARY KEY (id_usuario_filial, id_matriz, id_usuario)
+            PRIMARY KEY (id_funcionario, id_matriz, id_usuario)
     );
     
-    CREATE TABLE setor(
+    CREATE TABLE IF NOT EXISTS setor(
     id_setor INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100)
     );
 
 
-    CREATE TABLE vao(
+    CREATE TABLE IF NOT EXISTS vao(
     id_vao INT PRIMARY KEY AUTO_INCREMENT,
     numero INT,
     id_filial INT,
@@ -83,19 +81,19 @@
         FOREIGN KEY (id_matriz, id_filial) REFERENCES filial (id_matriz, id_filial)
     );
     
-        CREATE TABLE sensor(
-        id_sensor INT PRIMARY KEY AUTO_INCREMENT,
-        dt_instalacao DATE,
-        statuss VARCHAR(10),
-        id_vao INT,
+	CREATE TABLE IF NOT EXISTS sensor(
+	id_sensor INT PRIMARY KEY AUTO_INCREMENT,
+	dt_instalacao DATE,
+	statuss VARCHAR(10),
+	id_vao INT,
         
-		CONSTRAINT const_fk_vao
-			FOREIGN KEY (id_vao) REFERENCES vao (id_vao),
-        CONSTRAINT ch_statuss
-            CHECK (statuss IN ('Ativo','Inativo','Manutenção'))
-        );
+	CONSTRAINT const_fk_vao
+		FOREIGN KEY (id_vao) REFERENCES vao (id_vao),
+	CONSTRAINT ch_statuss
+		CHECK (statuss IN ('Ativo','Inativo','Manutenção'))
+	);
         
-	CREATE TABLE coleta(
+	CREATE TABLE IF NOT EXISTS coleta(
         id_coleta INT AUTO_INCREMENT,
         id_sensor INT,
         dt_coleta DATETIME DEFAULT CURRENT_TIMESTAMP,
