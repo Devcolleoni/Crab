@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRAB - Configurações</title>
+    <link rel="stylesheet" href="../styles/dashboard.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="fundo-adduser">
+
+    <div class="sidebar">
+        <div class="logo">
+            <span>CRAB</span>
+        </div>
+        <div class="info-usuario">
+            <p>Bem-vindo(a), <strong>Usuário</strong></p>
+        </div>
+
+        <nav class="menu">
+            <a href="matriz.html" ><i class="bi bi-speedometer2"></i> Painel Filiais</a>
+            <a href="gerenciamento-Matriz.html"><i class="bi bi-gear"></i> Gerenciar Filiais</a>
+            <a href="adduser.html"><i class="bi bi-person-plus"></i> Adicionar Usuário</a>
+            <a href="configuração.html" class="ativo"><i class="bi bi-gear"></i> Configurações</a>
+            <a href="ajuda.html"><i class="bi bi-question-circle"></i> Ajuda</a>
+        </nav>
+
+        <div class="rodape-sidebar">
+            <a href="../login.html">Sair <i class="bi bi-box-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="conteudo-principal">
+        <div class="cabecalho">
+            <h1>Configurações</h1>
+            <div class="data">11 de abril de 2026</div>
+        </div>
+
+        <div class="envoltorio-config">
+            <div class="cartao-config">
+                <div class="cabecalho-config">
+                    <i class="bi bi-person-circle"></i>
+                    <div>
+                        <h2>Perfil do Usuário</h2>
+                        <p>Gerencie suas informações pessoais e de acesso</p>
+                    </div>
+                </div>
+
+                <div class="config-form">
+                    <div class="campo">
+                        <label for="nomeUsuario">Usuário</label>
+                        <input type="text" id="nomeUsuario" placeholder="Seu nome de usuário">
+                    </div>
+
+                    <div class="campo">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="seu@email.com">
+                    </div>
+                    <div class="campo">                      
+                        <label for="senhaAtual">Senha Atual</label>
+                        <input type="password" id="senhaAtual" placeholder="Digite sua senha atual">
+                    </div>
+
+                    <div class="campo">
+                        <label for="novaSenha">Nova Senha</label>
+                        <input type="password" id="senhaNova" placeholder="Digite a nova senha">
+                    </div>
+
+                    <div class="campo">
+                        <label for="confirmarSenha">Confirmar Nova Senha</label>
+                        <input type="password" id="confirmarSenha" placeholder="Confirme a nova senha">
+                    </div>
+                    <button class="botao-salvar" onclick="salvarAlteracoes()">
+                        <i class="bi bi-check2-circle"></i>
+                        Salvar Alterações
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function salvarAlteracoes() {
+           let id = sessionStorage.getItem("ID_USUARIO")
+            let senha = senhaNova.value
+            let senhaantiga = senhaAtual.value
+            let Email = email.value
+                fetch("/usuarios/Atualizar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+               idServer: id,
+               NovaServer: senha,
+               AntigaServer: senhaantiga,
+               EmailServer: Email
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+                alert("Senha Atualizada!!")
+                resposta.json().then(json => {
+
+                   
+                });
+
+            } else {
+                console.log("Houve um erro ao atualizar a senha!!");
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+
+
+        }
+    </script>
+
+</body>
+</html>

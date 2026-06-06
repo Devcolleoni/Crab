@@ -1,137 +1,58 @@
-// function entrar() {
+function entrar() {
+    var emailVar = ipt_usuario.value;
+    var senhaVar = ipt_senha.value;
 
-//         if (user == "" || senhaDigitada == "") {
-//             mensagem.innerHTML = "Preencha todos os campos!";
-//             mensagem.style.color = "red";
-//             return;
-//         } if (!user.includes("@") || !user.includes(".com")) {
-//             mensagem.innerHTML = "Digite um e-mail válido!";
-//             mensagem.style.color = "red";
-//             return;
-//         }
+    console.log("FORM LOGIN: ", emailVar);
+    console.log("FORM SENHA: ", senhaVar);
 
-        // if (user == "Crab@institucional.com.br" && senhaDigitada == "Crab777") {
-
-        //     if (lembrar.checked) {
-        //         localStorage.setItem("email", user);
-        //         localStorage.setItem("senha", senhaDigitada);
-        //     } else {
-        //         localStorage.removeItem("email");
-        //         localStorage.removeItem("senha");
-        //     }
-
-        //     mensagem.innerHTML = "Login realizado com sucesso!";
-        //     mensagem.style.color = "green";
-        //     alert("Bem vindo " + user);
-
-        //     window.location.href = `../public/Dashboard - HTML/dashboard.html`;
-
-        // } else if (user == 'Admin@gmail.com' && senhaDigitada == 'admin777') {
-
-        //     mensagem.innerHTML = "Login realizado com sucesso!";
-        //     mensagem.style.color = "green";
-        //     alert("Bem vindo Administrador ");
-
-        //     window.location.href = `/dashboard/admin.html`;
-
-
-
-        // } else {
-        //     mensagem.innerHTML = "Usuário ou senha inválidos!";
-        //     mensagem.style.color = "red";
-        // }
-
-    // }
-
-    /*Executa qnd a pagina termina de carregar */
-
-    // window.onload = function () {
-    //     if (localStorage.getItem("email")) {
-    //         usuario.value = localStorage.getItem("email");
-    //         senha.value = localStorage.getItem("senha");
-    //         lembrar.checked = true;
-    //     }
-
-    function entrar() {
-
-        var emailVar = ipt_usuario.value;
-        var senhaVar = ipt_senha.value;
-
-        // if (emailVar == "" || senhaVar == "") {
-        //     mensagem.innerHTML = "Preencha todos os campos!";
-        //     mensagem.style.color = "red";
-        //     return;
-        // } if (!emailVar.includes("@") || !emailVar.includes(".com")) {
-        //     mensagem.innerHTML = "Digite um e-mail válido!";
-        //     mensagem.style.color = "red";
-        //     return;
-        // }
-
-        // if (emailVar == "" || senhaVar == "") {
-        //     cardErro.style.display = "block"
-        //     mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
-        //     finalizarAguardar();
-        //     return false;
-        // }
-        // else {
-        //     setInterval(sumirMensagem, 5000)
-        // }
-
-        console.log("FORM LOGIN: ", emailVar);
-        console.log("FORM SENHA: ", senhaVar);
-
-        fetch("/usuarios/autenticar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                emailServer: emailVar,
-                senhaServer: senhaVar
-            })
-        }).then(function (resposta) {
-            console.log("ESTOU NO THEN DO entrar()!")
-
-            if (resposta.ok) {
-                console.log(resposta);
-
-                resposta.json().then(json => {
-                    console.log(json);
-                    console.log(JSON.stringify(json));
-                     console.log("JSON COMPLETO:", json)
-                    sessionStorage.EMAIL_USUARIO = json.email;
-                    sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.setItem("ID_USUARIO", json.id_usuario);
-                    sessionStorage.setItem("ID_CARGO", json.id_cargo);
-                    sessionStorage.setItem("ID_MATRIZ", json.id_matriz)
-                    console.log("ID_MATRIZ RECEBIDO:", json.id_matriz)
-                    console.log("SESSION ID_MATRIZ:", sessionStorage.getItem("ID_MATRIZ"));
-                    alert("Autenticado!")
-
-
-                     let rotas = {
-        1: "./dashboard/admin.html",
-        2: "./dashboard/Matriz.html",
-        3: "./dashboard/dashboard.html"
-    };
-
-    window.location = rotas[json.id_cargo] ?? "./dashboard/dashboard.html";
-                });
-
-            } else {
-
-                console.log("Houve um erro ao tentar realizar o login!");
-
-                // resposta.text().then(texto => {
-                //     console.error(texto);
-                //     finalizarAguardar(texto);
-                // });
-            }
-
-        }).catch(function (erro) {
-            console.log(erro);
+    fetch("/usuarios/autenticar", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            emailServer: emailVar,
+            senhaServer: senhaVar
         })
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO entrar()!")
 
-        return false;
-    }
- 
+        if (resposta.ok) {
+            console.log(resposta);
+
+            resposta.json().then(json => {
+                console.log(json);
+                console.log(JSON.stringify(json));
+                console.log("JSON COMPLETO:", json)
+                
+                // Salvando os dados no SessionStorage
+                sessionStorage.EMAIL_USUARIO = json.email;
+                sessionStorage.NOME_USUARIO = json.nome;
+                sessionStorage.setItem("ID_USUARIO", json.id_usuario);
+                sessionStorage.setItem("ID_CARGO", json.id_cargo);
+                sessionStorage.setItem("ID_MATRIZ", json.id_matriz)
+                
+                console.log("ID_MATRIZ RECEBIDO:", json.id_matriz)
+                console.log("SESSION ID_MATRIZ:", sessionStorage.getItem("ID_MATRIZ"));
+                alert("Autenticado!");
+
+                if (json.id_cargo == 1) {window.location = "./dashboard/admin.html";} 
+                else if (json.id_cargo == 2) {window.location = "./dashboard2/matriz.html";} 
+                else if (json.id_cargo == 3) {window.location = "./dashboard3/dashboard.html";} 
+                else if (json.id_cargo == 4) {window.location = "./dashboard4/dashboard.html";} 
+                else {
+                    console.log("Cargo não reconhecido");
+                    alert("Cargo ou Login não reconhecido");
+                }
+            });
+
+        } else {
+            console.log("Houve um erro ao tentar realizar o login!");
+        }
+
+    }).catch(function (erro) {
+        console.log(erro);
+    });
+
+    return false;
+}
