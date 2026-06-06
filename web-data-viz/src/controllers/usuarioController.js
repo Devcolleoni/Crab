@@ -22,6 +22,7 @@ function autenticar(req, res) {
                   nome: resultadoAutenticar[0].nome,
                   email: resultadoAutenticar[0].email,
                   id_cargo: resultadoAutenticar[0].id_cargo,
+                  id_filial: resultadoAutenticar[0].id_filial,
                   id_matriz: resultadoAutenticar[0].id_matriz
 });         
                 } else if (resultadoAutenticar.length == 0) {
@@ -43,14 +44,14 @@ function autenticar(req, res) {
 
 function cadastrar(req, res) {
 
-    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
-    var nomeVar = req.body.nomeServer
-    var cpfVar = req.body.cpfServer;
-    var emailVar = req.body.emailServer;
-    var razaoSocialVar = req.body.razaoSocialServer;
-    var cnpjVar = req.body.cnpjServer;
+    
+    let nomeVar = req.body.nomeServer
+    let cpfVar = req.body.cpfServer;
+    let emailVar = req.body.emailServer;
+    let razaoSocialVar = req.body.razaoSocialServer;
+    let cnpjVar = req.body.cnpjServer;
 
-    // Faça as validações dos valores
+    
     if (nomeVar == undefined) {
         res.status(400).send("Seu nome está undefined!");
     } else if (cpfVar == undefined) {
@@ -63,7 +64,7 @@ function cadastrar(req, res) {
         res.status(400).send("Sua CNPJ está undefined!");
     } else {
 
-        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+        
         usuarioModel.cadastrar(nomeVar, cpfVar, emailVar, razaoSocialVar, cnpjVar)
             .then(
                 function (resultado) {
@@ -83,10 +84,10 @@ function cadastrar(req, res) {
 }
 
   function Atualizar(req, res) {
-    var SenhaVar = req.body.NovaServer;
-    var idVar = req.body.idServer;
-    var Antigavar = req.body.AntigaServer
-    var Emailvar = req.body.EmailServer
+    let SenhaVar = req.body.NovaServer;
+    let idVar = req.body.idServer;
+    let Antigavar = req.body.AntigaServer
+    let Emailvar = req.body.EmailServer
 
     usuarioModel.Atualizar(SenhaVar, idVar, Antigavar, Emailvar)
         .then(function (resultado) {

@@ -2,14 +2,18 @@ var setorModel = require("../models/setorModel");
 
 function cadastrar(req, res) {
 
-    var nomeSetor = req.body.nomeSetorServer;
-    var vaoInicial = req.body.vaoInicialServer;
-    var vaoFinal = req.body.vaoFinalServer;
+    let nomeSetor = req.body.nomeSetorServer;
+    let vaoInicial = req.body.vaoInicialServer;
+    let vaoFinal = req.body.vaoFinalServer;
+    let idFilial = req.body.idFilialServer;
+    let idMatriz = req.body.idMatrizServer;
 
     setorModel.cadastrar(
         nomeSetor,
         vaoInicial,
-        vaoFinal
+        vaoFinal, 
+        idFilial,
+        idMatriz
     )
     .then(function(resultado) {
         res.status(200).json(resultado);
