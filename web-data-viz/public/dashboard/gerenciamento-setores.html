@@ -126,18 +126,10 @@
     </div>
 
     <script>
-
+        
         function abrirModal(idModal) {
             document.getElementById(idModal).style.display = "flex";
-
-
-            if (idModal === "modalSetor") {
-                document.getElementById("ipt_nomeSetor").value = "";
-                document.getElementById("ipt_vao_inicial").value = "";
-                document.getElementById("ipt_vao_final").value = "";
-            }
         }
-
 
         function fecharModal(idModal) {
             document.getElementById(idModal).style.display = "none";
@@ -146,12 +138,9 @@
         window.onload = listarSetores;
 
         function cadastrarSetor() {
-            var nomeSetor = document.getElementById("ipt_nomeSetor").value;
-            var vaoInicial = Number(document.getElementById("ipt_vao_inicial").value);
-            var vaoFinal = Number(document.getElementById("ipt_vao_final").value);
-
-            sessionStorage.ID_FILIAL = 1;
-            sessionStorage.ID_MATRIZ = 1;
+            let nomeSetor = document.getElementById("ipt_nomeSetor").value;
+            let vaoInicial = Number(document.getElementById("ipt_vao_inicial").value);
+            let vaoFinal = Number(document.getElementById("ipt_vao_final").value);
 
             if (nomeSetor == " " || vaoInicial == "" || vaoFinal == "") {
                 alert('Preeencha todos os campos');
@@ -167,28 +156,22 @@
                     nomeSetorServer: nomeSetor,
                     vaoInicialServer: vaoInicial,
                     vaoFinalServer: vaoFinal,
-
                     idFilialServer: sessionStorage.ID_FILIAL,
                     idMatrizServer: sessionStorage.ID_MATRIZ
                 })
             })
                 .then(function (resposta) {
+
                     if (resposta.ok) {
                         alert('Setor cadastrado com sucesso!');
                         fecharModal("modalSetor");
-
-                        
-                        document.getElementById("ipt_nomeSetor").value = "";
-                        document.getElementById("ipt_vao_inicial").value = "";
-                        document.getElementById("ipt_vao_final").value = "";
                     } else {
                         throw "Erro ao cadastrar setor"
-                        
                     }
 
                     listarSetores();
-                })
 
+                })
                 .catch(function (erro) {
                     console.log(erro);
                 });
@@ -203,26 +186,43 @@
                     card_setores.innerHTML = "";
 
                     for (let i = 0; i < setores.length; i++) {
+                        var dadosSetor = setores[i];
+                        var textoVao = "";
+
+                
+                        if (dadosSetor.vao_inicial == null) {
+                            textoVao = "Nenhum vão cadastrado";
+                        } else if (dadosSetor.vao_final == null) {
+                            textoVao = "Nenhum vão cadastrado";
+                        } else {
     
+                            textoVao = "Do vão " + dadosSetor.vao_inicial + " ao " + dadosSetor.vao_final;
+                        }
+
                         card_setores.innerHTML += `
                 <div class="setor">
                     <div class="info-setor">
                         <div class="sigla"><i class="bi bi-signpost-2-fill"></i></div>
                         <div class="texto-setor">
-                            <h3>${setores[i].nome}</h3>
-                            <p>Vãos: de ${setores[i].vao_inicial} até ${setores[i].vao_final}</p>
+                            <h3>${dadosSetor.nome}</h3>
+                            <p style="margin: 5px 0 0 0; color: #64748b; font-size: 14px;">
+                                ${textoVao}
+                            </p>
                         </div>
                     </div>
+
                     <div class="acoes">
-                        <button class="botao" onclick="editarSetor(${setores[i].id_setor}, '${setores[i].nome}')">Editar</button>
-                        <button class="botao" onclick="removerSetor(${setores[i].id_setor})">Remover</button>
+                        <button class="botao" onclick="editarSetor(${dadosSetor.id_setor}, '${dadosSetor.nome}')">Editar</button>
+                        <button class="botao" onclick="removerSetor(${dadosSetor.id_setor})">Remover</button>
                     </div>
                 </div>
             `;
                     }
+                })
+                .catch(function (erro) {
+                    console.log("Erro ao listar setores: ", erro);
                 });
         }
-
 
         function removerSetor(idSetor) {
 
@@ -255,7 +255,7 @@
 
         function salvarSetor() {
 
-            var nome = document.getElementById("edit_ipt_nomeSetor").value;
+            let nome = document.getElementById("edit_ipt_nomeSetor").value;
 
             fetch(`/setores/editar/${idSetorEdicao}`, {
                 method: "PUT",
