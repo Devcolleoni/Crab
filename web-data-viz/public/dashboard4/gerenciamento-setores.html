@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Setor</title>
+    <link rel="stylesheet" href="../styles/setor.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <span>CRAB</span>
+        </div>
+        <div class="info-usuario">
+            <p>Bem-vindo(a), <strong>Usuário</strong></p>
+        </div>
+        <nav class="menu">
+            <a href="dashboard.html"><i class="bi bi-speedometer2"></i> Painel</a>
+            <a href="gerenciamento-setores.html" class="ativo"><i class="bi bi-signpost-2-fill"></i> Gerenciar
+                Setores</a>
+                <a href="adduser.html"><i class="bi bi-person-plus"></i> Adicionar Usuário</a>
+            <a href="configuração.html"><i class="bi bi-gear"></i> Configurações</a>
+            <a href="ajuda.html"><i class="bi bi-question-circle"></i> Ajuda</a>
+        </nav>
+        <div class="rodape-sidebar">
+            <a href="../login.html">Sair <i class="bi bi-box-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <section id="gerenciamento-setores">
+        <div class="cabecalho">
+            <h1>Gerenciar Setores</h1>
+            <button onclick="abrirModal('modalSetor')">Adicionar Setor</button>
+        </div>
+
+        <div class="buscar">
+            <input type="text" id="ipt_setor" placeholder="Buscar por nome">
+        </div>
+
+        <div class="setores-container">
+            <div class="cabecalho">
+                <h3>Setor</h3>
+            </div>
+
+            <div class="card-setores" id="card_setores"></div>
+        </div>
+    </section>
+
+    <div class="envoltorio-config" id="modalSetor">
+        <div class="cartao-config">
+            <div class="cabecalho-addsetor">
+                <i class="bi bi-signpost-2-fill"></i>
+                <div>
+                    <h2>Adicionar Novo Setor</h2>
+                    <p>Cadastre um novo setor no seu sistema</p>
+                </div>
+            </div>
+
+            <div class="config-form">
+                <div class="campo">
+                    <label for="nomeSetor">Nome do Setor:</label>
+                    <input type="text" id="ipt_nomeSetor" placeholder="Ex... Higiene">
+                </div>
+
+                <div class="campo">
+                    <label>Defina o intervalo entre os vãos</label>
+                    <div class="inputs">
+                        <div class="input">
+                            <label for="ipt_vao_inicial">Inicial:</label>
+                            <input id="ipt_vao_inicial" type="number">
+                        </div>
+                        <div class="input">
+                            <label for="ipt_vao_final">Final:</label>
+                            <input id="ipt_vao_final" type="number">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="botoes">
+                <button class="botao" onclick="fecharModal('modalSetor')">Cancelar</button>
+                <button class="botao" onclick="cadastrarSetor()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="envoltorio-config" id="modalEditarSetor">
+        <div class="cartao-config">
+            <div class="cabecalho-addsetor">
+                <i class="bi bi-signpost-2-fill"></i>
+                <div>
+                    <h2>Editar Setor</h2>
+                    <p>Altere as informações do seu setor</p>
+                </div>
+            </div>
+
+            <div class="config-form">
+                <div class="campo">
+                    <label for="nomeSetor">Nome do Setor:</label>
+                    <input type="text" id="edit_ipt_nomeSetor" placeholder="Ex... Higiene">
+                </div>
+
+                <div class="campo">
+                    <label>Defina o intervalo entre os vãos</label>
+                    <div class="inputs">
+                        <div class="input">
+                            <label for="ipt_vao_inicial">Inicial:</label>
+                            <input id="edit_ipt_vao_inicial" type="number">
+                        </div>
+                        <div class="input">
+                            <label for="ipt_vao_final">Final:</label>
+                            <input id="edit_ipt_vao_final" type="number">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="botoes">
+                <button class="botao" onclick="fecharModal('modalEditarSetor')">Cancelar</button>
+                <button class="botao" onclick="salvarSetor()">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+        function abrirModal(idModal) {
+            document.getElementById(idModal).style.display = "flex";
+        }
+
+        function fecharModal(idModal) {
+            document.getElementById(idModal).style.display = "none";
+        }
+
+        window.onload = listarSetores;
+
+        function cadastrarSetor() {
+            let nomeSetor = document.getElementById("ipt_nomeSetor").value;
+            let vaoInicial = Number(document.getElementById("ipt_vao_inicial").value);
+            let vaoFinal = Number(document.getElementById("ipt_vao_final").value);
+
+            if (nomeSetor == " " || vaoInicial == "" || vaoFinal == "") {
+                alert('Preeencha todos os campos');
+                return;
+            }
+
+            fetch("/setores/cadastrar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    nomeSetorServer: nomeSetor,
+                    vaoInicialServer: vaoInicial,
+                    vaoFinalServer: vaoFinal,
+                    idFilialServer: sessionStorage.ID_FILIAL,
+                    idMatrizServer: sessionStorage.ID_MATRIZ
+                })
+            })
+                .then(function (resposta) {
+
+                    if (resposta.ok) {
+                        alert('Setor cadastrado com sucesso!');
+                        fecharModal("modalSetor");
+                    } else {
+                        throw "Erro ao cadastrar setor"
+                    }
+
+                    listarSetores();
+
+                })
+                .catch(function (erro) {
+                    console.log(erro);
+                });
+        }
+
+        function listarSetores() {
+            fetch(`/setores/listar`)
+                .then(function (resposta) {
+                    return resposta.json();
+                })
+                .then(function (setores) {
+                    card_setores.innerHTML = "";
+
+                    for (let i = 0; i < setores.length; i++) {
+                        var dadosSetor = setores[i];
+                        var textoVao = "";
+
+                
+                        if (dadosSetor.vao_inicial == null) {
+                            textoVao = "Nenhum vão cadastrado";
+                        } else if (dadosSetor.vao_final == null) {
+                            textoVao = "Nenhum vão cadastrado";
+                        } else {
+    
+                            textoVao = "Do vão " + dadosSetor.vao_inicial + " ao " + dadosSetor.vao_final;
+                        }
+
+                        card_setores.innerHTML += `
+                <div class="setor">
+                    <div class="info-setor">
+                        <div class="sigla"><i class="bi bi-signpost-2-fill"></i></div>
+                        <div class="texto-setor">
+                            <h3>${dadosSetor.nome}</h3>
+                            <p style="margin: 5px 0 0 0; color: #64748b; font-size: 14px;">
+                                ${textoVao}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="acoes">
+                        <button class="botao" onclick="editarSetor(${dadosSetor.id_setor}, '${dadosSetor.nome}')">Editar</button>
+                        <button class="botao" onclick="removerSetor(${dadosSetor.id_setor})">Remover</button>
+                    </div>
+                </div>
+            `;
+                    }
+                })
+                .catch(function (erro) {
+                    console.log("Erro ao listar setores: ", erro);
+                });
+        }
+
+        function removerSetor(idSetor) {
+
+            fetch(`/setores/remover/${idSetor}`, {
+                method: "DELETE"
+            })
+                .then(function (resposta) {
+
+                    if (resposta.ok) {
+                        alert('Setor Removido com sucesso!');
+                        listarSetores();
+                    } else {
+                        throw "Erro ao remover setor";
+                    }
+                })
+                .catch(function (erro) {
+                    console.log(erro);
+                });
+        }
+
+        let idSetorEdicao = null;
+
+        function editarSetor(id, nome) {
+            idSetorEdicao = id;
+
+            document.getElementById("edit_ipt_nomeSetor").value = nome;
+
+            abrirModal("modalEditarSetor");
+        }
+
+        function salvarSetor() {
+
+            let nome = document.getElementById("edit_ipt_nomeSetor").value;
+
+            fetch(`/setores/editar/${idSetorEdicao}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    nomeServer: nome,
+                    idFilialServer: sessionStorage.ID_FILIAL,
+                    idMatrizServer: sessionStorage.ID_MATRIZ
+                })
+            })
+                .then(res => {
+                    if (res.ok) {
+                        alert("Setor atualizado!");
+                        fecharModal("modalEditarSetor");
+
+                        listarSetores();
+                    }
+                });
+        }
+
+    </script>
+</body>
+
+</html>
