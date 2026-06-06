@@ -199,20 +199,6 @@ INSERT INTO coleta (id_sensor, abastecido) VALUES
 (36, 1), (37, 1), (38, 1), (39, 0), (40, 1), (41, 1), (42, 1), (43, 1), (44, 0), (45, 1),
 (46, 0), (47, 0), (48, 1), (49, 0), (50, 0);
 
-CREATE VIEW vw_tx_abastecimento AS
-SELECT 
-    f.razao_social AS Filial,
-    COUNT(v.id_vao) AS Qtd_vao,
-    IFNULL(SUM(c.abastecido), 0) AS Qtd_vao_abastecido
-FROM filial f
-LEFT JOIN vao v ON f.id_filial = v.id_filial AND f.id_matriz = v.id_matriz
-LEFT JOIN sensor s ON v.id_vao = s.id_vao
-LEFT JOIN coleta c ON s.id_sensor = c.id_sensor
-GROUP BY f.razao_social;
-SELECT * FROM vw_tx_abastecimento;
-
-SELECT * FROM vw_tx_abastecimento;
-
 INSERT INTO coleta (id_sensor, dt_coleta, abastecido) VALUES
 -- DIA 1 (Manhã) - Vão Livre
 (1, '2026-06-10 08:00:00', 0),
@@ -253,3 +239,17 @@ INSERT INTO coleta (id_sensor, dt_coleta, abastecido) VALUES
 (1, '2026-06-11 11:00:00', 0),
 (1, '2026-06-11 12:00:00', 0),
 (1, '2026-06-11 13:00:00', 0);
+
+CREATE VIEW vw_tx_abastecimento AS
+SELECT 
+    f.razao_social AS Filial,
+    COUNT(v.id_vao) AS Qtd_vao,
+    IFNULL(SUM(c.abastecido), 0) AS Qtd_vao_abastecido
+FROM filial f
+LEFT JOIN vao v ON f.id_filial = v.id_filial AND f.id_matriz = v.id_matriz
+LEFT JOIN sensor s ON v.id_vao = s.id_vao
+LEFT JOIN coleta c ON s.id_sensor = c.id_sensor
+GROUP BY f.razao_social;
+SELECT * FROM vw_tx_abastecimento;
+
+SELECT * FROM vw_tx_abastecimento;
