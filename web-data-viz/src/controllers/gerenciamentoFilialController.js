@@ -10,9 +10,6 @@ function cadastrarFilial(req, res) {
     var idMatrizVar = req.body.idMatrizServer
     console.log(req.body)
     console.log("ID MATRIZ:", idMatrizVar)
-
-
-    var idMatrizVar = req.body.idMatriz
     
 
 
@@ -104,9 +101,42 @@ function listarFiliais(req, res) {
         })
 }
 
+function listarResponsaveis(req, res) {
+
+    let idMatriz = req.params.idMatriz
+
+    filialModel.listarResponsaveis(idMatriz)
+    .then(resultado => {
+        res.status(200).json(resultado)
+    })
+    .catch(erro => {
+        console.log(erro)
+        res.status(500).json(erro.sqlMessage)
+    })
+}
+
+function vincularResponsavel(req, res) {
+
+    let idUsuario = req.body.idUsuarioServer
+    let idFilial = req.body.idFilialServer
+    let idMatriz = req.body.idMatrizServer
+
+    filialModel.vincularResponsavel(idUsuario, idFilial, idMatriz)
+        .then(resultado => {
+
+            res.status(200).json(resultado)
+        })
+        .catch(erro => {
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage)
+        });
+}
+
 
 module.exports = {
     cadastrarFilial,
     cadastrarResponsavel,
-    listarFiliais
+    listarFiliais,
+    vincularResponsavel,
+    listarResponsaveis
 }

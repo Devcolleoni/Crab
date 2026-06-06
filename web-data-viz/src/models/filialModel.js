@@ -3,7 +3,7 @@ var database = require("../database/config")
 
 function cadastrarFilial(razaoSocialVar, cnpjVar, cepVar, idMatrizVar) {
     console.log("ACESSEI O FILIAL MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", razaoSocialVar, cnpjVar, cepVar, idMatrizVar);
-    
+
     console.log("razaoSocialVar:", razaoSocialVar)
     console.log("cnpjVar:", cnpjVar)
     console.log("cepVar:", cepVar)
@@ -57,9 +57,43 @@ function listarFiliais(idMatriz) {
 
 }
 
+function listarResponsaveis(idMatriz) {
+
+    var instrucaoSql = `
+    SELECT u.id_usuario, u.nome, u.email
+    FROM usuario u
+    WHERE u.id_usuario IN (
+    SELECT DISTINCT f.id_usuario
+    FROM funcionario f
+    WHERE f.id_matriz = ${idMatriz}
+      AND f.id_cargo = 3); `
+    console.log("Executando SQL:\n" + instrucaoSql);
+
+    return database.executar(instrucaoSql);
+}
+
+function vincularResponsavel(idUsuario, idFilial, idMatriz) {
+
+    var instrucaoSql = `
+    INSERT INTO funcionario (id_usuario, id_filial, id_matriz, id_cargo)
+    SELECT ${idUsuario}, ${idFilial}, ${idMatriz}, 3
+    WHERE NOT EXISTS (
+    SELECT 1 FROM funcionario
+    WHERE id_usuario = ${idUsuario}
+      AND id_filial = ${idFilial}
+      AND id_matriz = ${idMatriz}
+      AND id_cargo = 3);`
+
+    console.log("Executando SQL:\n" + instrucaoSql);
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     cadastrarFilial,
     cadastrarResponsavel,
-    listarFiliais
+    listarFiliais,
+    listarResponsaveis,
+    vincularResponsavel
 }
 

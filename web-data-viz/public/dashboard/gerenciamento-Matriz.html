@@ -52,93 +52,117 @@
             </div>
 
             <div class="card-filiais" id="div_filiais">
-                
+
 
             </div>
         </div>
 
-        
-    
 
-    <div class="envoltorio-config" id="modalFilial">
-        <div class="cartao-config">
-            <div class="cabecalho-adduser">
-                <i class="bi bi-person-plus-fill"></i>
-                <div>
-                    <h2>Adicionar Nova Filial</h2>
-                    <p>Cadastre uma nova filial ao seu sistema</p>
-                       
-                </div>
-            </div>
 
-            <div class="config-form">
-                <div class="campo">
-                    <label for="nomeUsuario">Razão Social:</label>
-                    <input type="text" id="ipt_razaoSocial" placeholder="Nome Filial" oninput="validarRazaoSocial()" >
+
+        <div class="envoltorio-config" id="modalFilial">
+            <div class="cartao-config">
+                <div class="cabecalho-adduser">
+                    <i class="bi bi-person-plus-fill"></i>
+                    <div>
+                        <h2>Adicionar Nova Filial</h2>
+                        <p>Cadastre uma nova filial ao seu sistema</p>
+
+                    </div>
                 </div>
 
-                <div class="campo">
-                    <label for="novaSenha">Cnpj:</label>
-                    <input type="text" id="ipt_cnpj" placeholder="00.000.000/0000-00" oninput="validarCPNJ()">
+                <div class="config-form">
+                    <div class="campo">
+                        <label for="nomeUsuario">Razão Social:</label>
+                        <input type="text" id="ipt_razaoSocial" placeholder="Nome Filial"
+                            oninput="validarRazaoSocial()">
+                    </div>
+
+                    <div class="campo">
+                        <label for="novaSenha">Cnpj:</label>
+                        <input type="text" id="ipt_cnpj" placeholder="00.000.000/0000-00" oninput="validarCPNJ()">
+                    </div>
+
+                    <div class="campo">
+                        <label for="email">Cep:</label>
+                        <input type="text" id="ipt_cep" placeholder="00000-000" oninput="validarCEP()">
+                    </div>
+
                 </div>
+                <div class="botoes-adduser">
 
-                <div class="campo">
-                    <label for="email">Cep:</label>
-                    <input type="text" id="ipt_cep" placeholder="00000-000" oninput="validarCEP()">
+                    <button class="botao-adduser" onclick="fecharModal('modalFilial')">Voltar</button>
+                    <button class="botao-adduser"
+                        onclick="cadastrarFilial(),trocarModal('modalFilial', 'modalResponsavel')">Próximo</button>
+
                 </div>
-
-            </div>
-            <div class="botoes-adduser">
-
-                <button class="botao-adduser" onclick="fecharModal('modalFilial')">Voltar</button>
-                <button class="botao-adduser" onclick="cadastrarFilial(),trocarModal('modalFilial', 'modalResponsavel')">Próximo</button>
-
             </div>
         </div>
-    </div>
 
-    <div class="envoltorio-config" id="modalResponsavel">
-        <div class="cartao-config">
-            <div class="cabecalho-adduser">
-                <i class="bi bi-person-plus-fill"></i>
-                <div>
-                    <h2>Adicionar O Responsável</h2>
-                    <p>Atribue um responsável pela sua Filial</p>
-                       
-                </div>
-            </div>
 
-            <div class="config-form">
-                <div class="campo">
-                    <label for="nomeUsuario">Nome Responsável:</label>
-                    <input type="text" id="ipt_nome" placeholder="Responsavel">
+
+        <div class="envoltorio-config" id="modalResponsavel">
+            <div class="cartao-config">
+                <div class="cabecalho-adduser">
+                    <i class="bi bi-person-plus-fill"></i>
+                    <div>
+                        <h2>Adicionar O Responsável</h2>
+                        <p>Atribue um responsável pela sua Filial</p>
+
+                    </div>
                 </div>
 
-                <div class="campo">
-                    <label for="cpf">CPF Responsável:</label>
-                    <input type="text" id="ipt_cpf" placeholder="000-000-000-00">
+                <div class="config-form">
+
+                    <div class="campo">
+                        <label>Tipo de responsável:</label>
+
+                        <select id="select_tipo_responsavel" onchange="trocarTipoResponsavel()">
+                            <option value="novo">Criar novo responsável</option>
+                            <option value="existente">Usar responsável existente</option>
+                        </select>
+                    </div>
+
+                    <div id="form-novo">
+                    <div class="campo">
+                        <label for="nomeUsuario">Nome Responsável:</label>
+                        <input type="text" id="ipt_nome" placeholder="Responsavel">
+                    </div>
+
+                    <div class="campo">
+                        <label for="cpf">CPF Responsável:</label>
+                        <input type="text" id="ipt_cpf" placeholder="000-000-000-00">
+                    </div>
+
+                    <div class="campo">
+                        <label for="novaSenha">Email:</label>
+                        <input type="email" id="ipt_email" placeholder="responvel@gmail.com">
+                    </div>
+
+                    <div class="campo">
+                        <label for="senha">Senha:</label>
+                        <input type="password" id="ipt_senha" placeholder="********">
+                    </div>
                 </div>
 
-                <div class="campo">
-                    <label for="novaSenha">Email:</label>
-                    <input type="email" id="ipt_email" placeholder="responvel@gmail.com">
+                <div id="div_existente" style="display:none;">
+                    <div class="campo">
+                        <select id="select_responsavel"></select>
+                    </div>
                 </div>
 
-                <div class="campo">
-                    <label for="senha">Senha:</label>
-                    <input type="password" id="ipt_senha" placeholder="********">
+
                 </div>
+                <div class="botoes-adduser">
 
-            </div>
-            <div class="botoes-adduser">
+                    <button class="botao-adduser"
+                        onclick="trocarModal('modalResponsavel', 'modalFilial')">Voltar</button>
+                    <button class="botao-adduser" onclick="finalizarResponsavel()">Finalizar</button>
 
-                <button class="botao-adduser" onclick="trocarModal('modalResponsavel', 'modalFilial')">Voltar</button>
-                <button class="botao-adduser" onclick="cadastrarResponsavel()">Finalizar</button>
-
+                </div>
             </div>
         </div>
-    </div>
-    
+
     </section>
 
 
@@ -154,11 +178,11 @@
 </html>
 <script>
     function abrirModal(idModal) {
-        document.getElementById(idModal).style.display = "flex" 
+        document.getElementById(idModal).style.display = "flex"
     }
 
     function fecharModal(idModal) {
-        document.getElementById(idModal).style.display = "none" 
+        document.getElementById(idModal).style.display = "none"
     }
 
     function trocarModal(fechar, abrir) {
@@ -167,40 +191,40 @@
     }
 
     function validarRazaoSocial() {
-    let empresa = ipt_razaoSocial.value;
+        let empresa = ipt_razaoSocial.value;
 
-    if (empresa.length >= 3) {
-        validacaoEmpresa = true;
-        
-    } else {
-        validacaoEmpresa = false;
-        
+        if (empresa.length >= 3) {
+            validacaoEmpresa = true;
+
+        } else {
+            validacaoEmpresa = false;
+
+        }
     }
-}
 
     function validarCPNJ() {
-    let cnpj = ipt_cnpj.value;
+        let cnpj = ipt_cnpj.value;
 
-    if(cnpj.length == 18 && cnpj.includes(".") && cnpj.includes("/") && cnpj.includes("-")) {
-        validacaoCNPJ = true;
-        
-    } else {
-        validacaoCNPJ = false;
-        
+        if (cnpj.length == 18 && cnpj.includes(".") && cnpj.includes("/") && cnpj.includes("-")) {
+            validacaoCNPJ = true;
+
+        } else {
+            validacaoCNPJ = false;
+
+        }
     }
-}
 
-function validarCEP() {
-    let cep = ipt_cep.value;
-    
-    if (cep.length == 9 && cep.includes('-')) {
-        validacaoCEP = true;
-        
-    } else {
-        validacaoCEP = false;
+    function validarCEP() {
+        let cep = ipt_cep.value;
 
+        if (cep.length == 9 && cep.includes('-')) {
+            validacaoCEP = true;
+
+        } else {
+            validacaoCEP = false;
+
+        }
     }
-}
 
 
     function cadastrarFilial() {
@@ -211,50 +235,141 @@ function validarCEP() {
         let idMatriz = sessionStorage.getItem("ID_MATRIZ")
 
         console.log("ID_MATRIZ:", sessionStorage.getItem("ID_MATRIZ"));
+        console.log("SESSION ID_MATRIZ:", sessionStorage.getItem("ID_MATRIZ"))
 
         fetch("/filial/cadastrarFilial", {
-            method: "POST", 
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-        body: JSON.stringify({
-            razaoSocialServer: razaoSocial,
-            cnpjServer: cpnj,
-            cepServer: cep,
-            idMatrizServer: idMatriz
+            body: JSON.stringify({
+                razaoSocialServer: razaoSocial,
+                cnpjServer: cpnj,
+                cepServer: cep,
+                idMatrizServer: idMatriz
+            })
+
         })
 
+            .then(
+                function (resposta) {
+                    if (resposta.ok) {
+
+                        resposta.json().then(function (json) {
+
+                            console.log(json)
+
+                            sessionStorage.setItem("ID_FILIAL_ATUAL", json.idFilial)
+
+                            console.log(
+                                "FILIAL CADASTRADA:",
+                                sessionStorage.getItem("ID_FILIAL_ATUAL")
+                            )
+                        })
+
+
+                    }
+                }
+            )
+
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            }
+            )
+    }
+
+    function finalizarResponsavel() {
+        let tipo = document.getElementById("select_tipo_responsavel").value
+
+        if (tipo == "novo") {
+            cadastrarResponsavel()
+        } else {
+            vincularResponsavelExistente()
+        }
+    }
+
+    function trocarTipoResponsavel() {
+
+        let tipo = document.getElementById("select_tipo_responsavel").value
+
+        if (tipo == "novo") {
+            document.getElementById("form-novo").style.display = "block"
+            document.getElementById("div_existente").style.display = "none"
+        } else {
+            document.getElementById("form-novo").style.display = "none"
+            document.getElementById("div_existente").style.display = "block"
+
+            carregarResponsaveis()
+        }
+    }
+    
+    function carregarResponsaveis() {
+
+        let idMatriz = sessionStorage.getItem("ID_MATRIZ")
+
+
+        fetch(`/filial/listarResponsaveis/${idMatriz}`)
+        .then(res => res.json())
+        .then(lista => {
+
+            let select = document.getElementById("select_responsavel")
+
+            select.innerHTML = `<option value="">Selecione</option>`
+
+            lista.forEach(u => {
+                select.innerHTML += `
+                    <option value="${u.id_usuario}">
+                        ${u.nome} - ${u.email}
+                    </option>
+                `;
+        })
+    })
+}
+
+function vincularResponsavelExistente() {
+
+    let idUsuario = document.getElementById("select_responsavel").value
+    let idFilial = sessionStorage.getItem("ID_FILIAL_ATUAL")
+    let idMatriz = sessionStorage.getItem("ID_MATRIZ")
+
+    if (!idUsuario) {
+        alert("Selecione um responsável!")
+        return;
+    }
+
+    if (!idFilial) {
+        alert("Filial não encontrada. Recarregue o processo.")
+        return;
+    }
+
+    fetch("/filial/vincularResponsavel", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        }, 
+        body:JSON.stringify({
+            idUsuarioServer: idUsuario,
+            idFilialServer: idFilial,
+            idMatrizServer: idMatriz
+        })
     })
 
-    .then(
-        function (resposta) {
-            if (resposta.ok) {
-                
-                resposta.json().then(function(json) {
-
-                    console.log(json)
-
-                    sessionStorage.setItem(
-                        "ID_FILIAL_ATUAL",
-                        json.idFilial
-                    )
-
-                    console.log(
-                        "FILIAL CADASTRADA:",
-                        sessionStorage.getItem("ID_FILIAL_ATUAL")
-                    )
-                })
-
-
-            }
+    .then(res => {
+        if(res.ok) {
+            alert("Responsável vinculado com sucesso!")
+            fecharModal('modalResponsavel')
+            listarFiliais()
+        } else {
+            alert("Erro ao vincular responsável no servidor")
         }
-    )
+    })
+    .catch(erro => {
+        console.log("Erro de conexão:", erro)
+        alert("Erro de conexão com o servidor")
+    })
+}
 
-    .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-      }
-    )
-    }
+
 
     function cadastrarResponsavel() {
 
@@ -264,7 +379,7 @@ function validarCEP() {
         let senhaResponsavel = ipt_senha.value
 
         fetch("/filial/cadastrarResponsavel", {
-            method: "POST", 
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -278,58 +393,58 @@ function validarCEP() {
             })
         })
 
-        .then(
-            function (resposta) {
-                if (resposta.ok) {
-                    console.log("Responsavel cadastrado a filial")
+            .then(
+                function (resposta) {
+                    if (resposta.ok) {
+                        console.log("Responsavel cadastrado a filial")
 
-            fecharModal('modalResponsavel')
+                        fecharModal('modalResponsavel')
 
-            ipt_nome.value = ""
-            ipt_cpf.value = ""
-            ipt_email.value = ""
-            ipt_senha.value = ""
+                        ipt_nome.value = ""
+                        ipt_cpf.value = ""
+                        ipt_email.value = ""
+                        ipt_senha.value = ""
 
+                    }
                 }
-            }
-        )
+            )
 
-         .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-        })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            })
     }
 
     function listarFiliais() {
 
         let idMatriz = sessionStorage.getItem("ID_MATRIZ")
-         
+
         console.log("ID MATRIZ FRONT:", idMatriz);
 
-        fetch(`/filial/listarFiliais/${idMatriz}`) 
-        .then(function(resposta) {
-            console.log("Status:", resposta.status)
-            
-        return resposta.text();
+        fetch(`/filial/listarFiliais/${idMatriz}`)
+            .then(function (resposta) {
+                console.log("Status:", resposta.status)
 
-         
+                return resposta.text();
 
-        })
 
-        .then(function(filiais) {
 
-            
+            })
 
-            filiais = JSON.parse(filiais)
-        
-            console.log("Dados recebidos:", filiais);
+            .then(function (filiais) {
 
-            div_filiais.innerHTML = ""
 
-            for (let i = 0; i < filiais.length; i++) {
 
-                let filial = filiais[i]
+                filiais = JSON.parse(filiais)
 
-                div_filiais.innerHTML += `
+                console.log("Dados recebidos:", filiais);
+
+                div_filiais.innerHTML = ""
+
+                for (let i = 0; i < filiais.length; i++) {
+
+                    let filial = filiais[i]
+
+                    div_filiais.innerHTML += `
                 
                 <div class= "filial"> 
 
@@ -351,11 +466,11 @@ function validarCEP() {
                 </div>
 
                 `
-            }
-        })
+                }
+            })
 
-        .catch(function(erro){
-            console.log("ERRO:", erro);
-        });
+            .catch(function (erro) {
+                console.log("ERRO:", erro);
+            });
     }
 </script>
