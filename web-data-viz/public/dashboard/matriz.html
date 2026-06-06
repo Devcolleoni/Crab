@@ -38,19 +38,19 @@
         <div class="metricas-topo">
             <div class="cartao-alerta-principal">
                 <span class="label">Lojas em alerta</span>
-                <span class="valor">2/12</span>
+                <span class="valor" id="kpi-alerta">-/-</span>
             </div>
             <div class="cartao-stat stat-vermelho">
                 <div class="stat-label">Saída abaixo<br>do ideal</div>
-                <span class="stat-numero">2</span>
+                <span class="stat-numero" id="kpi-vermelho">-</span>
             </div>
             <div class="cartao-stat stat-amarelo">
                 <div class="stat-label">Estoque com<br>poucos produtos</div>
-                <span class="stat-numero">3</span>
+                <span class="stat-numero" id="kpi-amarelo">-</span>
             </div>
             <div class="cartao-stat stat-azul">
                 <div class="stat-label">Lojas com<br>estoque estável</div>
-                <span class="stat-numero">7</span>
+                <span class="stat-numero" id="kpi-azul">-</span>
             </div>
         </div>
 
@@ -94,20 +94,39 @@
     <script>
 
         let filiais = [
-            { id: 1, nome: 'Filial 1', status: 'vermelho', entrada: 83, saida: 22 },
-            { id: 2, nome: 'Filial 2', status: 'amarelo',  entrada: 86, saida: 79 },
-            { id: 3, nome: 'Filial 3', status: 'amarelo',  entrada: 80, saida: 61 },
-            { id: 4, nome: 'Filial 4', status: 'amarelo',  entrada: 83, saida: 69 },
-            { id: 5, nome: 'Filial 5', status: 'azul',     entrada: 90, saida: 65 },
-            { id: 6, nome: 'Filial 6', status: 'azul',     entrada: 91, saida: 80 },
-            { id: 7, nome: 'Filial 7', status: 'vermelho', entrada: 80, saida: 29 },
-            { id: 8, nome: 'Filial 8', status: 'azul',     entrada: 88, saida: 82 },
+            { id_filial: 1, nome: 'Filial Sul',    status: 'azul',     entrada: 72, saida: 28 },
+            { id_filial: 2, nome: 'Filial Norte',   status: 'amarelo',  entrada: 55, saida: 45 },
+            { id_filial: 3, nome: 'Filial 3',       status: 'amarelo',  entrada: 80, saida: 61 },
+            { id_filial: 4, nome: 'Filial 4',       status: 'amarelo',  entrada: 83, saida: 69 },
+            { id_filial: 5, nome: 'Filial 5',       status: 'azul',     entrada: 90, saida: 65 },
+            { id_filial: 6, nome: 'Filial 6',       status: 'azul',     entrada: 91, saida: 80 },
+            { id_filial: 7, nome: 'Filial 7',       status: 'vermelho', entrada: 80, saida: 29 },
+            { id_filial: 8, nome: 'Filial 8',       status: 'azul',     entrada: 88, saida: 82 },
         ]
 
-        let statusLabel = { vermelho: 'Em Alerta', amarelo: 'Atenção', azul: 'Estável' }
-        let prioridade  = { vermelho: 1, amarelo: 2, azul: 3 }
+        let statusLabel = { vermelho: 'Em Alerta', amarelo: 'Atenção', azul: 'Estável', cinza: 'Sem dados' }
+        let prioridade  = { vermelho: 1, amarelo: 2, azul: 3, cinza: 4 }
 
         let filtroAtivo = 'todos'
+
+        function atualizarKpis(lista) {
+            let totalFiliais = 0
+            let qtdVermelho  = 0
+            let qtdAmarelo   = 0
+            let qtdAzul      = 0
+
+            for (let i = 0; i < lista.length; i++) {
+                if (lista[i].status !== 'cinza') totalFiliais++
+                if (lista[i].status === 'vermelho') qtdVermelho++
+                if (lista[i].status === 'amarelo')  qtdAmarelo++
+                if (lista[i].status === 'azul')     qtdAzul++
+            }
+
+            document.getElementById('kpi-alerta').innerText   = qtdVermelho + '/' + totalFiliais
+            document.getElementById('kpi-vermelho').innerText  = qtdVermelho
+            document.getElementById('kpi-amarelo').innerText   = qtdAmarelo
+            document.getElementById('kpi-azul').innerText      = qtdAzul
+        }
 
         function filtrar(tipo) {
             filtroAtivo = tipo
@@ -168,6 +187,7 @@
             }
 
             lista = ordenar(lista)
+            atualizarKpis(filiais)
             renderizarGrid(lista)
         }
 
@@ -178,26 +198,32 @@
             for (let i = 0; i < lista.length; i++) {
                 let f = lista[i]
 
-                grid.innerHTML += `
-                    <div class="cartao-filial status-${f.status}">
-                        <div class="filial-header">
-                            <h3>${f.nome}</h3>
-                            <button onclick="abrirPopup(${f.id})"><i class="bi bi-info-circle"></i></button>
-                        </div>
-                        <div class="filial-body">
-                            <p>Entrada: <span>${f.entrada}%</span></p>
-                            <p>Saída: <span>${f.saida}%</span></p>
-                        </div>
-                    </div>
-                `
+                let clique    = ''
+                let botaoInfo = ''
+
+                if (f.id_filial === 1) {
+                    clique    = 'clicavel" onclick="window.location.href=\'../dashboard/dashboard.html?idFilial=' + f.id_filial + '\''
+                    botaoInfo = '<button onclick="event.stopPropagation(); abrirPopup(' + f.id_filial + ')"><i class="bi bi-info-circle"></i></button>'
+                }
+
+                grid.innerHTML += '<div class="cartao-filial status-' + f.status + ' ' + clique + '">' +
+                    '<div class="filial-header">' +
+                        '<h3>' + f.nome + '</h3>' +
+                        botaoInfo +
+                    '</div>' +
+                    '<div class="filial-body">' +
+                        '<p>Entrada: <span>' + f.entrada + '%</span></p>' +
+                        '<p>Saída: <span>' + f.saida + '%</span></p>' +
+                    '</div>' +
+                '</div>'
             }
         }
 
-        function abrirPopup(id) {
+        function abrirPopup(id_filial) {
             let filial = null
 
             for (let i = 0; i < filiais.length; i++) {
-                if (filiais[i].id === id) {
+                if (filiais[i].id_filial === id_filial) {
                     filial = filiais[i]
                 }
             }
@@ -205,11 +231,10 @@
             if (!filial) return
 
             document.getElementById('popup-titulo').innerText = filial.nome
-            document.getElementById('popup-corpo').innerHTML = `
-                <p><strong>Status:</strong> ${statusLabel[filial.status]}</p>
-                <p><strong>Taxa de Entrada:</strong> ${filial.entrada}%</p>
-                <p><strong>Taxa de Saída:</strong> ${filial.saida}%</p>
-            `
+            document.getElementById('popup-corpo').innerHTML =
+                '<p><strong>Status:</strong> '          + statusLabel[filial.status] + '</p>' +
+                '<p><strong>Taxa de Entrada:</strong> ' + filial.entrada + '%</p>' +
+                '<p><strong>Taxa de Saída:</strong> '   + filial.saida   + '%</p>'
 
             document.getElementById('envoltorio-filial').style.display = 'flex'
         }

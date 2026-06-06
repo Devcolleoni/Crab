@@ -409,10 +409,13 @@ body {
     border: 2.5px solid;
     overflow: hidden;
     transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cartao-filial.clicavel {
     cursor: pointer;
 }
 
-.cartao-filial:hover {
+.cartao-filial.clicavel:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 28px rgba(0,0,0,0.15);
 }
@@ -555,56 +558,6 @@ body {
 .status-azul { border-color: #3b82f6; }
 .status-azul .filial-header { background: #e0eaff; color: #1e40af; }
 
-.cartao-filial {
-    transition: transform 0.2s, box-shadow 0.2s;
-    cursor: pointer;
-}
-
-.cartao-filial:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.15);
-}
-
-.toolbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-}
-
-.filtros { display: flex; gap: 8px; flex-wrap: wrap; }
-
-.btn-filtro {
-    padding: 6px 16px;
-    border-radius: 20px;
-    border: 2px solid #e2e8f0;
-    background: white;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 600;
-    color: #64748b;
-    transition: all 0.2s;
-}
-
-.btn-filtro:hover { border-color: #94a3b8; color: #1e2937; }
-
-#btn-todos.ativo    { background: #0f172a; color: white; border-color: #0f172a; }
-#btn-vermelho.ativo { background: #ef4444; color: white; border-color: #ef4444; }
-#btn-amarelo.ativo  { background: #f59e0b; color: white; border-color: #f59e0b; }
-#btn-azul.ativo     { background: #3b82f6; color: white; border-color: #3b82f6; }
-
-.select-ordenar {
-    padding: 6px 12px;
-    border-radius: 8px;
-    border: 2px solid #e2e8f0;
-    background: white;
-    font-size: 13px;
-    color: #1e2937;
-    cursor: pointer;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    transition: border-color 0.2s;
-}
-
-.select-ordenar:focus { outline: none; border-color: #f17524; }
+.status-cinza { border-color: #94a3b8; }
+.status-cinza .filial-header { background: #e2e8f0; color: #64748b; }
+.status-cinza .filial-body p span { color: #94a3b8; }
