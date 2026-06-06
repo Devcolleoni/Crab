@@ -18,10 +18,10 @@
         </div>
 
         <nav class="menu">
-            <a href="../home.html"><i class="bi bi-house"></i> Início</a>
             <a href="matriz.html" class="ativo"><i class="bi bi-speedometer2"></i> Painel Filiais</a>
             <a href="gerenciamento-Matriz.html"><i class="bi bi-gear"></i> Gerenciar Filiais</a>
             <a href="adduser.html"><i class="bi bi-person-plus"></i> Adicionar Usuário</a>
+            <a href="configuração.html"><i class="bi bi-gear"></i> Configurações</a>
             <a href="ajuda.html"><i class="bi bi-question-circle"></i> Ajuda</a>
         </nav>
 
@@ -94,16 +94,32 @@
 
     <script>
 
-        let filiais = [
-            { id_filial: 1, nome: 'Filial Sul',    status: 'azul',     entrada: 72, saida: 28 },
-            { id_filial: 2, nome: 'Filial Norte',   status: 'amarelo',  entrada: 55, saida: 45 },
-            { id_filial: 3, nome: 'Filial 3',       status: 'amarelo',  entrada: 80, saida: 61 },
-            { id_filial: 4, nome: 'Filial 4',       status: 'amarelo',  entrada: 83, saida: 69 },
-            { id_filial: 5, nome: 'Filial 5',       status: 'azul',     entrada: 90, saida: 65 },
-            { id_filial: 6, nome: 'Filial 6',       status: 'azul',     entrada: 91, saida: 80 },
-            { id_filial: 7, nome: 'Filial 7',       status: 'vermelho', entrada: 80, saida: 29 },
-            { id_filial: 8, nome: 'Filial 8',       status: 'azul',     entrada: 88, saida: 82 },
-        ]
+       let filiais = []
+
+function carregarFiliais() {
+    let idMatriz = sessionStorage.getItem('ID_MATRIZ')
+
+    fetch(`/filial/listarFiliais/${idMatriz}`)
+        .then(function(resposta) { return resposta.json() })
+        .then(function(dados) {
+    filiais = []
+
+    for (let i = 0; i < dados.length; i++) {
+        filiais.push({
+            id_filial: dados[i].id_filial,
+            nome:      dados[i].razao_social,
+            status:    dados[i].status  || 'cinza',
+            entrada:   dados[i].entrada || 0,
+            saida:     dados[i].saida   || 0
+        })
+    }
+
+    renderizar()
+})
+        .catch(function(erro) { console.log('ERRO:', erro) })
+}
+
+carregarFiliais()
 
         let statusLabel = { vermelho: 'Em Alerta', amarelo: 'Atenção', azul: 'Estável', cinza: 'Sem dados' }
         let prioridade  = { vermelho: 1, amarelo: 2, azul: 3, cinza: 4 }
@@ -249,4 +265,4 @@
     </script>
 
 </body>
-</html>
+</html> 

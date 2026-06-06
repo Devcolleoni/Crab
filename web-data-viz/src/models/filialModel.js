@@ -44,11 +44,28 @@ function cadastrarResponsavel(nomeVar, cpfVar, emailVar, senhaVar, idMatriz, idF
 function listarFiliais(idMatriz) {
 
     var instrucaoSql = `
-        SELECT f.id_filial, f.razao_social, f.cnpj, u.email
-        FROM filial f
-        LEFT JOIN funcionario func ON func.id_filial = f.id_filial
-        LEFT JOIN usuario u ON u.id_usuario = func.id_usuario
-        WHERE f.id_matriz = ${idMatriz};
+   SELECT 
+    f.id_filial,
+    f.id_matriz,
+    f.razao_social,
+    COUNT(v.id_vao) AS total_vaos,
+    ROUND(
+        IFNULL(SUM(c.abastecido), 0) / NULLIF(COUNT(v.id_vao), 0) * 100
+    , 0) AS entrada,
+    ROUND(
+        (COUNT(v.id_vao) - IFNULL(SUM(c.abastecido), 0)) / NULLIF(COUNT(v.id_vao), 0) * 100
+    , 0) AS saida,
+    CASE 
+        WHEN ROUND((COUNT(v.id_vao) - IFNULL(SUM(c.abastecido), 0)) / NULLIF(COUNT(v.id_vao), 0) * 100, 0) < 30 THEN 'vermelho'
+        WHEN ROUND((COUNT(v.id_vao) - IFNULL(SUM(c.abastecido), 0)) / NULLIF(COUNT(v.id_vao), 0) * 100, 0) < 60 THEN 'amarelo'
+        ELSE 'azul'
+    END AS status
+FROM filial f
+LEFT JOIN vao v ON f.id_filial = v.id_filial AND f.id_matriz = v.id_matriz
+LEFT JOIN sensor s ON v.id_vao = s.id_vao
+LEFT JOIN coleta c ON s.id_sensor = c.id_sensor
+WHERE f.id_matriz = ${idMatriz}
+GROUP BY f.id_filial, f.id_matriz, f.razao_social
         `
 
     console.log("Executando SQL:\n" + instrucaoSql);
