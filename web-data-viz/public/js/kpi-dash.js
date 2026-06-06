@@ -19,9 +19,9 @@ function buscarInfos() {
                 qtdVaoAbastecido.push(Number(dados[i].Qtd_vao_abastecido));
             }
 
-            console.log("Nomes capturados:", nomeFilial);
-            console.log("Vãos totais:", qtdVao);
-            console.log("Vãos abastecidos:", qtdVaoAbastecido);
+            // console.log("Nomes capturados:", nomeFilial);
+            // console.log("Vãos totais:", qtdVao);
+            // console.log("Vãos abastecidos:", qtdVaoAbastecido);
 
             let txAbastecimento = `${(100 * qtdVaoAbastecido[0] / qtdVao[0]).toFixed(1)}%`;
             p_tx_abastecimento.innerHTML = txAbastecimento;
@@ -31,41 +31,57 @@ function buscarInfos() {
             console.error("Erro no fetch:", err);
         });
 
-         fetch("/dashboard/entrada2")
-        .then(res => res.json())
-        .then(dados => {
+        fetch("/dashboard/entrada2")
+         .then(res => res.json())
+         .then(dados => {
             console.log("Dados puros recebidos da API:", dados);
 
             let id_sensor = [];
             let dia_coleta = [];
             let hora = [];
+            let abastecido = [];
 
             for (let i = 0; i < dados.length; i++) {
-              id_sensor.push(Number(dados[i].id_sensor))
+              id_sensor.push(Number(dados[i].id_sensor));
               dia_coleta.push(Number(dados[i].dia_coleta));
               hora.push(Number(dados[i].hora));
+              abastecido.push(Number(dados[i].abastecido));
             }
-            console.log("id_sensor:", id_sensor);
-            console.log("dia_coleta:", dia_coleta);
-            console.log("hora:", hora);
+            // const limiteHoras = Number(ipt_meta_ociosidade.value); 
+            let limiteHoras = 10; 
+            let vaosOciosos = []; 
+            let sensorAtual = null;
+            let horasSeguidas = 0;
+
+            for (let i = 0; i < dados.length; i++) {
+                let registro = dados[i];
+
+                if (sensorAtual !== registro.id_sensor) {
+                    sensorAtual = registro.id_sensor;
+                    horasSeguidas = 0; 
+                }
+                if (registro.abastecido == 1) {
+                    horasSeguidas++;
+
+                    if (horasSeguidas === limiteHoras) {
+                        if (!vaosOciosos.includes(sensorAtual)) {
+                            vaosOciosos.push(sensorAtual);
+                        }
+                    }
+                } 
+                else {
+                    horasSeguidas = 0;
+                }
+
+                p_qtd_vaos_ociosos.innerHTML = `${vaosOciosos.length}`
+}
+                console.log(`Sensores ociosos (parados por ${limiteHoras}h ou mais):`, vaosOciosos);
+                console.log(`Quantidade total de vãos ociosos:`, vaosOciosos.length);
 
         })
         .catch(err => {
             console.error("Erro no fetch:", err);
         });
-
-        let vaosComOciosidade = 0;
-        let tempoArmazenado = 0;
-
-        for(let i = 0; i < dados.length; i++){
-          if(dados[i].id_sensor == dados[i+1].id_sensor && dados[i].dia_coleta == dados[i+1].dia_coleta && (dados[i].horas - dados[i+1].horas) == 1 || dados[i].horas - dados[i+1].horas == 23){
-            tempoArmazenado ++;
-          }
-        }
-
-        if (tempoArmazenado > 5){
-          vaosComOciosidade 
-        }
 
 }
 

@@ -11,18 +11,10 @@ function entrada(filial, qtdVao, qtdVaoAbastecido) {
 
 
 }
-function entrada2(dt_coleta, horas, minutos) {
+function entrada2(total_sensores, id_sensor, abastecido, hora, dia_coleta ) {
 
     const sql = `
-    SELECT 
-	DATE_FORMAT(dt_coleta, '%d/%m/%Y') dt_coleta,
-	DATE_FORMAT(dt_coleta, '%H') horas,
-	DATE_FORMAT(dt_coleta, '%i') minutos
-	FROM coleta 
-	WHERE id_sensor = 1 
-	AND abastecido = 1 
-    ORDER BY dt_coleta 
-    DESC LIMIT 10;
+    SELECT * FROM vw_ociosidade;
     `    
     console.log("Executando a instrução SQL: \n" + sql);
     return database.executar(sql);
