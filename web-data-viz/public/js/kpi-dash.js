@@ -35,48 +35,80 @@ function buscarInfos() {
          .then(res => res.json())
          .then(dados => {
             console.log("Dados puros recebidos da API:", dados);
+            
+        const limiteHoras = 10; 
+        let vaosOciosos = []; 
+        let sensorAtual = null;
+        let horasSeguidas = 0;
 
-            let id_sensor = [];
-            let dia_coleta = [];
-            let hora = [];
-            let abastecido = [];
+        for (let i = 0; i < dados.length; i++) {
+            let registro = dados[i];
 
-            for (let i = 0; i < dados.length; i++) {
-              id_sensor.push(Number(dados[i].id_sensor));
-              dia_coleta.push(Number(dados[i].dia_coleta));
-              hora.push(Number(dados[i].hora));
-              abastecido.push(Number(dados[i].abastecido));
+            if (sensorAtual !== registro.id_sensor) {
+                sensorAtual = registro.id_sensor;
+                horasSeguidas = 0; 
             }
-            // const limiteHoras = Number(ipt_meta_ociosidade.value); 
-            let limiteHoras = 10; 
-            let vaosOciosos = []; 
-            let sensorAtual = null;
-            let horasSeguidas = 0;
+            if (registro.abastecido == 1) {
+                horasSeguidas++;    
+                if (horasSeguidas === limiteHoras) {
+                    if (!vaosOciosos.includes(sensorAtual)) {
+                        vaosOciosos.push(sensorAtual);
+                    }
+                }
+            } 
+            else {
+                horasSeguidas = 0;
+            }
+        }
+        console.log(`Sensores ociosos (parados por ${limiteHoras}h ou mais):`, vaosOciosos);
+        console.log(`Quantidade total de vãos ociosos:`, vaosOciosos.length);
+
+        p_qtd_vaos_ociosos.innerHTML = vaosOciosos.length;
+
+
+            let historicoDeOcupacoes = []; 
+
+            let sensorAtual2 = null;
+            let horasSeguidas2 = 0;
 
             for (let i = 0; i < dados.length; i++) {
                 let registro = dados[i];
 
-                if (sensorAtual !== registro.id_sensor) {
-                    sensorAtual = registro.id_sensor;
-                    horasSeguidas = 0; 
+                if (sensorAtual2 !== registro.id_sensor) {
+                    if (horasSeguidas2 > 0) {
+                        historicoDeOcupacoes.push(horasSeguidas2);
+                        horasSeguidas2 = 0; 
+                    }
+                    sensorAtual2 = registro.id_sensor;
                 }
                 if (registro.abastecido == 1) {
-                    horasSeguidas++;
-
-                    if (horasSeguidas === limiteHoras) {
-                        if (!vaosOciosos.includes(sensorAtual)) {
-                            vaosOciosos.push(sensorAtual);
-                        }
-                    }
+                    horasSeguidas2++;
                 } 
-                else {
-                    horasSeguidas = 0;
+                else if (registro.abastecido == 0 && horasSeguidas2 > 0) {
+                    historicoDeOcupacoes.push(horasSeguidas2);
+                    horasSeguidas2 = 0;
                 }
+            }
 
-                p_qtd_vaos_ociosos.innerHTML = `${vaosOciosos.length}`
-}
-                console.log(`Sensores ociosos (parados por ${limiteHoras}h ou mais):`, vaosOciosos);
-                console.log(`Quantidade total de vãos ociosos:`, vaosOciosos.length);
+            if (horasSeguidas2 > 0) {
+                historicoDeOcupacoes.push(horasSeguidas2);
+            }
+
+            let somaTotalHoras = 0;
+            let tempoMedio = 0;
+
+            if (historicoDeOcupacoes.length > 0) {
+                for (let i = 0; i < historicoDeOcupacoes.length; i++) {
+                    somaTotalHoras += historicoDeOcupacoes[i];
+                }
+                tempoMedio = somaTotalHoras / historicoDeOcupacoes.length;
+            }
+            console.log("Duração de todas as ocupações registradas:", historicoDeOcupacoes);
+            console.log("Tempo médio de permanência:", tempoMedio.toFixed(1), "horas");
+
+            p_kpi_tempo_medio.innerHTML = tempoMedio.toFixed(1);
+
+
 
         })
         .catch(err => {
