@@ -13,7 +13,8 @@ function autenticar(email, senha) {
         JOIN funcionario f
         ON f.id_usuario = u.id_usuario
         WHERE u.email = '${email}'
-        AND u.senha = '${senha}';
+        AND u.senha = '${senha}'
+        LIMIT 1;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

@@ -16,7 +16,7 @@
       <span>CRAB</span>
     </div>
     <div class="info-usuario">
-      <p>Bem-vindo(a), <strong>ADMIN</strong></p>
+      <p>Bem-vindo(a), <strong id="strong_nome_adm"></strong></p>
     </div>
     <div class="rodape-sidebar">
       <a href="../login.html">Sair <i class="bi bi-box-arrow-right"></i></a>
@@ -45,6 +45,10 @@
           const badge = document.getElementById('total-pendentes');
 
           badge.textContent = `${dados.length} pendentes`;
+          
+          const nome = sessionStorage.getItem("NOME_USUARIO");
+          strong_nome_adm.innerHTML = nome;
+          
 
           lista.innerHTML = '';
 

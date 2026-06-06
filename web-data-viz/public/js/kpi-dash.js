@@ -4,6 +4,15 @@ window.onload = () => {
 
 function buscarInfos() {
 
+    const nome = sessionStorage.getItem("NOME_USUARIO");
+    const email = sessionStorage.getItem("EMAIL_USUARIO");
+    const idUsuario = sessionStorage.getItem("ID_USUARIO");
+    const idCargo = sessionStorage.getItem("ID_CARGO");
+    const idMatriz = sessionStorage.getItem("ID_MATRIZ");
+    
+    console.log("Usuário logado:", nome);
+    console.log("ID da Matriz:", idMatriz);
+
     fetch("/dashboard/entrada")
         .then(res => res.json())
         .then(dados => {
