@@ -24,8 +24,6 @@ function entrada2(req, res) {
         })
 
 }
-
-
 module.exports = {
         
     entrada,

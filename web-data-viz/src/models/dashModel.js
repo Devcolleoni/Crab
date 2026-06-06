@@ -11,7 +11,7 @@ function entrada(filial, qtdVao, qtdVaoAbastecido) {
 
 
 }
-function entrada2(total_sensores, id_sensor, abastecido, hora, dia_coleta ) {
+function entrada2(total_sensores, id_sensor, abastecido, hora, dia_coleta, numero_vao, id_setor, nome_setor) {
 
     const sql = `
     SELECT * FROM vw_ociosidade;

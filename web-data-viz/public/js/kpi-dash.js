@@ -44,13 +44,13 @@ function buscarInfos() {
         for (let i = 0; i < dados.length; i++) {
             let registro = dados[i];
 
-            if (sensorAtual !== registro.id_sensor) {
+            if (sensorAtual != registro.id_sensor) {
                 sensorAtual = registro.id_sensor;
                 horasSeguidas = 0; 
             }
             if (registro.abastecido == 1) {
                 horasSeguidas++;    
-                if (horasSeguidas === limiteHoras) {
+                if (horasSeguidas == limiteHoras) {
                     if (!vaosOciosos.includes(sensorAtual)) {
                         vaosOciosos.push(sensorAtual);
                     }
@@ -74,7 +74,7 @@ function buscarInfos() {
             for (let i = 0; i < dados.length; i++) {
                 let registro = dados[i];
 
-                if (sensorAtual2 !== registro.id_sensor) {
+                if (sensorAtual2 != registro.id_sensor) {
                     if (horasSeguidas2 > 0) {
                         historicoDeOcupacoes.push(horasSeguidas2);
                         horasSeguidas2 = 0; 
@@ -123,46 +123,45 @@ function buscarInfos() {
 
 
                     
-// const ctx = document.getElementById('statusSetorChart');
-
-// let setor1 = ``;
-// let setor2 = ``;
-// let setor3 = ``;
-// let setor4 = ``;
-// let setor5 = ``;
-// let setor6 = ``;
-
-//  new Chart(ctx, {
-//     type: 'bar',
-//     data: {
-//         labels: [`${setor1}`, `${setor2}`, `${setor3}`, `${setor4}`, `${setor5}`, `${setor6}`],
-//       datasets: [{
-//         label: 'Crítico',
-//         data: [12, 19, 3, 5, 2, 3],
-//         borderWidth: 1
-//       },
-//       {
-//           label: 'Alerta',
-//         data: [12, 19, 3, 5, 2, 3],
-//         borderWidth: 1
-//       },
-//       {
-//         label: 'Estável',
-//         data: [12, 19, 3, 5, 2, 3],
-//         borderWidth: 1
-//       }
-//     ]
-//     },
-//     options: {
-//       scales: {
-//         y: {
-//           beginAtZero: true,
-//           stacked: true,
-//         },
-//         x: {
-//             stacked: true,
-//         }
-//       }
-//     }
-//   });
+const ctx = document.getElementById('statusSetorChart');
  
+let setor1 = ``;
+let setor2 = ``;
+let setor3 = ``;
+let setor4 = ``;
+let setor5 = ``;
+let setor6 = ``;
+ 
+ new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: [`${setor1}`, `${setor2}`, `${setor3}`, `${setor4}`, `${setor5}`, `${setor6}`],
+      datasets: [{
+        label: 'Estável',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      },
+            {
+        label: 'Alerta',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      },
+      {
+          label: 'Crítico',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      },
+    ]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          stacked: true,
+        },
+        x: {
+            stacked: true,
+        }
+      }
+    }
+  });
