@@ -9,7 +9,9 @@ function buscarInfos() {
     const idUsuario = sessionStorage.getItem("ID_USUARIO");
     const idCargo = sessionStorage.getItem("ID_CARGO");
     const idMatriz = sessionStorage.getItem("ID_MATRIZ");
+    const filiais = sessionStorage.getItem("ID_FILIAIS"); 
     
+    console.log(`Filiais:`, filiais);
     console.log("Usuário logado:", nome);
     console.log("ID da Matriz:", idMatriz);
 
@@ -27,10 +29,6 @@ function buscarInfos() {
                 qtdVao.push(Number(dados[i].Qtd_vao));
                 qtdVaoAbastecido.push(Number(dados[i].Qtd_vao_abastecido));
             }
-
-            // console.log("Nomes capturados:", nomeFilial);
-            // console.log("Vãos totais:", qtdVao);
-            // console.log("Vãos abastecidos:", qtdVaoAbastecido);
 
             let txAbastecimento = `${(100 * qtdVaoAbastecido[0] / qtdVao[0]).toFixed(1)}%`;
             p_tx_abastecimento.innerHTML = txAbastecimento;

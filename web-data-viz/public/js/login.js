@@ -24,15 +24,14 @@ function entrar() {
                 console.log(json);
                 console.log(JSON.stringify(json));
                 console.log("JSON COMPLETO:", json)
-                    
-                let filiais = json.id_filiais.split(','); 
-                console.log(filiais[0]);
+                
                 sessionStorage.setItem("ID_FILIAIS", JSON.stringify(filiais));
                 sessionStorage.EMAIL_USUARIO = json.email;
                 sessionStorage.NOME_USUARIO = json.nome;
                 sessionStorage.setItem("ID_USUARIO", json.id_usuario);
                 sessionStorage.setItem("ID_CARGO", json.id_cargo);
-                sessionStorage.setItem("ID_MATRIZ", json.id_matriz)
+                sessionStorage.setItem("ID_MATRIZ", json.id_matriz);
+                sessionStorage.setItem("ID_FILIAIS", json.id_filiais.split(','));
                 
                 console.log("ID_MATRIZ RECEBIDO:", json.id_matriz)
                 console.log("SESSION ID_MATRIZ:", sessionStorage.getItem("ID_MATRIZ"));
