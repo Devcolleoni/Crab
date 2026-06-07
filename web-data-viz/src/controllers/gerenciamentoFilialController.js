@@ -148,6 +148,20 @@ function vincularResponsavel(req, res) {
         });
 }
 
+function excluirFilial(req, res) {
+    let idFilial = req.params.idFilial
+
+    filialModel.excluirFilial(idFilial)
+    .then(function (resultado) {
+        res.json(resultado)
+    })
+
+    .catch(function (erro) {
+        console.log(erro);
+        res.status(500).json(erro.sqlMessage)
+    })
+}
+
 
 module.exports = {
     cadastrarFilial,
@@ -155,5 +169,6 @@ module.exports = {
     listarFiliais,
     listarFiliaisMatriz,
     vincularResponsavel,
-    listarResponsaveis
+    listarResponsaveis,
+    excluirFilial
 }

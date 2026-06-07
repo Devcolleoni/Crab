@@ -120,12 +120,61 @@ function vincularResponsavel(idUsuario, idFilial, idMatriz) {
     return database.executar(instrucaoSql);
 }
 
+function excluirFilial(idFilial) {
+    console.log("ACESSEI O FILIAL MODEL - Iniciando os delets completos da filial ID:", idFilial)
+
+
+
+    var sqlColetas = `
+    DELETE FROM coleta 
+    WHERE id_sensor IN (SELECT id_sensor FROM sensor WHERE id_vao IN (
+    SELECT id_vao FROM vao WHERE id_filial = ${idFilial}));`
+
+    var sqlSensores = `
+    DELETE FROM sensor 
+    WHERE id_vao IN (SELECT id_vao FROM vao WHERE id_filial = ${idFilial}
+    );`
+
+    var sqlVaos = `
+    DELETE FROM vao WHERE id_filial = ${idFilial};`
+
+    var sqlFuncionarios = `
+    UPDATE funcionario SET id_filial = NULL WHERE id_filial = ${idFilial};`
+
+
+    var sqlFilial = `
+    DELETE FROM filial WHERE id_filial = ${idFilial};`;
+
+    return database.executar(sqlColetas)
+
+        .then(() => {
+            console.log("Coletas dos sensores apagadas.")
+            return database.executar(sqlSensores)
+        })
+        .then(() => {
+            console.log("Sensores dos vãos apagados.")
+            return database.executar(sqlVaos)
+        })
+        .then(() => {
+            console.log("Vãos da filial apagados.")
+            return database.executar(sqlFuncionarios)
+        })
+        .then(() => {
+            console.log("Vínculos de funcionários removidos.")
+            return database.executar(sqlFilial)
+        })
+        .then(() => {
+            console.log("Filial excluída com sucesso absoluto!")
+        })
+}
+
 module.exports = {
     cadastrarFilial,
     cadastrarResponsavel,
     listarFiliais,
     listarFiliaisMatriz,
     listarResponsaveis,
-    vincularResponsavel
+    vincularResponsavel,
+    excluirFilial
 }
 

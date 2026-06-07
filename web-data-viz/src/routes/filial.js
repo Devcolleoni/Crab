@@ -28,5 +28,9 @@ router.get("/listarFiliaisMatriz/:idMatriz", function(req, res) {
 })
 
 
+router.delete("/excluirFilial/:idFilial", function (req, res) {
+    gerenciamentoFilialController.excluirFilial(req, res);
+});
+
 
 module.exports = router;

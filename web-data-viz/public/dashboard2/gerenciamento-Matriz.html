@@ -19,7 +19,7 @@
             <p>Bem-vindo(a), <strong>Usuário</strong></p>
         </div>
 
-         <nav class="menu">
+        <nav class="menu">
             <a href="matriz.html"><i class="bi bi-speedometer2"></i> Painel Filiais</a>
             <a href="gerenciamento-Matriz.html" class="ativo"><i class="bi bi-gear"></i> Gerenciar Filiais</a>
             <a href="configuração.html"><i class="bi bi-gear"></i> Configurações</a>
@@ -190,7 +190,7 @@
                         </div>
                         <div class="campo">
                             <label>CPF:</label>
-                            <input type="text" id="ipt_cpfEdicao" placeholder="000-000-000-00">
+                            <input type="text" id="ipt_cpfEdicao" placeholder="000.000.000-00">
                         </div>
                         <div class="campo">
                             <label>Email:</label>
@@ -513,7 +513,7 @@
 
                 <div class="acoes">
                     <div class="item" onclick="abrirEdicaoGerente('${filial.id_filial}')">editar</div>
-                    <div class="item">excluir</div>
+                    <div class="item" onclick="excluirFilial('${filial.id_filial}')">excluir</div>
                 </div>
 
                 </div>
@@ -639,5 +639,27 @@
                 .catch(erro => console.log("#ERRO:", erro))
         }
     }
-    
+
+    function excluirFilial(idFilial) {
+
+        fetch(`/filial/excluirFilial/${idFilial}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    alert("Filial excluída com sucesso!")
+                    listarFiliais()
+                } else {
+                    alert("erro ao excluir filial")
+                }
+            })
+
+            .catch(function (erro) {
+                console.log("ERRO ao deletar:", erro)
+            })
+    }
+
 </script>
