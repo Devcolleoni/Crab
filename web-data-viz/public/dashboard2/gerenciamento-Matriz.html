@@ -16,16 +16,16 @@
             <span>CRAB</span>
         </div>
         <div class="info-usuario">
-            <p>Bem-vindo(a), <strong id="strong_nome"></strong></p>
+            <p>Bem-vindo(a), <strong>Usuário</strong></p>
         </div>
 
-        <nav class="menu">
+         <nav class="menu">
             <a href="matriz.html"><i class="bi bi-speedometer2"></i> Painel Filiais</a>
             <a href="gerenciamento-Matriz.html" class="ativo"><i class="bi bi-gear"></i> Gerenciar Filiais</a>
-            <a href="adduser.html"><i class="bi bi-person-plus"></i> Adicionar Usuário</a>
             <a href="configuração.html"><i class="bi bi-gear"></i> Configurações</a>
             <a href="ajuda.html"><i class="bi bi-question-circle"></i> Ajuda</a>
         </nav>
+
 
         <div class="rodape-sidebar">
             <a href="../login.html">Sair <i class="bi bi-box-arrow-right"></i></a>
@@ -40,10 +40,16 @@
 
             <button onclick="abrirModal('modalFilial')">Adicionar Filial</button>
         </div>
+
+        <div class="buscar">
+            <input type="text" id="ipt_filial" placeholder="Buscar por nome">
+        </div>
+
+
         <div class="filiais-container">
             <div class="cabecalho">
                 <h3>Filial</h3>
-                <h3>Açôes</h3>
+                <h3>Ações</h3>
             </div>
 
             <div class="card-filiais" id="div_filiais">
@@ -119,32 +125,32 @@
                     </div>
 
                     <div id="form-novo">
-                    <div class="campo">
-                        <label for="nomeUsuario">Nome Responsável:</label>
-                        <input type="text" id="ipt_nome" placeholder="Responsavel">
+                        <div class="campo">
+                            <label for="nomeUsuario">Nome Responsável:</label>
+                            <input type="text" id="ipt_nome" placeholder="Responsavel">
+                        </div>
+
+                        <div class="campo">
+                            <label for="cpf">CPF Responsável:</label>
+                            <input type="text" id="ipt_cpf" placeholder="000-000-000-00">
+                        </div>
+
+                        <div class="campo">
+                            <label for="novaSenha">Email:</label>
+                            <input type="email" id="ipt_email" placeholder="responvel@gmail.com">
+                        </div>
+
+                        <div class="campo">
+                            <label for="senha">Senha:</label>
+                            <input type="password" id="ipt_senha" placeholder="********">
+                        </div>
                     </div>
 
-                    <div class="campo">
-                        <label for="cpf">CPF Responsável:</label>
-                        <input type="text" id="ipt_cpf" placeholder="000-000-000-00">
+                    <div id="div_existente" style="display:none;">
+                        <div class="campo">
+                            <select id="select_responsavel"></select>
+                        </div>
                     </div>
-
-                    <div class="campo">
-                        <label for="novaSenha">Email:</label>
-                        <input type="email" id="ipt_email" placeholder="responvel@gmail.com">
-                    </div>
-
-                    <div class="campo">
-                        <label for="senha">Senha:</label>
-                        <input type="password" id="ipt_senha" placeholder="********">
-                    </div>
-                </div>
-
-                <div id="div_existente" style="display:none;">
-                    <div class="campo">
-                        <select id="select_responsavel"></select>
-                    </div>
-                </div>
 
 
                 </div>
@@ -154,6 +160,58 @@
                         onclick="trocarModal('modalResponsavel', 'modalFilial')">Voltar</button>
                     <button class="botao-adduser" onclick="finalizarResponsavel()">Finalizar</button>
 
+                </div>
+            </div>
+        </div>
+
+        <div class="envoltorio-config" id="modalEditarGerente">
+            <div class="cartao-config">
+                <div class="cabecalho-adduser">
+                    <i class="bi bi-person-fill-gear"></i>
+                    <div>
+                        <h2>Alterar Responsável</h2>
+                        <p>Troque o responsável pela filial</p>
+                    </div>
+                </div>
+
+                <div class="config-form">
+                    <div class="campo">
+                        <label>Tipo de responsável:</label>
+                        <select id="select_tipo_gerente_edicao" onchange="trocarTipoGerenteEdicao()">
+                            <option value="novo">Criar novo responsável</option>
+                            <option value="existente">Usar responsável existente</option>
+                        </select>
+                    </div>
+
+                    <div id="form-novo-edicao">
+                        <div class="campo">
+                            <label>Nome:</label>
+                            <input type="text" id="ipt_nomeEdicao" placeholder="Responsável">
+                        </div>
+                        <div class="campo">
+                            <label>CPF:</label>
+                            <input type="text" id="ipt_cpfEdicao" placeholder="000-000-000-00">
+                        </div>
+                        <div class="campo">
+                            <label>Email:</label>
+                            <input type="email" id="ipt_emailEdicao" placeholder="responsavel@gmail.com">
+                        </div>
+                        <div class="campo">
+                            <label>Senha:</label>
+                            <input type="password" id="ipt_senhaEdicao" placeholder="********">
+                        </div>
+                    </div>
+
+                    <div id="div_existente_edicao" style="display:none;">
+                        <div class="campo">
+                            <select id="select_responsavel_edicao"></select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="botoes-adduser">
+                    <button class="botao-adduser" onclick="fecharModal('modalEditarGerente')">Cancelar</button>
+                    <button class="botao-adduser" onclick="finalizarGerenteEdicao()">Finalizar</button>
                 </div>
             </div>
         </div>
@@ -172,7 +230,6 @@
 
 </html>
 <script>
-    strong_nome.innerHTML = sessionStorage.getItem(`NOME_USUARIO`);
     function abrirModal(idModal) {
         document.getElementById(idModal).style.display = "flex"
     }
@@ -298,72 +355,72 @@
             carregarResponsaveis()
         }
     }
-    
+
     function carregarResponsaveis() {
 
         let idMatriz = sessionStorage.getItem("ID_MATRIZ")
 
 
         fetch(`/filial/listarResponsaveis/${idMatriz}`)
-        .then(res => res.json())
-        .then(lista => {
+            .then(res => res.json())
+            .then(lista => {
 
-            let select = document.getElementById("select_responsavel")
+                let select = document.getElementById("select_responsavel")
 
-            select.innerHTML = `<option value="">Selecione</option>`
+                select.innerHTML = `<option value="">Selecione</option>`
 
-            lista.forEach(u => {
-                select.innerHTML += `
+                lista.forEach(u => {
+                    select.innerHTML += `
                     <option value="${u.id_usuario}">
                         ${u.nome} - ${u.email}
                     </option>
                 `;
-        })
-    })
-}
-
-function vincularResponsavelExistente() {
-
-    let idUsuario = document.getElementById("select_responsavel").value
-    let idFilial = sessionStorage.getItem("ID_FILIAL_ATUAL")
-    let idMatriz = sessionStorage.getItem("ID_MATRIZ")
-
-    if (!idUsuario) {
-        alert("Selecione um responsável!")
-        return;
+                })
+            })
     }
 
-    if (!idFilial) {
-        alert("Filial não encontrada. Recarregue o processo.")
-        return;
-    }
+    function vincularResponsavelExistente() {
 
-    fetch("/filial/vincularResponsavel", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        }, 
-        body:JSON.stringify({
-            idUsuarioServer: idUsuario,
-            idFilialServer: idFilial,
-            idMatrizServer: idMatriz
-        })
-    })
+        let idUsuario = document.getElementById("select_responsavel").value
+        let idFilial = sessionStorage.getItem("ID_FILIAL_ATUAL")
+        let idMatriz = sessionStorage.getItem("ID_MATRIZ")
 
-    .then(res => {
-        if(res.ok) {
-            alert("Responsável vinculado com sucesso!")
-            fecharModal('modalResponsavel')
-            listarFiliais()
-        } else {
-            alert("Erro ao vincular responsável no servidor")
+        if (!idUsuario) {
+            alert("Selecione um responsável!")
+            return;
         }
-    })
-    .catch(erro => {
-        console.log("Erro de conexão:", erro)
-        alert("Erro de conexão com o servidor")
-    })
-}
+
+        if (!idFilial) {
+            alert("Filial não encontrada. Recarregue o processo.")
+            return;
+        }
+
+        fetch("/filial/vincularResponsavel", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idUsuarioServer: idUsuario,
+                idFilialServer: idFilial,
+                idMatrizServer: idMatriz
+            })
+        })
+
+            .then(res => {
+                if (res.ok) {
+                    alert("Responsável vinculado com sucesso!")
+                    fecharModal('modalResponsavel')
+                    listarFiliais()
+                } else {
+                    alert("Erro ao vincular responsável no servidor")
+                }
+            })
+            .catch(erro => {
+                console.log("Erro de conexão:", erro)
+                alert("Erro de conexão com o servidor")
+            })
+    }
 
 
 
@@ -455,7 +512,7 @@ function vincularResponsavelExistente() {
                 </div>
 
                 <div class="acoes">
-                    <div class="item">editar</div>
+                    <div class="item" onclick="abrirEdicaoGerente('${filial.id_filial}')">editar</div>
                     <div class="item">excluir</div>
                 </div>
 
@@ -469,4 +526,118 @@ function vincularResponsavelExistente() {
                 console.log("ERRO:", erro);
             });
     }
+
+    function abrirEdicaoGerente(idFilial) {
+        console.log("ID FILIAL CLICADO:", idFilial)  // verifica se o clique está chegando
+
+        sessionStorage.setItem("ID_FILIAL_ATUAL", idFilial)
+
+        document.getElementById("select_tipo_gerente_edicao").value = "novo"
+        document.getElementById("form-novo-edicao").style.display = "block"
+        document.getElementById("div_existente_edicao").style.display = "none"
+
+        let modal = document.getElementById("modalEditarGerente")
+        console.log("MODAL ENCONTRADO:", modal)  // verifica se o elemento existe
+
+        modal.style.display = "flex"
+    }
+
+    function trocarTipoGerenteEdicao() {
+        let tipo = document.getElementById("select_tipo_gerente_edicao").value
+
+        if (tipo == "novo") {
+            document.getElementById("form-novo-edicao").style.display = "block"
+            document.getElementById("div_existente_edicao").style.display = "none"
+        } else {
+            document.getElementById("form-novo-edicao").style.display = "none"
+            document.getElementById("div_existente_edicao").style.display = "block"
+
+            let idMatriz = sessionStorage.getItem("ID_MATRIZ")
+            let select = document.getElementById("select_responsavel_edicao")
+
+            select.innerHTML = `<option value="">Carregando...</option>`
+
+            fetch(`/filial/listarResponsaveis/${idMatriz}`)
+                .then(res => res.json())
+                .then(lista => {
+                    select.innerHTML = `<option value="">Selecione</option>`
+                    lista.forEach(u => {
+                        select.innerHTML += `<option value="${u.id_usuario}">${u.nome} - ${u.email}</option>`
+                    })
+                })
+                .catch(erro => console.log("#ERRO:", erro))
+
+        }
+    }
+
+    function finalizarGerenteEdicao() {
+
+        let tipo = document.getElementById("select_tipo_gerente_edicao").value
+
+        if (tipo == "novo") {
+
+            let nome = document.getElementById("ipt_nomeEdicao").value
+            let cpf = document.getElementById("ipt_cpfEdicao").value
+            let email = document.getElementById("ipt_emailEdicao").value
+            let senha = document.getElementById("ipt_senhaEdicao").value
+
+            fetch("/filial/cadastrarResponsavel", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    nomeResponsavelServer: nome,
+                    cpfResponsavelServer: cpf,
+                    emailResponsavelServer: email,
+                    senhaResponsavelServer: senha,
+                    idMatrizServer: sessionStorage.getItem("ID_MATRIZ"),
+                    idFilialServer: sessionStorage.getItem("ID_FILIAL_ATUAL")
+                })
+            })
+                .then(res => {
+                    if (res.ok) {
+                        alert("Responsável cadastrado e vinculado com sucesso!")
+                        fecharModal("modalEditarGerente")
+                        listarFiliais()
+
+                        document.getElementById("ipt_nomeEdicao").value = ""
+                        document.getElementById("ipt_cpfEdicao").value = ""
+                        document.getElementById("ipt_emailEdicao").value = ""
+                        document.getElementById("ipt_senhaEdicao").value = ""
+                    } else {
+                        alert("Erro ao cadastrar responsável.")
+                    }
+                })
+                .catch(erro => console.log("#ERRO:", erro))
+
+        } else {
+
+            let idUsuario = document.getElementById("select_responsavel_edicao").value
+
+            if (!idUsuario) {
+                alert("Selecione um responsável!")
+                return
+            }
+
+            fetch("/filial/vincularResponsavel", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    idUsuarioServer: idUsuario,
+                    idFilialServer: sessionStorage.getItem("ID_FILIAL_ATUAL"),
+                    idMatrizServer: sessionStorage.getItem("ID_MATRIZ")
+                })
+            })
+                .then(res => {
+                    if (res.ok) {
+                        alert("Responsável vinculado com sucesso!")
+                        fecharModal("modalEditarGerente")
+                        listarFiliais()
+                    } else {
+                        alert("Erro ao vincular responsável.")
+                    }
+                })
+                .catch(erro => console.log("#ERRO:", erro))
+        }
+    }
+    
 </script>

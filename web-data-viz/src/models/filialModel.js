@@ -109,14 +109,11 @@ function listarResponsaveis(idMatriz) {
 function vincularResponsavel(idUsuario, idFilial, idMatriz) {
 
     var instrucaoSql = `
-    INSERT INTO funcionario (id_usuario, id_filial, id_matriz, id_cargo)
-    SELECT ${idUsuario}, ${idFilial}, ${idMatriz}, 3
-    WHERE NOT EXISTS (
-    SELECT 1 FROM funcionario
-    WHERE id_usuario = ${idUsuario}
-      AND id_filial = ${idFilial}
-      AND id_matriz = ${idMatriz}
-      AND id_cargo = 3);`
+    UPDATE funcionario 
+        SET id_usuario = ${idUsuario}
+        WHERE id_filial = ${idFilial} 
+          AND id_matriz = ${idMatriz} 
+          AND id_cargo = 3;`
 
     console.log("Executando SQL:\n" + instrucaoSql);
 
