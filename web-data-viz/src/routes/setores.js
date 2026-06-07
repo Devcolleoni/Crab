@@ -7,7 +7,7 @@ router.post("/cadastrar", function(req, res) {
     setorController.cadastrar(req, res);
 });
 
-router.get("/listar", function(req, res) {
+router.get("/listar/:idFilial", function(req, res) {
     setorController.listar(req, res);
 });
 

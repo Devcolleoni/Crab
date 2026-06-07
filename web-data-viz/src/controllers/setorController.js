@@ -4,6 +4,8 @@
         let nomeSetor = req.body.nomeSetorServer;
         let vaoInicial = Number(req.body.vaoInicialServer);
         let vaoFinal = Number(req.body.vaoFinalServer);
+        let idFilial = req.body.idFilialServer;
+        let idMatriz = req.body.idMatrizServer;
                 
         if (nomeSetor == undefined || nomeSetor == "") {
             res.status(400).send("O nome do setor está inválido!");
@@ -23,7 +25,9 @@
     }
 
     function listar(req, res) {
-        setorModel.listar()
+        var idFilial = req.params.idFilial;
+
+        setorModel.listar(idFilial)
         .then(function(resultado) {
             res.json(resultado);
         })

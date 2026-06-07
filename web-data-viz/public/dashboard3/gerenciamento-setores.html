@@ -177,7 +177,7 @@
         }
 
         function listarSetores() {
-            fetch(`/setores/listar`)
+            fetch(`/setores/listar/${idFilial}`)
                 .then(function (resposta) {
                     return resposta.json();
                 })
