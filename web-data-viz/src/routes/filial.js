@@ -23,4 +23,10 @@ router.post("/vincularResponsavel", function (req, res) {
     gerenciamentoFilialController.vincularResponsavel(req, res)
 })
 
+router.get("/listarFiliaisMatriz/:idMatriz", function(req, res) {
+    gerenciamentoFilialController.listarFiliaisMatriz(req, res)
+})
+
+
+
 module.exports = router;

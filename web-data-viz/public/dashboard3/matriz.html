@@ -101,7 +101,7 @@
 function carregarFiliais() {
     let idMatriz = sessionStorage.getItem('ID_MATRIZ')
 
-    fetch(`/filial/listarFiliais/${idMatriz}`)
+    fetch(`/filial/listarFiliaisMatriz/${idMatriz}`)
         .then(function(resposta) { return resposta.json() })
         .then(function(dados) {
     filiais = []

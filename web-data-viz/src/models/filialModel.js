@@ -44,6 +44,21 @@ function cadastrarResponsavel(nomeVar, cpfVar, emailVar, senhaVar, idMatriz, idF
 function listarFiliais(idMatriz) {
 
     var instrucaoSql = `
+        SELECT f.id_filial, f.razao_social, f.cnpj, u.email
+        FROM filial f
+        LEFT JOIN funcionario func ON func.id_filial = f.id_filial
+        LEFT JOIN usuario u ON u.id_usuario = func.id_usuario
+        WHERE f.id_matriz = ${idMatriz};
+        `
+
+    console.log("Executando SQL:\n" + instrucaoSql);
+
+    return database.executar(instrucaoSql);
+
+}
+function listarFiliaisMatriz(idMatriz) {
+
+    var instrucaoSql = `
    SELECT 
     f.id_filial,
     f.id_matriz,
@@ -73,6 +88,8 @@ GROUP BY f.id_filial, f.id_matriz, f.razao_social
     return database.executar(instrucaoSql);
 
 }
+
+
 
 function listarResponsaveis(idMatriz) {
 
@@ -110,6 +127,7 @@ module.exports = {
     cadastrarFilial,
     cadastrarResponsavel,
     listarFiliais,
+    listarFiliaisMatriz,
     listarResponsaveis,
     vincularResponsavel
 }
