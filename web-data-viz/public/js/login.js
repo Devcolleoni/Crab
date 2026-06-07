@@ -24,8 +24,6 @@ function entrar() {
                 console.log(json);
                 console.log(JSON.stringify(json));
                 console.log("JSON COMPLETO:", json)
-                
-                sessionStorage.setItem("ID_FILIAIS", JSON.stringify(filiais));
                 sessionStorage.EMAIL_USUARIO = json.email;
                 sessionStorage.NOME_USUARIO = json.nome;
                 sessionStorage.setItem("ID_USUARIO", json.id_usuario);
