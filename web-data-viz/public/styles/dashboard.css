@@ -948,7 +948,7 @@ th {
 
 /* Resposta */
 .modal-resposta-container {
-    display: none;
+    display: block;
 }
 
 .modal-resposta-label {
