@@ -16,7 +16,7 @@
             <span>CRAB</span>
         </div>
         <div class="info-usuario">
-            <p>Bem-vindo(a), <strong>Usuário</strong></p>
+            <p>Bem-vindo(a), <strong id="strong_nome"></strong></p>
         </div>
 
         <nav class="menu">
@@ -90,6 +90,7 @@
 
 </html>
 <script>
+    strong_nome.innerHTML = sessionStorage.getItem(`NOME_USUARIO`);
     let numeros = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
     let especiais = ["!", "@", "#", "$", "%", "&", "*", "/"];
 

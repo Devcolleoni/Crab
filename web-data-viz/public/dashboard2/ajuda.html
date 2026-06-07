@@ -14,7 +14,7 @@
             <span>CRAB</span>
         </div>
         <div class="info-usuario">
-            <p>Bem-vindo(a), <strong>Usuário</strong></p>
+            <p>Bem-vindo(a), <strong id="strong_nome"></strong></p>
         </div>
 
         <nav class="menu">
@@ -151,6 +151,7 @@
 
 <script>
 
+    strong_nome.innerHTML = sessionStorage.getItem(`NOME_USUARIO`);
     function abrirModal() {
         document.getElementById("bob-modal").style.display = "flex"
     }

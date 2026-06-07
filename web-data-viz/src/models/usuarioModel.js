@@ -2,19 +2,23 @@ var database = require("../database/config")
 
 function autenticar(email, senha) {
     var instrucaoSql = `
-        SELECT
-        u.id_usuario,
-        u.nome,
-        u.email,
-        f.id_cargo,
-        f.id_filial,
-        f.id_matriz
+        SELECT 
+            u.id_usuario,
+            u.nome,
+            u.email,
+            f.id_cargo,
+            f.id_matriz,
+            GROUP_CONCAT(f.id_filial) AS id_filiais
         FROM usuario u
-        JOIN funcionario f
-        ON f.id_usuario = u.id_usuario
+        JOIN funcionario f ON f.id_usuario = u.id_usuario
         WHERE u.email = '${email}'
         AND u.senha = '${senha}'
-        LIMIT 1;
+        GROUP BY 
+            u.id_usuario, 
+            u.nome, 
+            u.email, 
+            f.id_cargo, 
+            f.id_matriz;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

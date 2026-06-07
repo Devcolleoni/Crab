@@ -15,7 +15,7 @@
             <span>CRAB</span>
         </div>
         <div class="info-usuario">
-            <p>Bem-vindo(a), <strong>Usuário</strong></p>
+            <p>Bem-vindo(a), <strong id="strong_nome"></strong></p>
         </div>
         <nav class="menu">
             <a href="dashboard.html"><i class="bi bi-speedometer2"></i> Painel</a>
@@ -126,6 +126,10 @@
     </div>
 
     <script>
+        const idMatriz = sessionStorage.getItem("ID_MATRIZ"); console.log(`Matriz: `, idMatriz)
+        const idFilial = sessionStorage.getItem("ID_FILIAL"); console.log(`Filial:`, idFilial)
+        const nome = sessionStorage.getItem("NOME_USUARIO"); console.log(`Usuario:`, nome)
+        strong_nome.innerHTML = nome;
         
         function abrirModal(idModal) {
             document.getElementById(idModal).style.display = "flex";

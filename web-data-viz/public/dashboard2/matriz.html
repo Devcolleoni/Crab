@@ -14,7 +14,7 @@
             <span>CRAB</span>
         </div>
         <div class="info-usuario">
-            <p>Bem-vindo(a), <strong>Usuário</strong></p>
+            <p>Bem-vindo(a), <strong id="strong_nome"></strong></p>
         </div>
 
         <nav class="menu">
@@ -93,6 +93,7 @@
     </div>
 
     <script>
+        strong_nome.innerHTML = sessionStorage.getItem(`NOME_USUARIO`);
 
        let filiais = []
 
@@ -219,7 +220,7 @@ carregarFiliais()
                 let botaoInfo = ''
 
                 if (f.id_filial === 1) {
-                    clique    = 'clicavel" onclick="window.location.href=\'../dashboard/dashboard.html?idFilial=' + f.id_filial + '\''
+                    clique    = 'clicavel" onclick="window.location.href=\'../dashboard2/dashboard.html?idFilial=' + f.id_filial + '\''
                     botaoInfo = '<button onclick="event.stopPropagation(); abrirPopup(' + f.id_filial + ')"><i class="bi bi-info-circle"></i></button>'
                 }
 

@@ -22,7 +22,7 @@ function autenticar(req, res) {
                   nome: resultadoAutenticar[0].nome,
                   email: resultadoAutenticar[0].email,
                   id_cargo: resultadoAutenticar[0].id_cargo,
-                  id_filial: resultadoAutenticar[0].id_filial,
+                  id_filiais: resultadoAutenticar[0].id_filiais,
                   id_matriz: resultadoAutenticar[0].id_matriz
 });         
                 } else if (resultadoAutenticar.length == 0) {

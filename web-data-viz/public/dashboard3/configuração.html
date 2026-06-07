@@ -14,7 +14,7 @@
             <span>CRAB</span>
         </div>
         <div class="info-usuario">
-            <p>Bem-vindo(a), <strong>Usuário</strong></p>
+            <p>Bem-vindo(a), <strong id="strong_nome"></strong></p>
         </div>
 
         <nav class="menu">
@@ -81,6 +81,9 @@
     </div>
 
     <script>
+
+        strong_nome.innerHTML = sessionStorage.getItem("NOME_USUARIO");
+
         function salvarAlteracoes() {
            let id = sessionStorage.getItem("ID_USUARIO")
             let senha = senhaNova.value

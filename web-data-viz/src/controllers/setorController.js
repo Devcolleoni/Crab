@@ -4,11 +4,7 @@
         let nomeSetor = req.body.nomeSetorServer;
         let vaoInicial = Number(req.body.vaoInicialServer);
         let vaoFinal = Number(req.body.vaoFinalServer);
-        
-    
-        let idFilial = req.body.idFilialServer || 1;
-        let idMatriz = req.body.idMatrizServer || 1;
-
+                
         if (nomeSetor == undefined || nomeSetor == "") {
             res.status(400).send("O nome do setor está inválido!");
         } else if (isNaN(vaoInicial) || isNaN(vaoFinal)) {

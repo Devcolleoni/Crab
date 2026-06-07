@@ -16,14 +16,14 @@
             <span>CRAB</span>
         </div>
         <div class="info-usuario">
-            <p>Bem-vindo(a), <strong>Usuário</strong></p>
+            <p>Bem-vindo(a), <strong id="strong_nome"></strong></p>
         </div>
 
         <nav class="menu">
-            <a href="../home.html"><i class="bi bi-house"></i> Início</a>
             <a href="matriz.html"><i class="bi bi-speedometer2"></i> Painel Filiais</a>
             <a href="gerenciamento-Matriz.html" class="ativo"><i class="bi bi-gear"></i> Gerenciar Filiais</a>
             <a href="adduser.html"><i class="bi bi-person-plus"></i> Adicionar Usuário</a>
+            <a href="configuração.html"><i class="bi bi-gear"></i> Configurações</a>
             <a href="ajuda.html"><i class="bi bi-question-circle"></i> Ajuda</a>
         </nav>
 
@@ -178,6 +178,7 @@
 
 </html>
 <script>
+    strong_nome.innerHTML = sessionStorage.getItem(`NOME_USUARIO`);
     function abrirModal(idModal) {
         document.getElementById(idModal).style.display = "flex"
     }
