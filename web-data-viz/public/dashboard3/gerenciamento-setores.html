@@ -127,9 +127,6 @@
         strong_nome.innerHTML = nome;
         
         function abrirModal(idModal) {
-            document.getElementById("pergunta").value = "";
-            document.getElementById("resposta").innerText = "";
-
             
             document.getElementById(idModal).style.display = "flex";
         }
@@ -167,6 +164,9 @@
 
                     if (resposta.ok) {
                         alert('Setor cadastrado com sucesso!');
+                        document.getElementById("ipt_nomeSetor").value = "";
+                        document.getElementById("ipt_vao_inicial").value = "";
+                        document.getElementById("ipt_vao_final").value = "";
                         fecharModal("modalSetor");
                     } else {
                         throw "Erro ao cadastrar setor"
