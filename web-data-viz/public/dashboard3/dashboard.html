@@ -39,29 +39,58 @@
 
     <div class="conteudo-principal">
         <div class="cabecalho">
-            <h1>Painel</h1>
-            <div class="config-cabecalho">
-                <select name="Setores" id="slc_setores" onchange="filtrarSetor(this.value)">
-                    <option value="Geral">Geral</option>
-                    <option value="Higiene">Setor: Higiene</option>
-                    <option value="Laticinios">Setor: Laticinios</option>
-                    <option value="Açougue">Setor: Açougue</option>
-                    <option value="Farinaceos">Setor: Farinaceos</option>
-                </select>
+    <h1>Painel</h1>
+    <div class="config-cabecalho">
+        <div>
+            <select name="Setores" id="select_filial" onchange="filtrarFilial(this.value)">
+                <option value="" disabled selected>Escolher Filial</option>
+            </select>
+        </div>
+        <div id="config">
+            <button onclick="toggleMetas()">
+                <i style="font-size: 25px;" class="bi bi-sliders"></i>
+            </button>
+        </div>
+    </div>
+</div>
 
-                <div id="config">
-                    <button onclick="AbrirConfiguracoes(document.getElementById('slc_setores').value)">
-                        <i style="font-size: 25px;" class="bi-three-dots-vertical"></i>
-                    </button>
-                </div>
+<div id="container_botoes_setor" style="display: none;">
+    <button class="btn-setor ativo" onclick="filtrarSetor('Geral')">Geral</button>
+</div>
+
+<!-- Painel de metas -->
+<div id="painel-metas" style="display: none;">
+    <div class="cartao-metas">
+        <div class="meta-item">
+            <label for="ipt_meta_abastecimento">
+                <i class="bi bi-droplet-fill"></i> Meta de Abastecimento (%)
+            </label>
+            <div class="meta-input-grupo">
+                <input type="number" id="ipt_meta_abastecimento" min="0" max="100" placeholder="Ex: 80">
+                <button onclick="salvarMetaAbastecimento()">Salvar</button>
             </div>
+        </div>
+        <div class="meta-item">
+            <label for="ipt_meta_ociosidade">
+                <i class="bi bi-clock-history"></i> Meta de Ociosidade (horas)
+            </label>
+            <div class="meta-input-grupo">
+                <input type="number" id="ipt_meta_ociosidade" min="0" placeholder="Ex: 10">
+                <button onclick="salvarMetaOciosidade()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <div id="container_botoes_setor" style="display: none;">
+            <button class="btn-setor ativo" onclick="filtrarSetor('Geral')">Geral</button>
         </div>
 
         <div style="display: none;" id="aba-config" class="aba-config">
             <div class="popup-conteudo" id="popup-conteudo">
                 <div class="topo">
                     <h3>Configurações</h3>
-                    <button onclick="AbrirConfiguracoes()">X</button>
+                    <!-- <button onclick="AbrirConfiguracoes()">X</button> -->
                 </div>
                                 <section class="meta">
                     <h4>Meta de Ociosidade (horas)</h4>
@@ -170,15 +199,15 @@
 
         <div class="graficos">
             <div class="cartao-grafico">
-                <h3>Fluxo de Entrada e Saída</h3>
+                <h3>Vãos com Ociosidade</h3>
                 <div class="container-grafico">
                     <canvas id="statusSetorChart"></canvas>
                 </div>
             </div>
             <div class="cartao-grafico">
-                <h3>Taxa de Abastecimento dos vãos — último ano</h3>
+                <h3>Abastecimento dos Vãos</h3>
                 <div class="container-grafico">
-                    <canvas id="taxaChart"></canvas>
+                    <canvas id="roscaChart"></canvas>
                 </div>
             </div>
         </div>
@@ -188,6 +217,6 @@
     strong_nome.innerHTML = sessionStorage.getItem("NOME_USUARIO");
     
     function adicionarSelect(){
-        
+
     }
 </script>

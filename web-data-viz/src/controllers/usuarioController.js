@@ -103,6 +103,44 @@ function cadastrar(req, res) {
             res.status(500).json(erro.sqlMessage);
         })};
 
+function autenticar2(req, res) {
+    var id_filial = req.body.id_filialServer;
+    var id_matriz = req.body.id_matrizServer;
+
+    if (id_filial == undefined) {
+        res.status(400).send("Seu email está undefined!");
+    } else if (id_matriz == undefined) {
+        res.status(400).send("Sua senha está indefinida!");
+    } else {
+
+        usuarioModel.autenticar(id_filial, id_matriz)
+            .then(function (resultadoAutenticar) {
+                console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
+                console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
+
+                if (resultadoAutenticar.length == 1) {
+                    console.log(resultadoAutenticar);
+                   res.json({
+                  nomeSetor: resultadoAutenticar[0].nome_setor,
+                  qtdVaos: resultadoAutenticar[0].quantidade_vaos,
+});         
+                } else if (resultadoAutenticar.length == 0) {
+                    res.status(403).send("Email e/ou senha inválido(s)");
+                } else {
+                    res.status(403).send("Mais de um usuário com o mesmo login e senha!");
+                }
+            }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+
+}
+
 
 
 
@@ -110,6 +148,7 @@ function cadastrar(req, res) {
 
 module.exports = {
     autenticar,
+    autenticar2,
     cadastrar,
     Atualizar
 }

@@ -23,6 +23,29 @@ function autenticar(email, senha) {
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
+function autenticar2(id_filial, id_matriz) {
+    var instrucaoSql = `
+    SELECT 
+        u.id_usuario,
+        u.nome,
+        u.email,
+        f.id_cargo,
+        f.id_matriz,
+        GROUP_CONCAT(DISTINCT f.id_filial) AS id_filiais
+    FROM usuario u
+    JOIN funcionario f ON f.id_usuario = u.id_usuario
+    WHERE u.email = '${email}'
+    AND u.senha = '${senha}'
+    GROUP BY 
+        u.id_usuario, 
+        u.nome, 
+        u.email, 
+        f.id_cargo, 
+        f.id_matriz;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
 
 // Coloque os mesmos parâmetros aqui. Vá para a var instrucaoSql
 function cadastrar(nomeVar, cpfVar, emailVar, razaoSocialVar, cnpjVar) {
@@ -49,6 +72,7 @@ function Atualizar(SenhaVar, idVar, Antigavar, Emailvar) {
 
 module.exports = {
     autenticar,
+    autenticar2,
     cadastrar,
     Atualizar
 };
