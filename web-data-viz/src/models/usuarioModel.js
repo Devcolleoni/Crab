@@ -70,9 +70,63 @@ function Atualizar(SenhaVar, idVar, Antigavar, Emailvar) {
     return database.executar(instrucaoSql);
 }
 
+function cadastrarFuncionario(nome, cpf, email, senha, cargo, filial){
+
+    let instrucaoUsuario = `
+        INSERT INTO usuario
+        (nome, cpf, email, senha)
+        VALUES
+        ('${nome}', '${cpf}', '${email}', '${senha}');
+    `;
+
+    console.log(instrucaoUsuario);
+
+    return database.executar(instrucaoUsuario)
+        .then(function(resultadoUsuario){
+
+            let idUsuario = resultadoUsuario.insertId;
+
+            let instrucaoFuncionario = `
+                INSERT INTO funcionario
+                (
+                    id_usuario,
+                    id_cargo,
+                    id_filial,
+                    id_matriz
+                )
+                VALUES
+                (
+                    ${idUsuario},
+                    ${cargo},
+                    ${filial},
+                    1
+                );
+            `;
+
+            console.log(instrucaoFuncionario);
+
+            return database.executar(instrucaoFuncionario);
+
+        });
+}
+
+function listarFiliais(idMatriz) {
+    var instrucaoSql = `
+        SELECT
+            id_filial,
+            razao_social
+        FROM filial
+        WHERE id_matriz = ${idMatriz};
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     autenticar,
     autenticar2,
     cadastrar,
-    Atualizar
+    Atualizar,
+    cadastrarFuncionario,
+    listarFiliais
 };

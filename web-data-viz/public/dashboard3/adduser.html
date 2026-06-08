@@ -54,6 +54,24 @@
                     <div class="erro" id="div_cpf"></div>
                 </div>
 
+                <div class="campoAdd">
+                    <label>Cargo*</label>
+                    <select id="select_cargo">
+                        <option value="">Selecione</option>
+                        <option value="1">Admin</option>
+                        <option value="2">Dono</option>
+                        <option value="3">Gerente</option>
+                        <option value="4">Funcionário</option>
+                    </select>
+                </div>
+
+                <div class="campoAdd">
+                    <label>Filial*</label>
+                    <select id="select_filial">
+                        <option value="">Selecione</option>
+                    </select>
+                </div>
+
                 <div class="campo">
                     <label for="email">Email*</label>
                     <input type="email" id="ipt_email" placeholder="seu@email.com" oninput="validarEmail()">
@@ -70,7 +88,7 @@
                     <label for="confirmarSenha">Confirmar Senha*</label>
                     <input type="password" id="ipt_confirmarSenha" placeholder="Confirme a senha"
                         oninput="validarConfSenha()">
-                        <div class="erro" id="div_confSenha"></div>
+                    <div class="erro" id="div_confSenha"></div>
                 </div>
                 <div class="botoes-adduser">
 
@@ -86,7 +104,7 @@
         </div>
     </div>
     </div>
-    
+
 </body>
 
 </html>
@@ -108,7 +126,7 @@
         let temEspecial = false;
         let temNumero = false;
         let temQuantidade = senha.length >= 8;
-        
+
 
         for (let i = 0; i < senha.length; i++) {
             let letraDigitada = senha[i]
@@ -122,16 +140,16 @@
         div_senha.innerHTML = "";
         if (temNumero == false) {
             div_senha.innerHTML += `Sua senha precisa ter pelo menos um número <br>`;
-        }  if (temEspecial == false) {
+        } if (temEspecial == false) {
             div_senha.innerHTML += `Sua senha precisa ter pelo menos um caractere especial <br>`;
-        }  if (temQuantidade == false) {
+        } if (temQuantidade == false) {
             div_senha.innerHTML += `Sua senha precisa ter pelo menos 8 caracteres`;
         }
-            if (temNumero && temEspecial && temQuantidade) {
-                validacaoSenha = true;
-            } else {
-                validacaoSenha = false;
-            }
+        if (temNumero && temEspecial && temQuantidade) {
+            validacaoSenha = true;
+        } else {
+            validacaoSenha = false;
+        }
     }
     function validarConfSenha() {
         let senha = ipt_senha.value;
@@ -157,7 +175,7 @@
             validacaoEmail = false;
         }
     }
-    
+
     function validarCPF() {
         let cpf = ipt_cpf.value;
 
@@ -176,18 +194,86 @@
         let cpf = ipt_cpf.value;
         let email = ipt_email.value;
         let senha = ipt_senha.value;
-        let confirmarSenha = ipt_confirmarSenha.value;
+        let cargo = select_cargo.value;
+        let filial = select_filial.value;
 
-        if(validacaoSenha && validacaoConfSenha && validacaoEmail && validacaoCPF && nomeUsuario !="") {
-            alert("Usuário adicionado com sucesso!");
-            cancelar();
+        if (
+            validacaoSenha &&
+            validacaoConfSenha &&
+            validacaoEmail &&
+            validacaoCPF &&
+            nomeUsuario != "" &&
+            cargo != "" &&
+            filial != ""
+        ) {
+
+            fetch("/usuarios/cadastrarFuncionario", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    nomeServer: nomeUsuario,
+                    cpfServer: cpf,
+                    emailServer: email,
+                    senhaServer: senha,
+                    cargoServer: cargo,
+                    filialServer: filial
+                })
+            })
+                .then(function (resposta) {
+
+                    if (resposta.ok) {
+
+                        alert("Usuário cadastrado com sucesso!");
+                        cancelar();
+
+                    } else {
+
+                        alert("Erro ao cadastrar usuário");
+
+                    }
+
+                })
+                .catch(function (erro) {
+
+                    console.log(erro);
+
+                });
+
         } else {
+
             alert("Preencha todos os campos corretamente antes de adicionar o usuário.");
+
         }
-        
-
-
     }
+
+    function carregarFiliais() {
+
+        const idMatriz = sessionStorage.ID_MATRIZ;
+
+        fetch(`/usuarios/filiais/${idMatriz}`)
+            .then(res => res.json())
+            .then(filiais => {
+
+                select_filial.innerHTML =
+                    '<option value="">Selecione</option>';
+
+                filiais.forEach(filial => {
+
+                    select_filial.innerHTML += `
+                    <option value="${filial.id_filial}">
+                        ${filial.razao_social}
+                    </option>
+                `;
+
+                });
+
+            })
+            .catch(erro => console.log(erro));
+    }
+
+    carregarFiliais();
 
     function cancelar() {
 
@@ -196,5 +282,7 @@
         document.getElementById("ipt_email").value = "";
         document.getElementById("ipt_senha").value = "";
         document.getElementById("ipt_confirmarSenha").value = "";
+        document.getElementById("select_cargo").value = "";
+        document.getElementById("select_filial").value = "";
     }
 </script>

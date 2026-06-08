@@ -971,6 +971,7 @@ th {
 .config-cabecalho div {
     margin-left: 10px;
 }
+<<<<<<< Updated upstream
 #container_botoes_setor {
     display: flex;
     flex-wrap: wrap;
@@ -1103,4 +1104,14 @@ th {
 .meta-input-grupo button:hover {
     background: #e05e10;
     transform: scale(1.04);
+=======
+
+.campoAdd input,
+.campoAdd select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+>>>>>>> Stashed changes
 }

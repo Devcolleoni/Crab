@@ -17,14 +17,14 @@ function autenticar(req, res) {
 
                 if (resultadoAutenticar.length == 1) {
                     console.log(resultadoAutenticar);
-                   res.json({
-                  id_usuario: resultadoAutenticar[0].id_usuario,
-                  nome: resultadoAutenticar[0].nome,
-                  email: resultadoAutenticar[0].email,
-                  id_cargo: resultadoAutenticar[0].id_cargo,
-                  id_filiais: resultadoAutenticar[0].id_filiais,
-                  id_matriz: resultadoAutenticar[0].id_matriz
-});         
+                    res.json({
+                        id_usuario: resultadoAutenticar[0].id_usuario,
+                        nome: resultadoAutenticar[0].nome,
+                        email: resultadoAutenticar[0].email,
+                        id_cargo: resultadoAutenticar[0].id_cargo,
+                        id_filiais: resultadoAutenticar[0].id_filiais,
+                        id_matriz: resultadoAutenticar[0].id_matriz
+                    });
                 } else if (resultadoAutenticar.length == 0) {
                     res.status(403).send("Email e/ou senha inválido(s)");
                 } else {
@@ -44,14 +44,14 @@ function autenticar(req, res) {
 
 function cadastrar(req, res) {
 
-    
+
     let nomeVar = req.body.nomeServer
     let cpfVar = req.body.cpfServer;
     let emailVar = req.body.emailServer;
     let razaoSocialVar = req.body.razaoSocialServer;
     let cnpjVar = req.body.cnpjServer;
 
-    
+
     if (nomeVar == undefined) {
         res.status(400).send("Seu nome está undefined!");
     } else if (cpfVar == undefined) {
@@ -64,7 +64,7 @@ function cadastrar(req, res) {
         res.status(400).send("Sua CNPJ está undefined!");
     } else {
 
-        
+
         usuarioModel.cadastrar(nomeVar, cpfVar, emailVar, razaoSocialVar, cnpjVar)
             .then(
                 function (resultado) {
@@ -83,7 +83,7 @@ function cadastrar(req, res) {
     }
 }
 
-  function Atualizar(req, res) {
+function Atualizar(req, res) {
     let SenhaVar = req.body.NovaServer;
     let idVar = req.body.idServer;
     let Antigavar = req.body.AntigaServer
@@ -92,17 +92,19 @@ function cadastrar(req, res) {
     usuarioModel.Atualizar(SenhaVar, idVar, Antigavar, Emailvar)
         .then(function (resultado) {
             console.log("Senha atualizada!");
-            res.status(201).json({ 
+            res.status(201).json({
                 mensagem: "Senha atualizada com sucesso!",
-                resultado: resultado 
+                resultado: resultado
             });
         })
         .catch(function (erro) {
             console.log(erro);
             console.log("\nHouve um erro ao realizar a inserção dos dados: ", erro.sqlMessage);
             res.status(500).json(erro.sqlMessage);
-        })};
+        })
+};
 
+<<<<<<< Updated upstream
 function autenticar2(req, res) {
     var id_filial = req.body.id_filialServer;
     var id_matriz = req.body.id_matrizServer;
@@ -141,14 +143,64 @@ function autenticar2(req, res) {
 
 }
 
+=======
+function cadastrarFuncionario(req, res) {
+>>>>>>> Stashed changes
 
+    let nome = req.body.nomeServer;
+    let cpf = req.body.cpfServer;
+    let email = req.body.emailServer;
+    let senha = req.body.senhaServer;
+    let cargo = req.body.cargoServer;
+    let filial = req.body.filialServer;
 
+    if (
+        nome == undefined ||
+        cpf == undefined ||
+        email == undefined ||
+        senha == undefined
+    ) {
+        res.status(400).send("Dados inválidos");
+        return;
+    }
 
+    usuarioModel.cadastrarFuncionario(
+        nome,
+        cpf,
+        email,
+        senha,
+        cargo,
+        filial
+    )
+        .then(function (resultado) {
+            res.json(resultado);
+        })
+        .catch(function (erro) {
+            console.log(erro);
+            res.status(500).json(erro);
+        });
+}
+
+function listarFiliais(req, res){
+
+    let idMatriz = req.params.idMatriz;
+
+    usuarioModel.listarFiliais(idMatriz)
+        .then(function(resultado){
+            res.json(resultado);
+        })
+        .catch(function(erro){
+            console.log(erro);
+            res.status(500).json(erro);
+        });
+}
 
 
 module.exports = {
     autenticar,
     autenticar2,
     cadastrar,
-    Atualizar
+    Atualizar,
+    cadastrarFuncionario,
+    listarFiliais
 }

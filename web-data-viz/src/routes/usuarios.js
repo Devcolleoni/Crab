@@ -16,7 +16,18 @@ router.post("/Atualizar", function (req, res){
     usuarioController.Atualizar(req, res)
 })
 
+<<<<<<< Updated upstream
 router.post("/autenticar2", function (req, res) {
     usuarioController.autenticar(req, res);
 });
+=======
+router.post("/cadastrarFuncionario", function(req, res){
+    usuarioController.cadastrarFuncionario(req, res);
+});
+
+router.get("/filiais/:idMatriz", function(req, res){
+    usuarioController.listarFiliais(req, res);
+});
+
+>>>>>>> Stashed changes
 module.exports = router;
