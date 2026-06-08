@@ -104,7 +104,6 @@ function Atualizar(req, res) {
         })
 };
 
-<<<<<<< Updated upstream
 function autenticar2(req, res) {
     var id_filial = req.body.id_filialServer;
     var id_matriz = req.body.id_matrizServer;
@@ -143,9 +142,9 @@ function autenticar2(req, res) {
 
 }
 
-=======
+
 function cadastrarFuncionario(req, res) {
->>>>>>> Stashed changes
+
 
     let nome = req.body.nomeServer;
     let cpf = req.body.cpfServer;
