@@ -29,14 +29,11 @@ function entrar() {
                 sessionStorage.setItem("ID_USUARIO", json.id_usuario);
                 sessionStorage.setItem("ID_CARGO", json.id_cargo);
                 sessionStorage.setItem("ID_MATRIZ", json.id_matriz);
-<<<<<<< Updated upstream
-                
-                var filiais = json.id_filiais ? json.id_filiais.split(','): [];
+
                 var filiais = json.id_filiais ? json.id_filiais.split(','): [];
                 sessionStorage.setItem("ID_FILIAL", filiais[0]);
-=======
-                sessionStorage.setItem("ID_FILIAIS", json.id_filiais);
->>>>>>> Stashed changes
+
+                sessionStorage.setItem("ID_FILIAIS", json.id_filiais); 
                 
                 console.log("ID_MATRIZ RECEBIDO:", json.id_matriz)
                 console.log("SESSION ID_MATRIZ:", sessionStorage.getItem("ID_MATRIZ"));
