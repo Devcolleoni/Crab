@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Sensor</title>
+    <link rel="stylesheet" href="../styles/setor.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <span>CRAB</span>
+        </div>
+        <div class="info-usuario">
+            <p>Bem-vindo(a), <strong id="strong_nome"></strong></p>
+        </div>
+        <nav class="menu">
+            <a href="dashboard.html"><i class="bi bi-speedometer2"></i> Painel</a>
+            <a href="matriz.html"><i class="bi bi-speedometer2"></i> Visão Geral</a>
+            <a href="gerenciamento-setores.html"><i class="bi bi-signpost-2-fill"></i> Gerenciar Setores</a>
+            <a href="cadastrar-sensor.html" class="ativo"><i class="bi bi-cpu"></i> Cadastrar Sensor</a>
+            <a href="ajuda.html"><i class="bi bi-question-circle"></i> Ajuda</a>
+        </nav>
+        <div class="rodape-sidebar">
+            <a href="../login.html">Sair <i class="bi bi-box-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <section id="gerenciamento-setores">
+        <div class="cabecalho">
+            <h1>Cadastrar Sensor</h1>
+            <button onclick="abrirModal('modalSensor')">Adicionar Sensor</button>
+        </div>
+
+        <div class="setores-container">
+            <div class="cabecalho">
+                <h3>Sensor</h3>
+            </div>
+            <div class="card-setores" id="card_sensores"></div>
+        </div>
+    </section>
+
+    <div class="envoltorio-config" id="modalSensor">
+        <div class="cartao-config">
+            <div class="cabecalho-addsetor">
+                <i class="bi bi-cpu"></i>
+                <div>
+                    <h2>Adicionar Novo Sensor</h2>
+                    <p>Vincule um sensor a um vão da filial</p>
+                </div>
+            </div>
+
+            <div class="config-form">
+
+                <div class="campo">
+                    <label>Filial:</label>
+                    <select id="select_filial" onchange="carregarVaos()">
+                        <option value="">Selecione a filial</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label>Vão:</label>
+                    <select id="select_vao">
+                        <option value="">Selecione o vão</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label>Data de Instalação:</label>
+                    <input type="date" id="ipt_dt_instalacao">
+                </div>
+
+                <div class="campo">
+                    <label>Status:</label>
+                    <select id="select_status">
+                        <option value="Ativo">Ativo</option>
+                        <option value="Inativo">Inativo</option>
+                        <option value="Manutenção">Manutenção</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="botoes">
+                <button class="botao" onclick="fecharModal('modalSensor')">Cancelar</button>
+                <button class="botao" onclick="cadastrarSensor()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const idMatriz = sessionStorage.getItem("ID_MATRIZ"); console.log(`Matriz: `, idMatriz)
+        const idFilial = sessionStorage.getItem("ID_FILIAL"); console.log(`Filial:`, idFilial)
+        const nome = sessionStorage.getItem("NOME_USUARIO"); console.log(`Usuario:`, nome)
+        strong_nome.innerHTML = nome;
+
+        function abrirModal(idModal) {
+            document.getElementById(idModal).style.display = "flex";
+            carregarFiliais();
+        }
+
+        function fecharModal(idModal) {
+            document.getElementById(idModal).style.display = "none";
+        }
+
+        window.onload = listarSensores;
+
+        function carregarFiliais() {
+            fetch(`/filial/listarFiliais/${idMatriz}`)
+                .then(function(resposta) { return resposta.json() })
+                .then(function(filiais) {
+                    let select = document.getElementById("select_filial")
+                    select.innerHTML = '<option value="">Selecione a filial</option>'
+
+                    for (let i = 0; i < filiais.length; i++) {
+                        select.innerHTML += `<option value="${filiais[i].id_filial}">${filiais[i].razao_social}</option>`
+                    }
+                })
+                .catch(function(erro) { console.log("Erro ao carregar filiais:", erro) })
+        }
+
+        function carregarVaos() {
+            let idFilialSelecionada = document.getElementById("select_filial").value
+
+            if (!idFilialSelecionada) return
+
+            fetch(`/sensor/listarVaos/${idFilialSelecionada}`)
+                .then(function(resposta) { return resposta.json() })
+                .then(function(vaos) {
+                    let select = document.getElementById("select_vao")
+                    select.innerHTML = '<option value="">Selecione o vão</option>'
+
+                    for (let i = 0; i < vaos.length; i++) {
+                        select.innerHTML += `<option value="${vaos[i].id_vao}">Vão ${vaos[i].numero}</option>`
+                    }
+                })
+                .catch(function(erro) { console.log("Erro ao carregar vãos:", erro) })
+        }
+
+        function cadastrarSensor() {
+            let idVao        = document.getElementById("select_vao").value
+            let dtInstalacao = document.getElementById("ipt_dt_instalacao").value
+            let status       = document.getElementById("select_status").value
+
+            if (!idVao || !dtInstalacao) {
+                alert("Preencha todos os campos!")
+                return
+            }
+
+            fetch("/sensor/cadastrar", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    idVaoServer:        idVao,
+                    dtInstalacaoServer: dtInstalacao,
+                    statusServer:       status
+                })
+            })
+                .then(function(resposta) {
+                    if (resposta.ok) {
+                        alert("Sensor cadastrado com sucesso!")
+                        fecharModal("modalSensor")
+                        listarSensores()
+                    } else {
+                        throw "Erro ao cadastrar sensor"
+                    }
+                })
+                .catch(function(erro) { console.log(erro) })
+        }
+
+        function listarSensores() {
+            fetch(`/sensor/listarSensores/${idFilial}`)
+                .then(function(resposta) { return resposta.json() })
+                .then(function(sensores) {
+                    card_sensores.innerHTML = ""
+
+                    for (let i = 0; i < sensores.length; i++) {
+                        let s = sensores[i]
+
+                        card_sensores.innerHTML += `
+                            <div class="setor">
+                                <div class="info-setor">
+                                    <div class="sigla"><i class="bi bi-cpu"></i></div>
+                                    <div class="texto-setor">
+                                        <h3>Sensor #${s.id_sensor}</h3>
+                                        <p style="margin: 5px 0 0 0; color: #64748b; font-size: 14px;">
+                                            Vão ${s.numero_vao} — Instalado em: ${s.dt_instalacao} — ${s.statuss}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    }
+                })
+                .catch(function(erro) { console.log("Erro ao listar sensores:", erro) })
+        }
+
+    </script>
+</body>
+
+</html>

@@ -26,6 +26,7 @@ var dash = require("./src/routes/dashboard")
 var gerenciamentoFilialRouter = require("./src/routes/filial");
 var setoresRouter = require("./src/routes/setores");
 var matrizRouter = require("./src/routes/matriz");
+var sensorRouter = require("./src/routes/sensor")
 
 
 app.use(express.json());
@@ -33,7 +34,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(cors());
-
+app.use("/sensor", sensorRouter)
 app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/admin", adminRouter);
