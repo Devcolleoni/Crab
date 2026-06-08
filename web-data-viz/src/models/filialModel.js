@@ -2,7 +2,7 @@
 var database = require("../database/config")
 
 function cadastrarFilial(razaoSocialVar, cnpjVar, cepVar, idMatrizVar) {
-    console.log("ACESSEI O FILIAL MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", razaoSocialVar, cnpjVar, cepVar, idMatrizVar);
+    console.log("ACESSEI O FILIAL MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", razaoSocialVar, cnpjVar, cepVar, idMatrizVar)
 
     console.log("razaoSocialVar:", razaoSocialVar)
     console.log("cnpjVar:", cnpjVar)
@@ -11,33 +11,58 @@ function cadastrarFilial(razaoSocialVar, cnpjVar, cepVar, idMatrizVar) {
 
     var instrucaoSql = `
          INSERT INTO  filial (razao_social, cnpj, cep, id_matriz) VALUES ('${razaoSocialVar}','${cnpjVar}','${cepVar}', ${idMatrizVar});
-         `;
+         `
     console.log("SQL:", instrucaoSql)
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    console.log("Executando a instrução SQL: \n" + instrucaoSql)
     console.log("ID MATRIZ:", idMatrizVar)
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql)
 }
 
 function cadastrarResponsavel(nomeVar, cpfVar, emailVar, senhaVar, idMatriz, idFilial) {
-    console.log("ACESSEI O FILIAL MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", nomeVar, cpfVar, emailVar, senhaVar);
+   console.log("ACESSEI O FILIAL MODEL - Cadastrar Responsável");
 
-    var instrucaoSql = `
-    INSERT INTO usuario (nome, cpf, email, senha) VALUES ('${nomeVar}','${cpfVar}','${emailVar}','${senhaVar}');
+    
+    var sqlNovoUsuario = `
+        INSERT INTO usuario (nome, cpf, email, senha) VALUES ('${nomeVar}','${cpfVar}','${emailVar}','${senhaVar}');
     `
 
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
 
-    return database.executar(instrucaoSql)
+    let vincularFuncionario = (idUsuarioGerado) => {
+        var instrucaoResponsavel = `
+            INSERT INTO funcionario (id_matriz, id_filial, id_usuario, id_cargo) 
+            VALUES ('${idMatriz}', '${idFilial}', '${idUsuarioGerado}', 3);
+        `
+        return database.executar(instrucaoResponsavel)
+    }
+
+    
+    return database.executar(sqlNovoUsuario)
         .then((resultado) => {
-
             let idUsuario = resultado.insertId
 
-            var instrucaoResponsavel = `
-            INSERT INTO funcionario (id_matriz, id_filial, id_usuario, id_cargo) VALUES ('${idMatriz}', '${idFilial}', '${idUsuario}', 3);
-            `
-                ;
-
-            return database.executar(instrucaoResponsavel);
+            
+            if (idFilial && idFilial !== 'null' && idFilial !== 'undefined' && idFilial > 0) {
+                
+                
+                var sqlLimparAntigo = `
+                    DELETE FROM funcionario 
+                    WHERE id_filial = ${idFilial} AND id_cargo = 3;
+                `
+                
+                console.log(`Filial existente (${idFilial}). Removendo responsável antigo...`)
+                return database.executar(sqlLimparAntigo)
+                    .then(() => {
+                        console.log("Responsável antigo removido. Vinculando o novo")
+                        return vincularFuncionario(idUsuario)
+                    });
+            } else {
+              
+                return vincularFuncionario(idUsuario)
+            }
+        })
+        .catch((erro) => {
+            console.log("Erro no processo de cadastrarResponsavel:", erro)
+            throw erro
         })
 }
 
