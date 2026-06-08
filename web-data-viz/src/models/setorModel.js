@@ -37,18 +37,16 @@ function cadastrar(nomeSetor, vaoInicial, vaoFinal, idFilial, idMatriz) {
 
 function listar(idFilial) {
     let instrucaoSql = `
-            SELECT 
-                s.id_setor, 
-                s.nome, 
-                MIN(v.numero) AS vao_inicial,
-                MAX(v.numero) AS vao_final
-            FROM setor s
-            LEFT JOIN vao v ON s.id_setor = v.id_setor
-            WHERE v.id_filial = ${idFilial}
-            GROUP BY s.id_setor, s.nome;
-        `;
-    console.log("Executando a instrução SQL de listagem (Intervalos): \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+        SELECT 
+            s.id_setor, 
+            s.nome, 
+            MIN(v.numero) AS vao_inicial,
+            MAX(v.numero) AS vao_final
+        FROM setor s
+        LEFT JOIN vao v ON s.id_setor = v.id_setor
+        GROUP BY s.id_setor, s.nome
+    `
+    return database.executar(instrucaoSql)
 }
 
 function remover(idSetor) {
