@@ -73,13 +73,13 @@ function listarFiliais(idMatriz) {
         FROM filial f
         LEFT JOIN funcionario func ON func.id_filial = f.id_filial
         LEFT JOIN usuario u ON u.id_usuario = func.id_usuario
-        WHERE f.id_matriz = ${idMatriz};
-        `
+        WHERE f.id_matriz = ${idMatriz}
+        GROUP BY f.id_filial, f.razao_social, f.cnpj, u.email
+    `
 
     console.log("Executando SQL:\n" + instrucaoSql);
 
     return database.executar(instrucaoSql);
-
 }
 function listarFiliaisMatriz(idMatriz) {
 

@@ -55,6 +55,15 @@
             </div>
 
             <div class="config-form">
+
+                <!-- SELECT DE FILIAL -->
+                <div class="campo">
+                    <label>Filial:</label>
+                    <select id="select_filial_setor">
+                        <option value="">Selecione a filial</option>
+                    </select>
+                </div>
+
                 <div class="campo">
                     <label for="nomeSetor">Nome do Setor:</label>
                     <input type="text" id="ipt_nomeSetor" placeholder="Ex... Higiene">
@@ -125,10 +134,10 @@
         const idFilial = sessionStorage.getItem("ID_FILIAL"); console.log(`Filial:`, idFilial)
         const nome = sessionStorage.getItem("NOME_USUARIO"); console.log(`Usuario:`, nome)
         strong_nome.innerHTML = nome;
-        
+
         function abrirModal(idModal) {
-            
             document.getElementById(idModal).style.display = "flex";
+            carregarFiliais();
         }
 
         function fecharModal(idModal) {
@@ -137,69 +146,71 @@
 
         window.onload = listarSetores;
 
-        function cadastrarSetor() {
-            let nomeSetor = document.getElementById("ipt_nomeSetor").value;
-            let vaoInicial = Number(document.getElementById("ipt_vao_inicial").value);
-            let vaoFinal = Number(document.getElementById("ipt_vao_final").value);
+        function carregarFiliais() {
+            fetch(`/filial/listarFiliais/${idMatriz}`)
+                .then(function(resposta) { return resposta.json() })
+                .then(function(filiais) {
+                    let select = document.getElementById("select_filial_setor")
+                    select.innerHTML = '<option value="">Selecione a filial</option>'
 
-            if (nomeSetor == " " || vaoInicial == "" || vaoFinal == "") {
-                alert('Preeencha todos os campos');
-                return;
+                    for (let i = 0; i < filiais.length; i++) {
+                        select.innerHTML += `<option value="${filiais[i].id_filial}">${filiais[i].razao_social}</option>`
+                    }
+                })
+                .catch(function(erro) { console.log("Erro ao carregar filiais:", erro) })
+        }
+
+        function cadastrarSetor() {
+            let nomeSetor  = document.getElementById("ipt_nomeSetor").value
+            let vaoInicial = Number(document.getElementById("ipt_vao_inicial").value)
+            let vaoFinal   = Number(document.getElementById("ipt_vao_final").value)
+            let idFilialSelecionada = document.getElementById("select_filial_setor").value
+
+            if (!idFilialSelecionada || nomeSetor == "" || vaoInicial == "" || vaoFinal == "") {
+                alert('Preencha todos os campos')
+                return
             }
 
             fetch("/setores/cadastrar", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    nomeSetorServer: nomeSetor,
+                    nomeSetorServer:  nomeSetor,
                     vaoInicialServer: vaoInicial,
-                    vaoFinalServer: vaoFinal,
-                    idFilialServer: sessionStorage.ID_FILIAL,
-                    idMatrizServer: sessionStorage.ID_MATRIZ
+                    vaoFinalServer:   vaoFinal,
+                    idFilialServer:   idFilialSelecionada,
+                    idMatrizServer:   idMatriz
                 })
             })
-                .then(function (resposta) {
-
+                .then(function(resposta) {
                     if (resposta.ok) {
-                        alert('Setor cadastrado com sucesso!');
-                        document.getElementById("ipt_nomeSetor").value = "";
-                        document.getElementById("ipt_vao_inicial").value = "";
-                        document.getElementById("ipt_vao_final").value = "";
-                        fecharModal("modalSetor");
+                        alert('Setor cadastrado com sucesso!')
+                        document.getElementById("ipt_nomeSetor").value = ""
+                        document.getElementById("ipt_vao_inicial").value = ""
+                        document.getElementById("ipt_vao_final").value = ""
+                        fecharModal("modalSetor")
+                        listarSetores()
                     } else {
                         throw "Erro ao cadastrar setor"
                     }
-
-                    listarSetores();
-
                 })
-                .catch(function (erro) {
-                    console.log(erro);
-                });
+                .catch(function(erro) { console.log(erro) })
         }
 
         function listarSetores() {
             fetch(`/setores/listar/${idFilial}`)
-                .then(function (resposta) {
-                    return resposta.json();
-                })
-                .then(function (setores) {
-                    card_setores.innerHTML = "";
+                .then(function(resposta) { return resposta.json() })
+                .then(function(setores) {
+                    card_setores.innerHTML = ""
 
                     for (let i = 0; i < setores.length; i++) {
-                        var dadosSetor = setores[i];
-                        var textoVao = "";
+                        var dadosSetor = setores[i]
+                        var textoVao = ""
 
-                
-                        if (dadosSetor.vao_inicial == null) {
-                            textoVao = "Nenhum vão cadastrado";
-                        } else if (dadosSetor.vao_final == null) {
-                            textoVao = "Nenhum vão cadastrado";
+                        if (dadosSetor.vao_inicial == null || dadosSetor.vao_final == null) {
+                            textoVao = "Nenhum vão cadastrado"
                         } else {
-    
-                            textoVao = "Do vão " + dadosSetor.vao_inicial + " ao " + dadosSetor.vao_final;
+                            textoVao = "Do vão " + dadosSetor.vao_inicial + " ao " + dadosSetor.vao_final
                         }
 
                         card_setores.innerHTML += `
@@ -219,66 +230,52 @@
                         <button class="botao" onclick="removerSetor(${dadosSetor.id_setor})">Remover</button>
                     </div>
                 </div>
-            `;
+            `
                     }
                 })
-                .catch(function (erro) {
-                    console.log("Erro ao listar setores: ", erro);
-                });
+                .catch(function(erro) { console.log("Erro ao listar setores: ", erro) })
         }
 
         function removerSetor(idSetor) {
-
-            fetch(`/setores/remover/${idSetor}`, {
-                method: "DELETE"
-            })
-                .then(function (resposta) {
-
+            fetch(`/setores/remover/${idSetor}`, { method: "DELETE" })
+                .then(function(resposta) {
                     if (resposta.ok) {
-                        alert('Setor Removido com sucesso!');
-                        listarSetores();
+                        alert('Setor Removido com sucesso!')
+                        listarSetores()
                     } else {
-                        throw "Erro ao remover setor";
+                        throw "Erro ao remover setor"
                     }
                 })
-                .catch(function (erro) {
-                    console.log(erro);
-                });
+                .catch(function(erro) { console.log(erro) })
         }
 
-        let idSetorEdicao = null;
+        let idSetorEdicao = null
 
         function editarSetor(id, nome) {
-            idSetorEdicao = id;
-
-            document.getElementById("edit_ipt_nomeSetor").value = nome;
-
-            abrirModal("modalEditarSetor");
+            idSetorEdicao = id
+            document.getElementById("edit_ipt_nomeSetor").value = nome
+            abrirModal("modalEditarSetor")
         }
 
         function salvarSetor() {
-
-            let nome = document.getElementById("edit_ipt_nomeSetor").value;
+            let nome = document.getElementById("edit_ipt_nomeSetor").value
 
             fetch(`/setores/editar/${idSetorEdicao}`, {
                 method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    nomeServer: nome,
-                    idFilialServer: sessionStorage.ID_FILIAL,
-                    idMatrizServer: sessionStorage.ID_MATRIZ
+                    nomeServer:     nome,
+                    idFilialServer: sessionStorage.getItem("ID_FILIAL"),
+                    idMatrizServer: sessionStorage.getItem("ID_MATRIZ")
                 })
             })
-                .then(res => {
+                .then(function(res) {
                     if (res.ok) {
-                        alert("Setor atualizado!");
-                        fecharModal("modalEditarSetor");
-
-                        listarSetores();
+                        alert("Setor atualizado!")
+                        fecharModal("modalEditarSetor")
+                        listarSetores()
                     }
-                });
+                })
         }
 
     </script>

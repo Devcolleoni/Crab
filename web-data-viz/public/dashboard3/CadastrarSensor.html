@@ -173,7 +173,7 @@
         }
 
         function listarSensores() {
-            fetch(`/sensor/listarSensores/${idFilial}`)
+            fetch(`/sensor/listarSensores/${idMatriz}`)
                 .then(function(resposta) { return resposta.json() })
                 .then(function(sensores) {
                     card_sensores.innerHTML = ""
@@ -186,6 +186,7 @@
                                 <div class="info-setor">
                                     <div class="sigla"><i class="bi bi-cpu"></i></div>
                                     <div class="texto-setor">
+                                        <h3>Sensor #${s.id_sensor} — ${s.nome_filial}</h3>
                                         <h3>Sensor #${s.id_sensor}</h3>
                                         <p style="margin: 5px 0 0 0; color: #64748b; font-size: 14px;">
                                             Vão ${s.numero_vao} — Instalado em: ${s.dt_instalacao} — ${s.statuss}

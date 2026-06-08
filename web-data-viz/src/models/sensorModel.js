@@ -22,20 +22,21 @@ function cadastrar(idVao, dtInstalacao, status) {
     return database.executar(instrucaoSql)
 }
 
-function listarSensores(idFilial) {
+function listarSensores(idMatriz) {
     var instrucaoSql = `
         SELECT 
             s.id_sensor,
             s.dt_instalacao,
             s.statuss,
-            v.numero AS numero_vao
+            v.numero AS numero_vao,
+            f.razao_social AS nome_filial
         FROM sensor s
         JOIN vao v ON s.id_vao = v.id_vao
-        WHERE v.id_filial = ${idFilial}
-        ORDER BY v.numero
+        JOIN filial f ON v.id_filial = f.id_filial AND v.id_matriz = f.id_matriz
+        WHERE v.id_matriz = ${idMatriz}
+        ORDER BY f.razao_social, v.numero
     `
-
-    return database.executar(instrucaoSql, [idFilial])
+    return database.executar(instrucaoSql)
 }
 
 module.exports = {
