@@ -30,8 +30,13 @@ function entrar() {
                 sessionStorage.setItem("ID_CARGO", json.id_cargo);
                 sessionStorage.setItem("ID_MATRIZ", json.id_matriz);
                 
+<<<<<<< HEAD
 
                 var filiais = json.id_filiais ? json.id_filiais.split(','): [];
+=======
+                var filiais = json.id_filiais ? json.id_filiais.split(','): [];
+                sessionStorage.setItem("ID_FILIAL", filiais[0]);
+>>>>>>> 1a588e9a0fcd65a5de4edc0932cfc41436e1405f
                 
                 console.log("ID_MATRIZ RECEBIDO:", json.id_matriz)
                 console.log("SESSION ID_MATRIZ:", sessionStorage.getItem("ID_MATRIZ"));

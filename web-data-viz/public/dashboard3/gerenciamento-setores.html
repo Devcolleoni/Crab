@@ -127,6 +127,10 @@
         strong_nome.innerHTML = nome;
         
         function abrirModal(idModal) {
+            document.getElementById("pergunta").value = "";
+            document.getElementById("resposta").innerText = "";
+
+            
             document.getElementById(idModal).style.display = "flex";
         }
 

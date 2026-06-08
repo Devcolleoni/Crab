@@ -548,6 +548,12 @@ body {
 .filial-body p span {
     font-weight: bold;
 }
+.erro {
+    display: block;
+    margin-top: 5px;
+    font-size: 13px;
+    color: red;
+}
 
 .status-vermelho { border-color: #ef4444; }
 .status-vermelho .filial-header { background: #ef4444; color: white; }

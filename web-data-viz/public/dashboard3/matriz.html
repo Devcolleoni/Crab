@@ -220,10 +220,10 @@ carregarFiliais()
                 let clique    = ''
                 let botaoInfo = ''
 
-                if (f.id_filial === 1) {
+                
                     clique    = 'clicavel" onclick="window.location.href=\'../dashboard3/dashboard.html?idFilial=' + f.id_filial + '\''
                     botaoInfo = '<button onclick="event.stopPropagation(); abrirPopup(' + f.id_filial + ')"><i class="bi bi-info-circle"></i></button>'
-                }
+            
 
                 grid.innerHTML += '<div class="cartao-filial status-' + f.status + ' ' + clique + '">' +
                     '<div class="filial-header">' +

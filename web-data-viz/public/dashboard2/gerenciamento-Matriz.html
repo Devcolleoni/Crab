@@ -75,16 +75,21 @@
                         <label for="nomeUsuario">Razão Social:</label>
                         <input type="text" id="ipt_razaoSocial" placeholder="Nome Filial"
                             oninput="validarRazaoSocial()">
+                        
+                        <span id="erroRazaoSocial" class="erro"></span>
                     </div>
 
                     <div class="campo">
                         <label for="novaSenha">Cnpj:</label>
                         <input type="text" id="ipt_cnpj" placeholder="00.000.000/0000-00" oninput="validarCPNJ()">
+                    
+                        <span id="erroCnpj" class="erro"></span>
                     </div>
 
                     <div class="campo">
                         <label for="email">Cep:</label>
                         <input type="text" id="ipt_cep" placeholder="00000-000" oninput="validarCEP()">
+                        <span id="erroCep" class="erro"></span>
                     </div>
 
                 </div>
@@ -245,9 +250,13 @@
         let empresa = ipt_razaoSocial.value;
 
         if (empresa.length >= 3) {
+            erroRazaoSocial.innerHTML = "";
+            ipt_razaoSocial.style.border = "3px solid green";
             validacaoEmpresa = true;
 
         } else {
+            erroRazaoSocial.innerHTML = "A razão social deve conter pelo menos 3 caracteres.";
+            ipt_razaoSocial.style.border = "3px solid red";
             validacaoEmpresa = false;
 
         }
@@ -257,9 +266,13 @@
         let cnpj = ipt_cnpj.value;
 
         if (cnpj.length == 18 && cnpj.includes(".") && cnpj.includes("/") && cnpj.includes("-")) {
+            erroCnpj.innerHTML = "";
+            ipt_cnpj.style.border = "3px solid green";
             validacaoCNPJ = true;
 
         } else {
+            erroCnpj.innerHTML = "O CNPJ deve estar no formato 00.000.000/0000-00.";
+            ipt_cnpj.style.border = "3px solid red";
             validacaoCNPJ = false;
 
         }
@@ -269,9 +282,13 @@
         let cep = ipt_cep.value;
 
         if (cep.length == 9 && cep.includes('-')) {
+            erroCep.innerHTML = "";
+            ipt_cep.style.border = "3px solid green";
             validacaoCEP = true;
 
         } else {
+            erroCep.innerHTML = "O CEP deve estar no formato 00000-000.";
+            ipt_cep.style.border = "3px solid red";
             validacaoCEP = false;
 
         }
